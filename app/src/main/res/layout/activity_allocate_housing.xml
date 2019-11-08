@@ -59,7 +59,6 @@
                 android:layout_weight="1" />
 
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -81,11 +80,7 @@
                 android:layout_height="30dp"
                 android:layout_marginRight="25dp"
                 android:layout_weight="1" />
-
-
-
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -94,23 +89,26 @@
 
             <TextView
                 android:id="@+id/lblFromDate"
-                android:layout_width="11dp"
+                android:layout_width="20dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="From Date"
                 android:textAlignment="center"
                 android:textSize="20sp" />
 
-            <Spinner
-                android:id="@+id/spinnerFromDate"
+            <TextView
+                android:id="@+id/txtFromDate"
                 android:layout_width="10dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="25dp"
-                android:layout_weight="1" />
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
+                android:layout_weight="1"
+                android:hint="Select a date"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="18dp" />
 
 
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -132,11 +130,38 @@
                 android:layout_height="30dp"
                 android:layout_marginRight="25dp"
                 android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:paddingTop="25dp">
 
+            <TextView
+                android:id="@+id/lblToDate"
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="To Date"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+
+
+            <TextView
+                android:id="@+id/txtToDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
+                android:layout_weight="1"
+                android:background="#F77E7D7D"
+                android:paddingLeft="30dp"
+                android:paddingRight="10dp"
+                android:textAlignment="center"
+                android:textColor="#F8F7F7"
+                android:textSize="20sp" />
 
 
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
