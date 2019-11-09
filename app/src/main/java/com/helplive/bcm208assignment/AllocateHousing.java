@@ -2,21 +2,27 @@ package com.helplive.bcm208assignment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 public class AllocateHousing extends AppCompatActivity{
+    private TextView fromDate;
+    DatePickerDialog datePickerDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,5 +95,22 @@ public class AllocateHousing extends AppCompatActivity{
             }
         });
 
+        fromDate=findViewById(R.id.txtFromDate);
+        fromDate.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Calendar calendar = Calendar.getInstance();
+                final int year = calendar.get(Calendar.YEAR);
+                final int month = calendar.get(Calendar.MONTH);
+                final int day = calendar.get(Calendar.DAY_OF_MONTH);
+                datePickerDialog = new DatePickerDialog(AllocateHousing.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                        fromDate.setText(day+" - "+(month+1)+" - "+year);
+                    }
+                },year,month,day);
+                datePickerDialog.show();
+            }
+        });
     }
 }
