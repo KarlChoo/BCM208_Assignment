@@ -2,6 +2,7 @@ package com.helplive.bcm208assignment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -17,16 +18,19 @@ public class RegisterApplicant extends AppCompatActivity {
 
     public void registerApplicant(View view){
         EditText editTextName = findViewById(R.id.nameEditText);
+        EditText editTextFullname = findViewById(R.id.editTextFullname);
         EditText editTextPass = findViewById(R.id.passwordEditText);
         EditText editTextPass2 = findViewById(R.id.password2EditText);
         EditText editTextEmail = findViewById(R.id.emailEditText);
         EditText editTextMonthSal = findViewById(R.id.monthSalEditText);
 
         String name = editTextName.getText().toString().trim();
+        String fullname = editTextFullname.getText().toString().trim();
         String password =  editTextPass.getText().toString().trim();
         String confpassword = editTextPass2.getText().toString().trim();
         String email = editTextEmail.getText().toString().trim();
         String monthlySalaryStr = editTextMonthSal.getText().toString().trim();
+        Integer monthlySalary = 0;
 
         //Toast.makeText(this.getBaseContext(),"TEST",Toast.LENGTH_SHORT).show();
 
@@ -57,7 +61,7 @@ public class RegisterApplicant extends AppCompatActivity {
         }
 
         try{
-            Double monthlySalary = Double.parseDouble(monthlySalaryStr);
+           Integer.parseInt(monthlySalaryStr);
         }catch (Exception e){
             Toast.makeText(this.getBaseContext(),"Please fill in the monthly salary field",Toast.LENGTH_SHORT).show();
             editTextMonthSal.requestFocus();
@@ -83,13 +87,15 @@ public class RegisterApplicant extends AppCompatActivity {
             return;
         }
         //4. Monthly Salary can't be 0
-        if(Double.parseDouble(monthlySalaryStr) <= 0){
+        if(monthlySalary <= 0){
             Toast.makeText(this.getBaseContext(),"Monthly salary cannot be RM 0",Toast.LENGTH_SHORT).show();
             editTextEmail.requestFocus();
             return;
         }
 
         //registration successful
+        Applicant a = new Applicant(name,password,fullname,email,monthlySalary);
+
         Toast.makeText(this.getBaseContext(),"Registration successful",Toast.LENGTH_SHORT).show();
 
     }
