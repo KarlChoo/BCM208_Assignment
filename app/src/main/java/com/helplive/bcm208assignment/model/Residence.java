@@ -79,7 +79,7 @@ public class Residence {
         setNumUnits(numUnits);
         setSizePerUnit(sizePerUnit);
         setMonthlyRental(monthlyRental);
-        setApplications(new ArrayList<>());
+        setApplications(new ArrayList<Application>());
 
         initialisedAllUnits();
     }

@@ -59,4 +59,3 @@ public class HousingOfficer extends User{
     }
 }
 
-}

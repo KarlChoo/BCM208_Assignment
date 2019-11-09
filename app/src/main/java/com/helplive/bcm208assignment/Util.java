@@ -1,8 +1,9 @@
-package com.helplive.bcm208assignment.util;
+package com.helplive.bcm208assignment;
 
-public class Constants {
-    public static final int DB_VERSION = 1;
-    public static final String DB_NAME = "mhsDB";
+
+public class Util {
+    public static final int DATABASE_VERSION = 1;
+    public static final String DATABASE_NAME = "mhsDB";
     public static final String[] mhstables = {"User","Residence","Application","Allocation","Unit"};
 
     //User table columns
