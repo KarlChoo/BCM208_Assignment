@@ -16,6 +16,7 @@ public class User {
     }
 
     public void viewApplications(){
+
         System.out.println("Yet to completed");
     }
 
