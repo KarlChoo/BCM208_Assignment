@@ -14,10 +14,19 @@ public class Residence {
     private ArrayList<Unit> units;
     private String staffID;
 
-    class Unit {
+    public class Unit {
         private int unitNo;
         private boolean availability;
         private Allocation allocation;
+        private Residence residence;
+
+        public Residence getResidence() {
+            return residence;
+        }
+
+        public void setResidence(Residence residence) {
+            this.residence = residence;
+        }
 
         public Unit(int unitNo) {
             setUnitNo(unitNo);

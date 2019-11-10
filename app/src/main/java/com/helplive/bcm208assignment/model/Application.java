@@ -31,7 +31,7 @@ public class Application {
     }
 
     /**
-     * @param aAppGenID the appGenID to set
+     * @paramaAppGenID the appGenID to set
      */
     public static void setAppGenID(int anAppGenID) {
         appGenID = anAppGenID;
@@ -45,7 +45,7 @@ public class Application {
     }
 
     /**
-     * @param applicationID the applicationID to set
+     * @paramapplicationID the applicationID to set
      */
     public void setApplicationID() {
         this.applicationID = String.format("%03d_%04d", appGenID++,
@@ -136,12 +136,6 @@ public class Application {
         this.applicant = applicant;
     }
 
-    public String toString() {
-        return getApplicationID() + " submitted by " +
-                getApplicant().getFullname() + " Status: " +
-                getStatus();
-    }
-
     /**
      * @return the residence
      */
@@ -154,5 +148,11 @@ public class Application {
      */
     public void setResidence(Residence residence) {
         this.residence = residence;
+    }
+
+    public String toString() {
+        return getApplicationID() + " submitted by " +
+                getApplicant().getFullname() + " Status: " +
+                getStatus();
     }
 }
