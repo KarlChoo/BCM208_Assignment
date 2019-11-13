@@ -15,8 +15,8 @@ public class Application {
     private Applicant applicant;
     private Residence residence;
 
-    public Application(LocalDate appDate, int requiredMonth, int requiredYear) {
-        setApplicationID();
+    public Application(String applicationID, LocalDate appDate, int requiredMonth, int requiredYear) {
+        setApplicationID(applicationID);
         setApplicationDate(appDate);
         setRequiredMonth(requiredMonth);
         setRequiredYear(requiredYear);
@@ -47,9 +47,9 @@ public class Application {
     /**
      * @paramapplicationID the applicationID to set
      */
-    public void setApplicationID() {
-        this.applicationID = String.format("%03d_%04d", appGenID++,
-                LocalDate.now().getYear());
+    //to be revised
+    public void setApplicationID(String applicationID) {
+        this.applicationID = applicationID;
     }
 
     /**

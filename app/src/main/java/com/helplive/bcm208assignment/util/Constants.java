@@ -19,7 +19,7 @@ public class Constants {
     public static final String RESIDENCE_NOOFUNITS = "number_of_units";
     public static final String RESIDENCE_SIZEPERUNIT = "size_per_unit";
     public static final String RESIDENCE_MONTHLYRENTAL = "monthly_rental";
-    public static final String RESIDENCE_OWNER = "owner";
+    public static final String RESIDENCE_OWNER_ID = "owner_id";
 
     //Application table columns
     public static final String APPLICATION_ID = "application_ID";
@@ -36,11 +36,11 @@ public class Constants {
     public static final String ALLOCATION_UNITNO = "unit_no";
     public static final String ALLOCATION_FROMDATE = "from_date";
     public static final String ALLOCATION_DURATION = "duration";
-    public static final String ALLOCATION_TODATE = "to_date";
+    public static final String ALLOCATION_ENDDATE = "end_date";
 
 
     //Unit table columns
     public static final String UNIT_NO = "unit_no";
-    public static final String UNIT_RESIDENCE = "residence";
+    public static final String UNIT_RESIDENCE_ID = "residence_id";
     public static final String UNIT_AVAILABITLITY = "availability";
 }

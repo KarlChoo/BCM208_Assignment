@@ -52,7 +52,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     + Constants.RESIDENCE_NOOFUNITS + " INTEGER,"
                     + Constants.RESIDENCE_SIZEPERUNIT + " INTEGER,"
                     + Constants.RESIDENCE_MONTHLYRENTAL + " REAL,"
-                    + Constants.RESIDENCE_OWNER + " TEXT);";
+                    + Constants.RESIDENCE_OWNER_ID + " TEXT);";
 
             db.execSQL(CREATE_RESIDENCE_TABLE);
         } catch (Exception e) {
@@ -82,7 +82,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     + Constants.ALLOCATION_UNITNO+ " TEXT,"
                     + Constants.ALLOCATION_FROMDATE + " TEXT,"
                     + Constants.ALLOCATION_DURATION + " INTEGER,"
-                    + Constants.ALLOCATION_TODATE + " TEXT);";
+                    + Constants.ALLOCATION_ENDDATE + " TEXT);";
 
             db.execSQL(CREATE_ALLOCATION_TABLE);
         } catch (Exception e) {
@@ -92,9 +92,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try {
             //create unit table
             String CREATE_UNIT_TABLE = "CREATE TABLE " + Constants.mhstables[4] + "("
-                    + Constants.UNIT_NO + " TEXT PRIMARY KEY,"
-                    + Constants.UNIT_RESIDENCE + " TEXT,"
-                    + Constants.UNIT_AVAILABITLITY + " INTEGER);";
+                    + Constants.UNIT_NO + " TEXT,"
+                    + Constants.UNIT_RESIDENCE_ID + " TEXT,"
+                    + Constants.UNIT_AVAILABITLITY + " INTEGER,"
+                    +"PRIMARY KEY ("+ Constants.UNIT_NO + "," + Constants.UNIT_RESIDENCE_ID +");";
 
             db.execSQL(CREATE_UNIT_TABLE);
         } catch (Exception e) {
@@ -146,7 +147,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         ContentValues contentValues = new ContentValues();
 
-        String sql = "SELECT COUNT(*) FROM " + Constants.mhstables[1] + "WHERE residenceID LIKE 'RD%'";
+        String sql = "SELECT COUNT(*) FROM " + Constants.mhstables[1];
         Cursor cursor = db.rawQuery(sql,null);
 
         int currentIdNum = cursor.getInt(0) + 1;
@@ -156,10 +157,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         contentValues.put(Constants.RESIDENCE_ADDRESS,residence.getAddress());
         contentValues.put(Constants.RESIDENCE_NOOFUNITS,residence.getNumUnits());
         contentValues.put(Constants.RESIDENCE_SIZEPERUNIT,residence.getSizePerUnit());
-        contentValues.put(Constants.RESIDENCE_MONTHLYRENTAL,residence.getMonthlyRental();
-        contentValues.put(Constants.RESIDENCE_OWNER,residence.getOwner();
+        contentValues.put(Constants.RESIDENCE_MONTHLYRENTAL,residence.getMonthlyRental());
+        contentValues.put(Constants.RESIDENCE_OWNER_ID,residence.getStaffID());
 
         db.insert(Constants.mhstables[1],null,contentValues);
+
+        addUnit(residence.getUnit(),residence.getResidenceID());
+
         db.close();
     }
 
@@ -168,7 +172,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         ContentValues contentValues = new ContentValues();
 
-        String sql = "SELECT COUNT(*) FROM " + Constants.mhstables[2] + "WHERE applicationID LIKE 'AN%'";
+        String sql = "SELECT COUNT(*) FROM " + Constants.mhstables[2];
         Cursor cursor = db.rawQuery(sql,null);
 
         int currentIdNum = cursor.getInt(0) + 1;
@@ -180,8 +184,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         contentValues.put(Constants.APPLICATION_REQUIREDMONTH,application.getRequiredMonth());
         contentValues.put(Constants.APPLICATION_REQUIREDYEAR,application.getRequiredYear());
         contentValues.put(Constants.APPLICATION_STATUS,application.getStatus());
+        //pending
         contentValues.put(Constants.APPLICATION_APPLICANT,application.getApplicant());
-        contentValues.put(Constants.APPLICATION_RESIDENCE,application.getResidence());
+        contentValues.put(Constants.APPLICATION_RESIDENCE,application.getResidence().getResidenceID());
 
         db.insert(Constants.mhstables[2],null,contentValues);
         db.close();
@@ -192,7 +197,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         ContentValues contentValues = new ContentValues();
 
-        String sql = "SELECT COUNT(*) FROM " + Constants.mhstables[3] + "WHERE residenceID LIKE 'AL%'";
+        String sql = "SELECT COUNT(*) FROM " + Constants.mhstables[3];
         Cursor cursor = db.rawQuery(sql,null);
 
         int currentIdNum = cursor.getInt(0) + 1;
@@ -203,32 +208,34 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         //issue with LocalDate
         contentValues.put(Constants.ALLOCATION_FROMDATE,allocation.getFromDate());
         contentValues.put(Constants.ALLOCATION_DURATION,allocation.getDuration());
-        contentValues.put(Constants.ALLOCATION_TODATE,allocation.getToDate());
+        contentValues.put(Constants.ALLOCATION_ENDDATE,allocation.getEndDate());
 
 
         db.insert(Constants.mhstables[3],null,contentValues);
         db.close();
     }
 
-    public void addUnit(Residence.Unit Unit){
+    public void addUnit(int numOfUnits, String residenceID){
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
 
-        String sql = "SELECT COUNT(*) FROM " + Constants.mhstables[4] + "WHERE unitNo LIKE 'UN%'";
-        Cursor cursor = db.rawQuery(sql,null);
+        int count = 1;
 
-        int currentIdNum = cursor.getInt(0) + 1;
-        String newUnitNo = "UN" + String.format("%04d",currentIdNum);
+        String newUnitNo;
+
         String newAvailability = "available";
 
-        contentValues.put(Constants.UNIT_NO,newUnitNo);
-        //issue accessing inner-class methods
-        contentValues.put(Constants.UNIT_RESIDENCE,Unit.getResidence());
-        contentValues.put(Constants.UNIT_AVAILABITLITY,newAvailability);
+        for(int i=0; i<numOfUnits; i++) {
 
+            newUnitNo = "UN" + String.format("%04d",count);
+            contentValues.put(Constants.UNIT_NO, newUnitNo);
+            contentValues.put(Constants.UNIT_RESIDENCE_ID, residenceID);
+            contentValues.put(Constants.UNIT_AVAILABITLITY, newAvailability);
 
-        db.insert(Constants.mhstables[4],null,contentValues);
+            db.insert(Constants.mhstables[4], null, contentValues);
+            count++;
+        }
         db.close();
     }
 }
