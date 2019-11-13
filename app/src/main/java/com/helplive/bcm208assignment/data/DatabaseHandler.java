@@ -16,6 +16,7 @@ import com.helplive.bcm208assignment.model.Residence;
 import com.helplive.bcm208assignment.util.Constants;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
@@ -142,7 +143,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     }
 
-    public void addResidence(Residence residence){
+    public void ADDResidence(Residence residence){
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -162,9 +163,107 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         db.insert(Constants.mhstables[1],null,contentValues);
 
-        addUnit(residence.getUnit(),residence.getResidenceID());
+        //addUnit(residence.getUnit(),residence.getResidenceID());
 
         db.close();
+    }
+
+    public Residence GetResidence(int id){
+        //read object from database
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        //"=?" refers to the String id
+        Cursor cursor = db.query(Constants.mhstables[1],
+                new String[]{Constants.RESIDENCE_ID,
+                        Constants.RESIDENCE_ADDRESS,
+                        Constants.RESIDENCE_NOOFUNITS,
+                        Constants.RESIDENCE_SIZEPERUNIT,
+                        Constants.RESIDENCE_MONTHLYRENTAL},
+                        //Constants.RESIDENCE_OWNER_ID},
+                Constants.RESIDENCE_ID + "=?",
+                new String[]{String.valueOf(id)},
+                null,null,null);
+
+        //if have data
+        if(cursor != null){
+            //the first id that match with user input id
+            cursor.moveToFirst();
+        }
+
+        //get each value from cursor and store to contact
+        Residence residence = new Residence();
+        residence.setResidenceID(cursor.getString(0)));
+        residence.setAddress(cursor.getString(1));
+        residence.setNumUnits(Integer.parseInt(cursor.getString(2)));
+        residence.setSizePerUnit(Integer.parseInt(cursor.getString(3)));
+        residence.setMonthlyRental(Integer.parseInt(cursor.getString(4)));
+        db.close();
+
+        return residence;
+    }
+
+    public List<Residence> GetAllResidences(){
+
+        List<Residence> residenceList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectAll = "SELECT * FROM " + Constants.mhstables[1];
+
+        //only one for rawQuery, query has more than 1
+        Cursor cursor = db.rawQuery(selectAll,null);
+
+        if(cursor.moveToFirst() == true){
+            //do-while moveToNext returns false
+            do{
+                Residence residence = new Residence();
+                residence.setResidenceID(cursor.getString(0)));
+                residence.setAddress(cursor.getString(1));
+                residence.setNumUnits(Integer.parseInt(cursor.getString(2)));
+                residence.setSizePerUnit(Integer.parseInt(cursor.getString(3)));
+                residence.setMonthlyRental(Integer.parseInt(cursor.getString(4)));
+
+                residenceList.add(residence);
+            }while(cursor.moveToNext());
+        }
+        db.close();
+        return residenceList;
+    }
+
+    public void DeleteAllResidences(){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        String deleteAll = "DELETE FROM " + Constants.mhstables[1];
+
+        db.execSQL(deleteAll);
+        db.close();
+    }
+
+    public void DeleteResidence(Residence residence) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(Constants.mhstables[1], Constants.RESIDENCE_ID + "=?",
+                new String[]{String.valueOf(residence.getResidenceID())});
+        db.close();
+    }
+
+    public int UpdateResidence(Residence residence) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Constants.RESIDENCE_ADDRESS,residence.getAddress());
+        contentValues.put(Constants.RESIDENCE_NOOFUNITS,residence.getNumUnits());
+        contentValues.put(Constants.RESIDENCE_SIZEPERUNIT,residence.getSizePerUnit());
+        contentValues.put(Constants.RESIDENCE_MONTHLYRENTAL,residence.getMonthlyRental());
+        contentValues.put(Constants.RESIDENCE_OWNER_ID,residence.getStaffID());
+
+        int result = db.update(Constants.mhstables[1], contentValues,
+                Constants.RESIDENCE_ID + "=?",
+                new String[]{String.valueOf(residence.getResidenceID())});
+
+        db.close();
+        return result;
     }
 
     public void createApplication(Application application){

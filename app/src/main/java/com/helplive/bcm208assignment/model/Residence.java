@@ -180,6 +180,7 @@ public class Residence {
         this.monthlyRental = monthlyRental;
     }
 
+    @Override
     public String toString() {
         return getResidenceID() + " with " + getNumUnits() +
                 " units at " + getAddress();
