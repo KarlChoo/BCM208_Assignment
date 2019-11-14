@@ -7,21 +7,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import androidx.annotation.Nullable;
-
-import com.helplive.bcm208assignment.Applicant;
 import com.helplive.bcm208assignment.model.Allocation;
 import com.helplive.bcm208assignment.model.Application;
 import com.helplive.bcm208assignment.model.Residence;
 import com.helplive.bcm208assignment.util.Constants;
 
-import java.util.ArrayList;
-
 public class DatabaseHandler extends SQLiteOpenHelper {
 
     private final Context context;
 
-    public DatabaseHandler(@Nullable Context context) {
+    public DatabaseHandler(Context context) {
         super(context, Constants.DB_NAME, null, Constants.DB_VERSION);
         this.context = context;
     }
