@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.helplive.bcm208assignment.model.Allocation;
+import com.helplive.bcm208assignment.model.Applicant;
 import com.helplive.bcm208assignment.model.Application;
 import com.helplive.bcm208assignment.model.Residence;
 import com.helplive.bcm208assignment.util.Constants;
