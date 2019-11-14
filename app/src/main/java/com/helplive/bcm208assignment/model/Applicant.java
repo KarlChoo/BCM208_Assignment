@@ -16,6 +16,10 @@ public class Applicant extends User{
         this.applications = new ArrayList<>();
     }
 
+    public Applicant(){
+
+    }
+
     /**
      * @return the email
      */

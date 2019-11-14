@@ -46,9 +46,9 @@ public class EditResidence extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        int id = intent.getIntExtra("id",-1);
+        String id = intent.getStringExtra("null");
 
-        if(id != -1){
+        if(!(id.equalsIgnoreCase("null"))){
             residence = databaseHandler.GetResidence(id);
             addressEditText2.setText(residence.getAddress());
             numOfUnitsEditText2.setText(residence.getNumUnits());

@@ -168,6 +168,7 @@ public class MHS {
         return false;
     }
 
+    /*
     public void addApplicationToResidenceAndApplicant(Residence res,
                                                       Applicant applicant, LocalDate appDate, int monthRequired,
                                                       int yearRequired) {
@@ -176,7 +177,7 @@ public class MHS {
         app.setApplicant(applicant);
         applicant.addApplication(app);
         res.addApplication(app);
-    }
+    }*/
     /*
     public ArrayList<Residence> getResidencesBy(String staffID) {
         return null;
