@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.helplive.bcm208assignment.model.Applicant;
+
 public class RegisterApplicant extends AppCompatActivity {
 
     @Override

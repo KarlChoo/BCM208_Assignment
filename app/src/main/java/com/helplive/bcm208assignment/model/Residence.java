@@ -3,7 +3,7 @@ package com.helplive.bcm208assignment.model;
 import java.util.ArrayList;
 
 public class Residence {
-    static int genID = 1;
+    //static int genID = 1;
     private String residenceID;
     private String address;
     private int numUnits;
@@ -83,7 +83,7 @@ public class Residence {
 
     public Residence(String address, int numUnits, int sizePerUnit,
                      double monthlyRental) {
-        setResidenceID();
+        setResidenceID("");
         setAddress(address);
         setNumUnits(numUnits);
         setSizePerUnit(sizePerUnit);
@@ -92,6 +92,8 @@ public class Residence {
 
         initialisedAllUnits();
     }
+
+    public Residence(){};
 
     public Unit getUnit(int unitNo) {
         return getUnits().get(unitNo-1);
@@ -120,8 +122,8 @@ public class Residence {
     /**
      * @paramresidenceID the residenceID to set
      */
-    public void setResidenceID() {
-        this.residenceID = String.format("R%03d", genID++);
+    public void setResidenceID(String residenceID) {
+        this.residenceID = residenceID;
     }
 
     /**
@@ -180,6 +182,7 @@ public class Residence {
         this.monthlyRental = monthlyRental;
     }
 
+    @Override
     public String toString() {
         return getResidenceID() + " with " + getNumUnits() +
                 " units at " + getAddress();

@@ -13,9 +13,15 @@ import com.helplive.bcm208assignment.model.Application;
 import com.helplive.bcm208assignment.model.Residence;
 import com.helplive.bcm208assignment.util.Constants;
 
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
 public class DatabaseHandler extends SQLiteOpenHelper {
 
     private final Context context;
+    private final SimpleDateFormat dateToStrDB = new SimpleDateFormat("yyyy-MM-dd");
 
     public DatabaseHandler(Context context) {
         super(context, Constants.DB_NAME, null, Constants.DB_VERSION);
@@ -138,7 +144,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     }
 
-    public void addResidence(Residence residence){
+    public void ADDResidence(Residence residence){
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -158,9 +164,107 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         db.insert(Constants.mhstables[1],null,contentValues);
 
-        addUnit(residence.getUnit(),residence.getResidenceID());
+        //addUnit(residence.getUnit(),residence.getResidenceID());
 
         db.close();
+    }
+
+    public Residence GetResidence(int id){
+        //read object from database
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        //"=?" refers to the String id
+        Cursor cursor = db.query(Constants.mhstables[1],
+                new String[]{Constants.RESIDENCE_ID,
+                        Constants.RESIDENCE_ADDRESS,
+                        Constants.RESIDENCE_NOOFUNITS,
+                        Constants.RESIDENCE_SIZEPERUNIT,
+                        Constants.RESIDENCE_MONTHLYRENTAL},
+                        //Constants.RESIDENCE_OWNER_ID},
+                Constants.RESIDENCE_ID + "=?",
+                new String[]{String.valueOf(id)},
+                null,null,null);
+
+        //if have data
+        if(cursor != null){
+            //the first id that match with user input id
+            cursor.moveToFirst();
+        }
+
+        //get each value from cursor and store to contact
+        Residence residence = new Residence();
+        residence.setResidenceID(cursor.getString(0));
+        residence.setAddress(cursor.getString(1));
+        residence.setNumUnits(Integer.parseInt(cursor.getString(2)));
+        residence.setSizePerUnit(Integer.parseInt(cursor.getString(3)));
+        residence.setMonthlyRental(Integer.parseInt(cursor.getString(4)));
+        db.close();
+
+        return residence;
+    }
+
+    public List<Residence> GetAllResidences(){
+
+        List<Residence> residenceList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectAll = "SELECT * FROM " + Constants.mhstables[1];
+
+        //only one for rawQuery, query has more than 1
+        Cursor cursor = db.rawQuery(selectAll,null);
+
+        if(cursor.moveToFirst() == true){
+            //do-while moveToNext returns false
+            do{
+                Residence residence = new Residence();
+                residence.setResidenceID(cursor.getString(0));
+                residence.setAddress(cursor.getString(1));
+                residence.setNumUnits(Integer.parseInt(cursor.getString(2)));
+                residence.setSizePerUnit(Integer.parseInt(cursor.getString(3)));
+                residence.setMonthlyRental(Integer.parseInt(cursor.getString(4)));
+
+                residenceList.add(residence);
+            }while(cursor.moveToNext());
+        }
+        db.close();
+        return residenceList;
+    }
+
+    public void DeleteAllResidences(){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        String deleteAll = "DELETE FROM " + Constants.mhstables[1];
+
+        db.execSQL(deleteAll);
+        db.close();
+    }
+
+    public void DeleteResidence(Residence residence) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(Constants.mhstables[1], Constants.RESIDENCE_ID + "=?",
+                new String[]{String.valueOf(residence.getResidenceID())});
+        db.close();
+    }
+
+    public int UpdateResidence(Residence residence) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Constants.RESIDENCE_ADDRESS,residence.getAddress());
+        contentValues.put(Constants.RESIDENCE_NOOFUNITS,residence.getNumUnits());
+        contentValues.put(Constants.RESIDENCE_SIZEPERUNIT,residence.getSizePerUnit());
+        contentValues.put(Constants.RESIDENCE_MONTHLYRENTAL,residence.getMonthlyRental());
+        contentValues.put(Constants.RESIDENCE_OWNER_ID,residence.getStaffID());
+
+        int result = db.update(Constants.mhstables[1], contentValues,
+                Constants.RESIDENCE_ID + "=?",
+                new String[]{String.valueOf(residence.getResidenceID())});
+
+        db.close();
+        return result;
     }
 
     public void createApplication(Application application){
@@ -176,12 +280,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         contentValues.put(Constants.APPLICATION_ID,newApplicationID);
         //issue with LocalDate
-        contentValues.put(Constants.APPLICATION_DATE,application.getApplicationDate());
+        contentValues.put(Constants.APPLICATION_DATE,dateToStrDB.format(application.getApplicationDate()));
         contentValues.put(Constants.APPLICATION_REQUIREDMONTH,application.getRequiredMonth());
         contentValues.put(Constants.APPLICATION_REQUIREDYEAR,application.getRequiredYear());
         contentValues.put(Constants.APPLICATION_STATUS,application.getStatus());
         //pending
-        contentValues.put(Constants.APPLICATION_APPLICANT,application.getApplicant());
+        contentValues.put(Constants.APPLICATION_APPLICANT,dateToStrDB.format(application.getApplicant()));
         contentValues.put(Constants.APPLICATION_RESIDENCE,application.getResidence().getResidenceID());
 
         db.insert(Constants.mhstables[2],null,contentValues);
@@ -202,9 +306,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         contentValues.put(Constants.ALLOCATION_ID,newAllocationID);
         contentValues.put(Constants.ALLOCATION_UNITNO,allocation.getResidenceUnit().getUnitNo());
         //issue with LocalDate
-        contentValues.put(Constants.ALLOCATION_FROMDATE,allocation.getFromDate());
+        contentValues.put(Constants.ALLOCATION_FROMDATE,dateToStrDB.format(allocation.getFromDate()));
         contentValues.put(Constants.ALLOCATION_DURATION,allocation.getDuration());
-        contentValues.put(Constants.ALLOCATION_ENDDATE,allocation.getEndDate());
+        contentValues.put(Constants.ALLOCATION_ENDDATE,dateToStrDB.format(allocation.getEndDate()));
 
 
         db.insert(Constants.mhstables[3],null,contentValues);
