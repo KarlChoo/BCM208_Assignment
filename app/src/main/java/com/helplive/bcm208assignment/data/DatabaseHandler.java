@@ -9,7 +9,6 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-import com.helplive.bcm208assignment.Applicant;
 import com.helplive.bcm208assignment.model.Allocation;
 import com.helplive.bcm208assignment.model.Application;
 import com.helplive.bcm208assignment.model.Residence;
@@ -168,7 +167,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public Residence GetResidence(int id){
+    public Residence GetResidence(String residenceID){
         //read object from database
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -181,7 +180,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         Constants.RESIDENCE_MONTHLYRENTAL},
                         //Constants.RESIDENCE_OWNER_ID},
                 Constants.RESIDENCE_ID + "=?",
-                new String[]{String.valueOf(id)},
+                new String[]{String.valueOf(residenceID)},
                 null,null,null);
 
         //if have data
@@ -190,7 +189,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             cursor.moveToFirst();
         }
 
-        //get each value from cursor and store to contact
+        //get each value from cursor and store to residence
         Residence residence = new Residence();
         residence.setResidenceID(cursor.getString(0)));
         residence.setAddress(cursor.getString(1));
