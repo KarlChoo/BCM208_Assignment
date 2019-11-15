@@ -50,7 +50,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try {
             //create residence table
             String CREATE_RESIDENCE_TABLE = "CREATE TABLE " + Constants.mhstables[1] + "("
-                    + Constants.RESIDENCE_ID + " TEXT PRIMARY KEY,"
+                    + Constants.RESIDENCE_ID + " INTEGER PRIMARY KEY,"
                     + Constants.RESIDENCE_ADDRESS + " TEXT,"
                     + Constants.RESIDENCE_NOOFUNITS + " INTEGER,"
                     + Constants.RESIDENCE_SIZEPERUNIT + " INTEGER,"
@@ -128,13 +128,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
             ContentValues contentValues = new ContentValues();
 
-            String sql = "SELECT COUNT(*) FROM " + Constants.mhstables[0] + "WHERE userID LIKE 'AP%'";
-            Cursor cursor = db.rawQuery(sql,null);
-
-            int currentIdNum = cursor.getInt(0) + 1;
-            String newUserID = "AP" + String.format("%04d",currentIdNum);
-
-            contentValues.put(Constants.USER_ID,newUserID);
             contentValues.put(Constants.USER_USERNAME,applicant.getUsername());
             contentValues.put(Constants.USER_PASSWORD,applicant.getPassword());
             contentValues.put(Constants.USER_FULLNAME,applicant.getFullname());
@@ -156,13 +149,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
             ContentValues contentValues = new ContentValues();
 
-            String sql = "SELECT COUNT(*) FROM " + Constants.mhstables[1];
-            Cursor cursor = db.rawQuery(sql,null);
-
-            int currentIdNum = cursor.getInt(0) + 1;
-            String newResidenceID = "RD" + String.format("%04d",currentIdNum);
-
-            contentValues.put(Constants.RESIDENCE_ID,newResidenceID);
             contentValues.put(Constants.RESIDENCE_ADDRESS,residence.getAddress());
             contentValues.put(Constants.RESIDENCE_NOOFUNITS,residence.getNumUnits());
             contentValues.put(Constants.RESIDENCE_SIZEPERUNIT,residence.getSizePerUnit());
@@ -307,13 +293,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         ContentValues contentValues = new ContentValues();
 
-        String sql = "SELECT COUNT(*) FROM " + Constants.mhstables[2];
-        Cursor cursor = db.rawQuery(sql,null);
-
-        int currentIdNum = cursor.getInt(0) + 1;
-        String newApplicationID = "AN" + String.format("%04d",currentIdNum);
-
-        contentValues.put(Constants.APPLICATION_ID,newApplicationID);
         //issue with LocalDate
         contentValues.put(Constants.APPLICATION_DATE,dateToStrDB.format(application.getApplicationDate()));
         contentValues.put(Constants.APPLICATION_REQUIREDMONTH,application.getRequiredMonth());
@@ -332,13 +311,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         ContentValues contentValues = new ContentValues();
 
-        String sql = "SELECT COUNT(*) FROM " + Constants.mhstables[3];
-        Cursor cursor = db.rawQuery(sql,null);
-
-        int currentIdNum = cursor.getInt(0) + 1;
-        String newAllocationID = "AL" + String.format("%04d",currentIdNum);
-
-        contentValues.put(Constants.ALLOCATION_ID,newAllocationID);
         contentValues.put(Constants.ALLOCATION_UNITNO,allocation.getResidenceUnit().getUnitNo());
         //issue with LocalDate
         contentValues.put(Constants.ALLOCATION_FROMDATE,dateToStrDB.format(allocation.getFromDate()));

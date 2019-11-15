@@ -22,7 +22,7 @@ public class AddResidence extends AppCompatActivity {
         residence.setAddress(addressEditText1.getText().toString().trim());
         residence.setNumUnits(Integer.parseInt(numOfUnitsEditText1.getText().toString().trim()));
         residence.setSizePerUnit(Integer.parseInt(sizeOfUnitEditText1.getText().toString().trim()));
-        residence.setMonthlyRental(Integer.parseInt(monthlyRentalEditText1.getText().toString().trim()));
+        residence.setMonthlyRental(Float.parseFloat(monthlyRentalEditText1.getText().toString().trim()));
 
         databaseHandler.ADDResidence(residence);
         databaseHandler.close();
