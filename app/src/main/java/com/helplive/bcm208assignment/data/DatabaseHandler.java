@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.helplive.bcm208assignment.model.Allocation;
 import com.helplive.bcm208assignment.model.Applicant;
@@ -166,7 +165,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
     }
 
-    public Residence GetResidence(String residenceID) {
+    public Residence GetResidence(int residenceID) {
         Residence residence = new Residence();
         try {
             //read object from database
@@ -191,6 +190,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             }
 
             //get each value from cursor and store to contact
+            residence = new Residence();
             residence.setResidenceID(cursor.getString(0));
             residence.setAddress(cursor.getString(1));
             residence.setNumUnits(Integer.parseInt(cursor.getString(2)));
@@ -274,15 +274,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             contentValues.put(Constants.RESIDENCE_NOOFUNITS, residence.getNumUnits());
             contentValues.put(Constants.RESIDENCE_SIZEPERUNIT, residence.getSizePerUnit());
             contentValues.put(Constants.RESIDENCE_MONTHLYRENTAL, residence.getMonthlyRental());
-            contentValues.put(Constants.RESIDENCE_OWNER_ID, residence.getStaffID());
 
             result = db.update(Constants.mhstables[1], contentValues,
                     Constants.RESIDENCE_ID + "=?",
                     new String[]{String.valueOf(residence.getResidenceID())});
-
             db.close();
         } catch (Exception e) {
-        Log.d("ADD Residence: ", e.getMessage());
+        Log.d("Update Residence: ", e.getMessage());
         e.printStackTrace();
     }
         return result;

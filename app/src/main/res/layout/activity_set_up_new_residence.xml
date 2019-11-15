@@ -4,61 +4,101 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FAF7F6F6"
     tools:context=".SetUpNewResidence">
 
-    <ListView
-        android:id="@+id/allResidenceListView"
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#FAF7F7"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    </ListView>
+        <TextView
+            android:id="@+id/setUpNewResidenceTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="30dp"
+            android:paddingTop="30dp"
+            android:text="Set Up New Residence"
+            android:textSize="28sp" />
 
-    <Button
-        android:id="@+id/addButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:onClick="addButton"
-        android:text="ADD"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/allResidenceListView" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:paddingTop="25dp"
+            app:srcCompat="@drawable/house" />
 
-    <Button
-        android:id="@+id/editButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:onClick="editButton"
-        android:text="EDIT"
-        app:layout_constraintStart_toEndOf="@+id/addButton"
-        app:layout_constraintTop_toBottomOf="@+id/allResidenceListView" />
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/deleteButton"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:onClick="deleteButton"
-        android:text="DELETE"
-        app:layout_constraintStart_toEndOf="@+id/editButton"
-        app:layout_constraintTop_toBottomOf="@+id/allResidenceListView" />
-
-    <Button
-        android:id="@+id/deleteAllButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="4dp"
-        android:onClick="deleteAllButton"
-        android:text="DELETE ALL"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout">
+        <ListView
+            android:id="@+id/allResidenceListView"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:paddingTop="20dp">
+        </ListView>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="414dp"
+        android:layout_height="105dp"
+        android:layout_marginStart="45dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
-        app:layout_constraintStart_toEndOf="@+id/deleteButton"
-        app:layout_constraintTop_toBottomOf="@+id/allResidenceListView" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/addButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:onClick="addButton"
+            android:text="ADD"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/allResidenceListView" />
+
+        <Button
+            android:id="@+id/editButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:onClick="editButton"
+            android:text="EDIT"
+            app:layout_constraintStart_toEndOf="@+id/addButton"
+            app:layout_constraintTop_toBottomOf="@+id/allResidenceListView" />
+
+        <Button
+            android:id="@+id/deleteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:onClick="deleteButton"
+            android:text="DELETE"
+            app:layout_constraintStart_toEndOf="@+id/editButton"
+            app:layout_constraintTop_toBottomOf="@+id/allResidenceListView" />
+
+        <Button
+            android:id="@+id/deleteAllButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:onClick="deleteAllButton"
+            android:text="DELETE ALL"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.333"
+            app:layout_constraintStart_toEndOf="@+id/deleteButton"
+            app:layout_constraintTop_toBottomOf="@+id/allResidenceListView" />
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

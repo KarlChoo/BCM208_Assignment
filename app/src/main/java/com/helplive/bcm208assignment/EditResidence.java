@@ -23,7 +23,7 @@ public class EditResidence extends AppCompatActivity {
         residence.setAddress(addressEditText2.getText().toString().trim());
         residence.setNumUnits(Integer.parseInt(numOfUnitsEditText2.getText().toString().trim()));
         residence.setSizePerUnit(Integer.parseInt(sizeOfUnitEditText2.getText().toString().trim()));
-        residence.setMonthlyRental(Integer.parseInt(monthlyRentalEditText2.getText().toString().trim()));
+        residence.setMonthlyRental(Float.parseFloat(monthlyRentalEditText2.getText().toString().trim()));
 
         databaseHandler.UpdateResidence(residence);
         finish();
@@ -46,13 +46,13 @@ public class EditResidence extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        String id = intent.getStringExtra("null");
+        int residenceID = intent.getIntExtra("residenceID",-1);
 
-        if(!(id.equalsIgnoreCase("null"))){
-            residence = databaseHandler.GetResidence(id);
+        if(residenceID != -1){
+            residence = databaseHandler.GetResidence(residenceID);
             addressEditText2.setText(residence.getAddress());
-            numOfUnitsEditText2.setText(residence.getNumUnits());
-            sizeOfUnitEditText2.setText(residence.getSizePerUnit());
+            numOfUnitsEditText2.setText(String.valueOf(residence.getNumUnits()));
+            sizeOfUnitEditText2.setText(String.valueOf(residence.getSizePerUnit()));
             String monthlyRental = new Double(residence.getMonthlyRental()).toString();
             monthlyRentalEditText2.setText(monthlyRental);
         }

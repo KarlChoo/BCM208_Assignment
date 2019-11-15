@@ -26,10 +26,10 @@ public class SetUpNewResidence extends AppCompatActivity {
     AlertDialog.Builder alert;
 
     public void editButton(View view){
-        //user at least select 1 contact
+        //user at least select 1 residence
         if(residence != null){
             Intent intent = new Intent(this, EditResidence.class);
-            intent.putExtra("id",residence.getResidenceID());
+            intent.putExtra("residenceID",residence.getResidenceID());
             startActivity(intent);
         }
     }
