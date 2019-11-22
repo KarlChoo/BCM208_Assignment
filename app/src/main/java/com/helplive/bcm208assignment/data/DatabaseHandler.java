@@ -7,9 +7,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.helplive.bcm208assignment.model.User;
 import com.helplive.bcm208assignment.model.Allocation;
 import com.helplive.bcm208assignment.model.Applicant;
 import com.helplive.bcm208assignment.model.Application;
+import com.helplive.bcm208assignment.model.HousingOfficer;
 import com.helplive.bcm208assignment.model.Residence;
 import com.helplive.bcm208assignment.util.Constants;
 
@@ -96,8 +98,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             String CREATE_UNIT_TABLE = "CREATE TABLE " + Constants.mhstables[4] + "("
                     + Constants.UNIT_NO + " TEXT,"
                     + Constants.UNIT_RESIDENCE_ID + " TEXT,"
-                    + Constants.UNIT_AVAILABITLITY + " INTEGER,"
-                    +"PRIMARY KEY ("+ Constants.UNIT_NO + "," + Constants.UNIT_RESIDENCE_ID +");";
+                    + Constants.UNIT_AVAILABITLITY + " INTEGER);";
+                    //+"PRIMARY KEY ("+ Constants.UNIT_NO + "," + Constants.UNIT_RESIDENCE_ID +");";
 
             db.execSQL(CREATE_UNIT_TABLE);
         } catch (Exception e) {
@@ -119,8 +121,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
     }
 
-
-    //User table methods
+    /**
+     *
+     *
+     *     User table methods
+     *
+     *
+     *
+      */
     public void addApplicant(Applicant applicant){
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -133,17 +141,86 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String newUserID = "AP" + String.format("%04d",currentIdNum);
 
         contentValues.put(Constants.USER_ID,newUserID);
+        //contentValues.put(Constants.USER_ID,"AP0001");
         contentValues.put(Constants.USER_USERNAME,applicant.getUsername());
         contentValues.put(Constants.USER_PASSWORD,applicant.getPassword());
         contentValues.put(Constants.USER_FULLNAME,applicant.getFullname());
         contentValues.put(Constants.USER_EMAIL,applicant.getEmail());
         contentValues.put(Constants.USER_MONTHLYINCOME,applicant.getMonthlyIncome());
 
+        try {
+            db.insert(Constants.mhstables[0], null, contentValues);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        db.close();
+
+    }
+
+
+    public void addHousingOfficer(HousingOfficer housingOfficer){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+
+        String sql = "SELECT COUNT(*) FROM " + Constants.mhstables[0] + "WHERE userID LIKE 'HO%'";
+        Cursor cursor = db.rawQuery(sql,null);
+
+        int currentIdNum = cursor.getInt(0) + 1;
+        String newUserID = "HO" + String.format("%04d",currentIdNum);
+
+        contentValues.put(Constants.USER_ID,newUserID);
+        contentValues.put(Constants.USER_USERNAME,housingOfficer.getUsername());
+        contentValues.put(Constants.USER_PASSWORD,housingOfficer.getPassword());
+        contentValues.put(Constants.USER_FULLNAME,housingOfficer.getFullname());
+
         db.insert(Constants.mhstables[0],null,contentValues);
         db.close();
 
     }
 
+    public List<User> getAllUsers(){
+        List<User> users = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectSQL = "SELECT * FROM " + Constants.mhstables[0];
+
+        Cursor cursor = db.rawQuery(selectSQL,null);
+
+        if(cursor.moveToFirst()){
+            do{
+                if(cursor.getString(0).substring(0,1).equalsIgnoreCase("AP")){
+                    Applicant applicant = new Applicant();
+                    applicant.setUserID(cursor.getString(0));
+                    applicant.setUsername(cursor.getString(1));
+                    applicant.setPassword(cursor.getString(2));
+                    applicant.setFullname(cursor.getString(3));
+                    applicant.setEmail(cursor.getString(4));
+                    applicant.setMonthlyIncome(cursor.getDouble(5));
+                    users.add(applicant);
+                }else if (cursor.getString(0).substring(0,1).equalsIgnoreCase("HO")){
+                    HousingOfficer ho = new HousingOfficer();
+                    ho.setUserID(cursor.getString(0));
+                    ho.setUsername(cursor.getString(1));
+                    ho.setPassword(cursor.getString(2));
+                    ho.setFullname(cursor.getString(3));
+                    users.add(ho);
+                }
+
+            }while (cursor.moveToNext());
+        }
+        db.close();
+        return users;
+    }
+
+    /**
+     *
+     *
+     *     Residence table methods
+     *
+     *
+     *
+     */
     public void ADDResidence(Residence residence){
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -267,6 +344,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return result;
     }
 
+    /**
+     *
+     *
+     *     Application table methods
+     *
+     *
+     *
+     */
     public void createApplication(Application application){
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -292,6 +377,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+
+    /**
+     *
+     *
+     *     Allocation table methods
+     *
+     *
+     *
+     */
     public void makeAllocation(Allocation allocation){
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -315,6 +409,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    /**
+     *
+     *
+     *     Unit table methods
+     *
+     *
+     *
+     */
     public void addUnit(int numOfUnits, String residenceID){
         SQLiteDatabase db = this.getWritableDatabase();
 

@@ -1,9 +1,18 @@
 package com.helplive.bcm208assignment.model;
 
 public class User {
+    private String userID;
     private String username;
     private String password;
     private String fullname;
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
 
     public User(String username, String password, String fullname) {
         setUsername(username);
