@@ -161,6 +161,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
+                android:onClick="addResidence"
                 android:text="Add" />
 
             <Button
@@ -170,6 +171,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
+                android:onClick="cancelButton"
                 android:text="Cancel" />
         </LinearLayout>
 

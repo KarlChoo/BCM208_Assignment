@@ -26,10 +26,11 @@ public class SetUpNewResidence extends AppCompatActivity {
     AlertDialog.Builder alert;
 
     public void editButton(View view){
-        //user at least select 1 contact
+        //user at least select 1 residence
         if(residence != null){
             Intent intent = new Intent(this, EditResidence.class);
-            intent.putExtra("id",residence.getResidenceID());
+        int x = residence.getResidenceID();
+            intent.putExtra("residenceID",x);
             startActivity(intent);
         }
     }
@@ -106,8 +107,8 @@ public class SetUpNewResidence extends AppCompatActivity {
     }
     public void GETAllResidences(){
         residence = null;
-        List<Residence> contactList  = databaseHandler.GetAllResidences();
-        ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, contactList);
+        List<Residence> residenceList  = databaseHandler.GetAllResidences();
+        ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, residenceList);
         allResidencesListView.setAdapter(adapter);
     }
 }
