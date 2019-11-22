@@ -184,7 +184,7 @@ public class Residence {
 
     @Override
     public String toString() {
-        return getResidenceID() + " with " + getNumUnits() +
+        return "ResidenceID " + getResidenceID() + ", with " + getNumUnits() +
                 " units at " + getAddress();
     }
 
