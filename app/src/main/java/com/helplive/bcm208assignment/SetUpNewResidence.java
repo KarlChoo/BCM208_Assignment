@@ -29,7 +29,8 @@ public class SetUpNewResidence extends AppCompatActivity {
         //user at least select 1 residence
         if(residence != null){
             Intent intent = new Intent(this, EditResidence.class);
-            intent.putExtra("residenceID",residence.getResidenceID());
+        int x = residence.getResidenceID();
+            intent.putExtra("residenceID",x);
             startActivity(intent);
         }
     }

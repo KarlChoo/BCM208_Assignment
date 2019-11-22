@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Residence {
     //static int genID = 1;
-    private String residenceID;
+    private int residenceID;
     private String address;
     private int numUnits;
     private int sizePerUnit;
@@ -83,7 +83,7 @@ public class Residence {
 
     public Residence(String address, int numUnits, int sizePerUnit,
                      double monthlyRental) {
-        setResidenceID("");
+        setResidenceID(0);
         setAddress(address);
         setNumUnits(numUnits);
         setSizePerUnit(sizePerUnit);
@@ -115,14 +115,14 @@ public class Residence {
     /**
      * @return the residenceID
      */
-    public String getResidenceID() {
+    public int getResidenceID() {
         return residenceID;
     }
 
     /**
      * @paramresidenceID the residenceID to set
      */
-    public void setResidenceID(String residenceID) {
+    public void setResidenceID(int residenceID) {
         this.residenceID = residenceID;
     }
 

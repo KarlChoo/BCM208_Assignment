@@ -69,9 +69,9 @@ public class MHS {
      * @return Residence The residence matching the parametric
      * residence ID if found, other returns null
      */
-    public Residence findResidence(String residenceID) {
+    public Residence findResidence(int residenceID) {
         for (Residence r: getResidences())
-            if (r.getResidenceID().equalsIgnoreCase(residenceID))
+            if (r.getResidenceID() == residenceID)
                 return r;
         return null;
     }

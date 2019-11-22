@@ -191,7 +191,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
             //get each value from cursor and store to contact
             residence = new Residence();
-            residence.setResidenceID(cursor.getString(0));
+            residence.setResidenceID(Integer.parseInt(cursor.getString(0)));
             residence.setAddress(cursor.getString(1));
             residence.setNumUnits(Integer.parseInt(cursor.getString(2)));
             residence.setSizePerUnit(Integer.parseInt(cursor.getString(3)));
@@ -220,7 +220,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 //do-while moveToNext returns false
                 do{
                     Residence residence = new Residence();
-                    residence.setResidenceID(cursor.getString(0));
+                    residence.setResidenceID(Integer.parseInt(cursor.getString(0)));
                     residence.setAddress(cursor.getString(1));
                     residence.setNumUnits(Integer.parseInt(cursor.getString(2)));
                     residence.setSizePerUnit(Integer.parseInt(cursor.getString(3)));
@@ -320,7 +320,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void addUnit(int numOfUnits, String residenceID){
+    public void addUnit(int numOfUnits, int residenceID){
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
