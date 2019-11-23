@@ -66,7 +66,7 @@ public class RegisterHousingOfficer extends AppCompatActivity {
             editTextPass.requestFocus();
             return;
         }
-        
+
         //Validate for repeat username
         if(databaseHandler.validateUsername(name)){
             //registration successful
