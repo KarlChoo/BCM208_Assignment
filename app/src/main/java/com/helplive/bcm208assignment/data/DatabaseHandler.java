@@ -121,6 +121,45 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
     }
 
+
+    //Use if only no data in table
+    public void initializeData() {
+        SQLiteDatabase db = getWritableDatabase();
+        try{
+            /**
+             * INSERT INTO user (user_ID,username,password,fullname,email,monthly_income)
+             * VALUES
+             * ("AP0005","another","123","sndkknadnka","xzcnznck",32),
+             * ("HO0005","two","123","dasasdad","xcaddqwd",65);
+             */
+        }catch (Exception e){
+            Log.d("Initialize fail:",e.getMessage());
+        }
+        db.close();
+    }
+
+    public void deleteData(String tablename){
+        SQLiteDatabase db = getWritableDatabase();
+        try{
+            String sql = "DELETE * FROM " + tablename + ";";
+            db.execSQL(sql);
+        }catch (Exception e){
+            Log.d("Delete table data: " , e.getMessage());
+        }
+        db.close();
+    };
+
+    public void manipulateDB(){
+        SQLiteDatabase db = getWritableDatabase();
+        try{
+            String sql = "DELETE FROM " + Constants.mhstables[0] + " WHERE " + Constants.USER_ID + " IN ('AP0003','AP0004','AP0005')";
+            db.execSQL(sql);
+        }catch (Exception e){
+            Log.d("Manipulate: " , e.getMessage());
+        }
+        db.close();
+    }
+
     /**
      *
      *
@@ -135,10 +174,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
             ContentValues contentValues = new ContentValues();
 
-
+            //Generate applicant user id
             String sql = "SELECT * FROM " + Constants.mhstables[0] + " WHERE user_ID LIKE 'AP%';";
             Cursor cursor = db.rawQuery(sql,null);
-
             int currentIdNum = cursor.getCount();
             String newUserID = "AP" + String.format("%04d",++currentIdNum);
 
@@ -214,6 +252,29 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return null;
     }
 
+    public boolean validateUsername(String username){
+        SQLiteDatabase db = this.getReadableDatabase();
+        try{
+            //String sql = "SELECT * FROM " + Constants.mhstables[0] + ";";
+            //Cursor cursor = db.rawQuery(sql, null);
+
+            Cursor cursor = db.query(Constants.mhstables[0],// Selecting Table
+                    new String[]{Constants.USER_ID, Constants.USER_USERNAME, Constants.USER_PASSWORD,Constants.USER_FULLNAME},//Selecting columns want to query
+                    Constants.USER_USERNAME + "=?",
+                    new String[]{username},//Where clause
+                    null, null, null);
+
+
+            if(cursor != null && cursor.moveToNext()){
+                return false;
+            }
+        }catch (Exception e){
+            Log.d("Validate username:",e.getMessage());
+        }
+        db.close();
+        return true;
+    }
+
 
     public List<User> getAllUsers(){
         List<User> users = new ArrayList<>();
@@ -245,6 +306,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
             }while (cursor.moveToNext());
         }
+        cursor.close();
         db.close();
         return users;
     }
@@ -466,4 +528,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
         db.close();
     }
+
+
 }

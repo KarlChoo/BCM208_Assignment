@@ -99,13 +99,21 @@ public class RegisterApplicant extends AppCompatActivity {
             return;
         }
 
-        //registration successful
-        Applicant a = new Applicant(name,password,fullname,email,monthlySalary);
-        databaseHandler.addApplicant(a);
+        //Validate for repeat username
+        if(databaseHandler.validateUsername(name)){
 
-        Toast.makeText(this.getBaseContext(),"Registration successful",Toast.LENGTH_SHORT).show();
-        databaseHandler.close();
-        finish();
+            //registration successful
+            Applicant a = new Applicant(name,password,fullname,email,monthlySalary);
+            databaseHandler.addApplicant(a);
+            Toast.makeText(this.getBaseContext(),"Registration successful",Toast.LENGTH_SHORT).show();
+            databaseHandler.close();
+            finish();
+        }else{
+            editTextName.setText("");
+            editTextName.requestFocus();
+            Toast.makeText(this.getBaseContext(),"Username is taken",Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     public void cancelRegister(View view){

@@ -26,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         databaseHandler = new DatabaseHandler(MainActivity.this);
+        //databaseHandler.initializeData(); //For ardcode insert data
+        //databaseHandler.manipulateDB(); //For hardcode db manipulate
+        //databaseHandler.deleteData(Constants.mhstables[0]); //For hardcode delete all data in table
 }
 
     public void login(View view){
@@ -48,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this,"Housing Officer",Toast.LENGTH_SHORT).show();
             }
         }else{
-            Toast.makeText(this,"Login failed",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"User does not exist",Toast.LENGTH_SHORT).show();
         }
 
         //Toast.makeText(this.getBaseContext(),allUsers.get(0).toString(),Toast.LENGTH_SHORT).show();

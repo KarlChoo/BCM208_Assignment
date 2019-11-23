@@ -66,15 +66,20 @@ public class RegisterHousingOfficer extends AppCompatActivity {
             editTextPass.requestFocus();
             return;
         }
-
-        //registration successful
-        HousingOfficer ho = new HousingOfficer(name,password,fullname);
-        databaseHandler.addHousingOfficer(ho);
-
-
-        Toast.makeText(this.getBaseContext(),"Registration successful",Toast.LENGTH_SHORT).show();
-        databaseHandler.close();
-        finish();
+        
+        //Validate for repeat username
+        if(databaseHandler.validateUsername(name)){
+            //registration successful
+            HousingOfficer ho = new HousingOfficer(name,password,fullname);
+            databaseHandler.addHousingOfficer(ho);
+            Toast.makeText(this.getBaseContext(),"Registration successful",Toast.LENGTH_SHORT).show();
+            databaseHandler.close();
+            finish();
+        }else{
+            editTextName.setText("");
+            editTextName.requestFocus();
+            Toast.makeText(this.getBaseContext(),"Username is taken",Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void cancelRegister(View view){
