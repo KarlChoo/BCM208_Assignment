@@ -38,7 +38,7 @@ public class SetUpNewResidence extends AppCompatActivity {
     public void deleteButton(View view){
         if(residence != null){
             databaseHandler.DeleteResidence(residence);
-            GETAllResidences();
+            getAllResidences();
         }
     }
 
@@ -49,7 +49,7 @@ public class SetUpNewResidence extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     databaseHandler.DeleteAllResidences();
-                    GETAllResidences();
+                    getAllResidences();
                 }
             });
 
@@ -66,7 +66,7 @@ public class SetUpNewResidence extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        GETAllResidences();
+        getAllResidences();
     }
 
     public void addButton(View view){
@@ -103,9 +103,9 @@ public class SetUpNewResidence extends AppCompatActivity {
                 }
             }
         });
-        GETAllResidences();
+        getAllResidences();
     }
-    public void GETAllResidences(){
+    public void getAllResidences(){
         residence = null;
         List<Residence> residenceList  = databaseHandler.GetAllResidences();
         ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, residenceList);
