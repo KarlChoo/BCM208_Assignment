@@ -7,9 +7,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.helplive.bcm208assignment.model.User;
 import com.helplive.bcm208assignment.model.Allocation;
 import com.helplive.bcm208assignment.model.Applicant;
 import com.helplive.bcm208assignment.model.Application;
+import com.helplive.bcm208assignment.model.HousingOfficer;
 import com.helplive.bcm208assignment.model.Residence;
 import com.helplive.bcm208assignment.util.Constants;
 
@@ -49,7 +51,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try {
             //create residence table
             String CREATE_RESIDENCE_TABLE = "CREATE TABLE " + Constants.mhstables[1] + "("
-                    + Constants.RESIDENCE_ID + " INTEGER PRIMARY KEY,"
+                    + Constants.RESIDENCE_ID + " TEXT PRIMARY KEY,"
                     + Constants.RESIDENCE_ADDRESS + " TEXT,"
                     + Constants.RESIDENCE_NOOFUNITS + " INTEGER,"
                     + Constants.RESIDENCE_SIZEPERUNIT + " INTEGER,"
@@ -97,7 +99,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     + Constants.UNIT_NO + " TEXT,"
                     + Constants.UNIT_RESIDENCE_ID + " TEXT,"
                     + Constants.UNIT_AVAILABITLITY + " INTEGER,"
-                    +"PRIMARY KEY ("+ Constants.UNIT_NO + "," + Constants.UNIT_RESIDENCE_ID +");";
+                    +" PRIMARY KEY ("+ Constants.UNIT_NO + "," + Constants.UNIT_RESIDENCE_ID +");";
 
             db.execSQL(CREATE_UNIT_TABLE);
         } catch (Exception e) {
@@ -120,13 +122,66 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
 
-    //User table methods
-    public void addApplicant(Applicant applicant){
+    //Use if only no data in table
+    public void initializeData() {
+        SQLiteDatabase db = getWritableDatabase();
         try{
-            SQLiteDatabase db = this.getWritableDatabase();
+            /**
+             * INSERT INTO user (user_ID,username,password,fullname,email,monthly_income)
+             * VALUES
+             * ("AP0005","another","123","sndkknadnka","xzcnznck",32),
+             * ("HO0005","two","123","dasasdad","xcaddqwd",65);
+             */
+        }catch (Exception e){
+            Log.d("Initialize fail:",e.getMessage());
+        }
+        db.close();
+    }
+
+    public void deleteData(String tablename){
+        SQLiteDatabase db = getWritableDatabase();
+        try{
+            String sql = "DELETE * FROM " + tablename + ";";
+            db.execSQL(sql);
+        }catch (Exception e){
+            Log.d("Delete table data: " , e.getMessage());
+        }
+        db.close();
+    };
+
+    public void manipulateDB(){
+        SQLiteDatabase db = getWritableDatabase();
+        try{
+            String sql = "DELETE FROM " + Constants.mhstables[0] + " WHERE " + Constants.USER_ID + " IN ('AP0003','AP0004','AP0005')";
+            db.execSQL(sql);
+        }catch (Exception e){
+            Log.d("Manipulate: " , e.getMessage());
+        }
+        db.close();
+    }
+
+    /**
+     *
+     *
+     *     User table methods
+     *
+     *
+     *
+      */
+    public void addApplicant(Applicant applicant){
+        SQLiteDatabase db = this.getWritableDatabase();
+        try{
 
             ContentValues contentValues = new ContentValues();
 
+            //Generate applicant user id
+            String sql = "SELECT * FROM " + Constants.mhstables[0] + " WHERE user_ID LIKE 'AP%';";
+            Cursor cursor = db.rawQuery(sql,null);
+            int currentIdNum = cursor.getCount();
+            String newUserID = "AP" + String.format("%04d",++currentIdNum);
+
+            contentValues.put(Constants.USER_ID,newUserID);
+            //contentValues.put(Constants.USER_ID,"AP0001");
             contentValues.put(Constants.USER_USERNAME,applicant.getUsername());
             contentValues.put(Constants.USER_PASSWORD,applicant.getPassword());
             contentValues.put(Constants.USER_FULLNAME,applicant.getFullname());
@@ -134,17 +189,139 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             contentValues.put(Constants.USER_MONTHLYINCOME,applicant.getMonthlyIncome());
 
             db.insert(Constants.mhstables[0],null,contentValues);
-            db.close();
+
         } catch (Exception e) {
             Log.d("Add Applicant: ", e.getMessage());
             e.printStackTrace();
         }
-
+        db.close();
     }
 
-    public void ADDResidence(Residence residence){
+    public void addHousingOfficer(HousingOfficer housingOfficer){
+        SQLiteDatabase db = this.getWritableDatabase();
         try{
-            SQLiteDatabase db = this.getWritableDatabase();
+
+            ContentValues contentValues = new ContentValues();
+
+
+            String sql = "SELECT * FROM " + Constants.mhstables[0] + " WHERE "+Constants.USER_ID+" LIKE 'HO%'";
+            Cursor cursor = db.rawQuery(sql,null);
+
+            int currentIdNum = cursor.getCount();
+            String newUserID = "HO" + String.format("%04d",++currentIdNum);
+
+            contentValues.put(Constants.USER_ID,newUserID);
+            //contentValues.put(Constants.USER_ID,"AP0001");
+            contentValues.put(Constants.USER_USERNAME,housingOfficer.getUsername());
+            contentValues.put(Constants.USER_PASSWORD,housingOfficer.getPassword());
+            contentValues.put(Constants.USER_FULLNAME,housingOfficer.getFullname());
+
+            db.insert(Constants.mhstables[0],null,contentValues);
+
+        } catch (Exception e) {
+            Log.d("Add Housing Offcier: ", e.getMessage());
+            e.printStackTrace();
+        }
+        db.close();
+    }
+
+    public User authenticate(User user){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(Constants.mhstables[0],// Selecting Table
+                new String[]{Constants.USER_ID, Constants.USER_USERNAME, Constants.USER_PASSWORD,Constants.USER_FULLNAME},//Selecting columns want to query
+                Constants.USER_USERNAME + "=?",
+                new String[]{user.getUsername()},//Where clause
+                null, null, null);
+
+
+        if (cursor != null && cursor.moveToFirst() && cursor.getCount() > 0) {
+            //if cursor has value then in user database there is user associated with this given username
+            User user1 = new User(cursor.getString(1), cursor.getString(2),
+                    cursor.getString(3));
+            user1.setUserID(cursor.getString(0));
+
+
+            //Match both passwords check they are same or not
+
+            if (user.getPassword().equalsIgnoreCase(user1.getPassword())) {
+                return user1;
+            }
+        }
+
+        //if user password does not matches or there is no record with that email then return @false
+        return null;
+    }
+
+    public boolean validateUsername(String username){
+        SQLiteDatabase db = this.getReadableDatabase();
+        try{
+            //String sql = "SELECT * FROM " + Constants.mhstables[0] + ";";
+            //Cursor cursor = db.rawQuery(sql, null);
+
+            Cursor cursor = db.query(Constants.mhstables[0],// Selecting Table
+                    new String[]{Constants.USER_ID, Constants.USER_USERNAME, Constants.USER_PASSWORD,Constants.USER_FULLNAME},//Selecting columns want to query
+                    Constants.USER_USERNAME + "=?",
+                    new String[]{username},//Where clause
+                    null, null, null);
+
+
+            if(cursor != null && cursor.moveToNext()){
+                return false;
+            }
+        }catch (Exception e){
+            Log.d("Validate username:",e.getMessage());
+        }
+        db.close();
+        return true;
+    }
+
+
+    public List<User> getAllUsers(){
+        List<User> users = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectSQL = "SELECT * FROM " + Constants.mhstables[0];
+
+        Cursor cursor = db.rawQuery(selectSQL,null);
+
+        if(cursor.moveToFirst()){
+            do{
+                if(cursor.getString(0).substring(0,1).equalsIgnoreCase("AP")){
+                    Applicant applicant = new Applicant();
+                    applicant.setUserID(cursor.getString(0));
+                    applicant.setUsername(cursor.getString(1));
+                    applicant.setPassword(cursor.getString(2));
+                    applicant.setFullname(cursor.getString(3));
+                    applicant.setEmail(cursor.getString(4));
+                    applicant.setMonthlyIncome(cursor.getDouble(5));
+                    users.add(applicant);
+                }else if (cursor.getString(0).substring(0,1).equalsIgnoreCase("HO")){
+                    HousingOfficer ho = new HousingOfficer();
+                    ho.setUserID(cursor.getString(0));
+                    ho.setUsername(cursor.getString(1));
+                    ho.setPassword(cursor.getString(2));
+                    ho.setFullname(cursor.getString(3));
+                    users.add(ho);
+                }
+
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return users;
+    }
+
+    /**
+     *
+     *
+     *     Residence table methods
+     *
+     *
+     *
+     */
+    public void ADDResidence(Residence residence){
+        SQLiteDatabase db = this.getWritableDatabase();
+        try{
 
             ContentValues contentValues = new ContentValues();
 
@@ -158,18 +335,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
             //addUnit(residence.getUnit(),residence.getResidenceID());
 
-            db.close();
+
         } catch (Exception e) {
             Log.d("ADD Residence: ", e.getMessage());
             e.printStackTrace();
         }
+        db.close();
     }
 
     public Residence GetResidence(int residenceID) {
         Residence residence = new Residence();
+        SQLiteDatabase db = this.getReadableDatabase();
         try {
             //read object from database
-            SQLiteDatabase db = this.getReadableDatabase();
 
             //"=?" refers to the String id
             Cursor cursor = db.query(Constants.mhstables[1],
@@ -196,20 +374,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             residence.setNumUnits(Integer.parseInt(cursor.getString(2)));
             residence.setSizePerUnit(Integer.parseInt(cursor.getString(3)));
             residence.setMonthlyRental(Integer.parseInt(cursor.getString(4)));
-            db.close();
         } catch (Exception e) {
             Log.d("Get Residence: ", e.getMessage());
             e.printStackTrace();
         }
+        db.close();
         return residence;
     }
 
-
-
     public List<Residence> GetAllResidences(){
+
         List<Residence> residenceList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
         try{
-            SQLiteDatabase db = this.getReadableDatabase();
 
             String selectAll = "SELECT * FROM " + Constants.mhstables[1];
 
@@ -229,45 +406,44 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     residenceList.add(residence);
                 }while(cursor.moveToNext());
             }
-            db.close();
         } catch (Exception e) {
             Log.d("GET All Residence: ", e.getMessage());
             e.printStackTrace();
         }
+        db.close();
         return residenceList;
     }
 
     public void DeleteAllResidences(){
+        SQLiteDatabase db = this.getWritableDatabase();
         try{
-            SQLiteDatabase db = this.getWritableDatabase();
             String deleteAll = "DELETE FROM " + Constants.mhstables[1];
 
             db.execSQL(deleteAll);
-            db.close();
         } catch (Exception e) {
             Log.d("Delete All Residence: ", e.getMessage());
             e.printStackTrace();
         }
-
+        db.close();
     }
 
     public void DeleteResidence(Residence residence) {
+        SQLiteDatabase db = this.getWritableDatabase();
         try{
-            SQLiteDatabase db = this.getWritableDatabase();
 
             db.delete(Constants.mhstables[1], Constants.RESIDENCE_ID + "=?",
                     new String[]{String.valueOf(residence.getResidenceID())});
-            db.close();
         } catch (Exception e) {
             Log.d("Delete Residence: ", e.getMessage());
             e.printStackTrace();
         }
+        db.close();
     }
 
     public int UpdateResidence(Residence residence) {
         int result = 0;
+        SQLiteDatabase db = this.getWritableDatabase();
         try {
-            SQLiteDatabase db = this.getWritableDatabase();
 
             ContentValues contentValues = new ContentValues();
             contentValues.put(Constants.RESIDENCE_ADDRESS, residence.getAddress());
@@ -278,11 +454,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             result = db.update(Constants.mhstables[1], contentValues,
                     Constants.RESIDENCE_ID + "=?",
                     new String[]{String.valueOf(residence.getResidenceID())});
-            db.close();
         } catch (Exception e) {
-        Log.d("Update Residence: ", e.getMessage());
-        e.printStackTrace();
-    }
+            Log.d("Update Residence: ", e.getMessage());
+            e.printStackTrace();
+        }
+        db.close();
+
         return result;
     }
 
@@ -320,6 +497,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    /**
+     *
+     *
+     *     Unit table methods
+     *
+     *
+     *
+     */
     public void addUnit(int numOfUnits, int residenceID){
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -343,4 +528,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
         db.close();
     }
+
+
 }

@@ -9,6 +9,7 @@
 
     <EditText
         android:id="@+id/usernameEditText"
+        style="@style/Widget.AppCompat.EditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -37,6 +38,7 @@
         android:id="@+id/loginBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="login"
         android:paddingLeft="30dp"
         android:paddingTop="5dp"
         android:paddingRight="30dp"
@@ -50,42 +52,58 @@
         app:layout_constraintVertical_bias="0.585" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/titleTextView"
+        style="@android:style/Widget.Holo.Light.TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_thin"
         android:text="Welcome to MicroHousing System"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/usernameEditText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.589"
+        app:layout_constraintHorizontal_bias="0.448"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.375" />
+        app:layout_constraintVertical_bias="0.699" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/registerApplicantTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="404dp"
+        android:layout_marginTop="412dp"
         android:onClick="goRegisterApplicant"
         android:text="Register as Applicant"
         android:textColor="#2196F3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.472"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/registerHOTextField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#2196F3"
+        android:onClick="goRegisterHO"
         android:text="Register as Housing Officer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/registerApplicantTextView"
         app:layout_constraintVertical_bias="0.113" />
+
+    <ImageView
+        android:id="@+id/mainIconImgView"
+        android:layout_width="80dp"
+        android:layout_height="90dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.468"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.005"
+        app:srcCompat="@drawable/house_icon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

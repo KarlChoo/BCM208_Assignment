@@ -117,7 +117,7 @@ public class MHS {
                                 double monthlyRental) {
         Residence res = new Residence(address, numOfUnits, sizePerUnit,
                 monthlyRental);
-        res.setStaffID(housingOfficer.getStaffID());
+        res.setStaffID(housingOfficer.getUserID());
         housingOfficer.addResidence(res);
         return getResidences().add(res);
     }
@@ -169,16 +169,6 @@ public class MHS {
     }
 
     /*
-    public void addApplicationToResidenceAndApplicant(Residence res,
-                                                      Applicant applicant, LocalDate appDate, int monthRequired,
-                                                      int yearRequired) {
-
-        Application app = new Application(appDate, monthRequired, yearRequired);
-        app.setApplicant(applicant);
-        applicant.addApplication(app);
-        res.addApplication(app);
-    }*/
-    /*
     public ArrayList<Residence> getResidencesBy(String staffID) {
         return null;
 
@@ -197,7 +187,7 @@ public class MHS {
         for (User user: getUsers())
             if (user instanceof HousingOfficer) {
                 HousingOfficer ho = (HousingOfficer) user;
-                if (ho.getStaffID().equalsIgnoreCase(staffID))
+                if (ho.getUserID().equalsIgnoreCase(staffID))
                     return ho;
             }
         return null;
