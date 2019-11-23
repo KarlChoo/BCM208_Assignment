@@ -99,7 +99,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     + Constants.UNIT_NO + " TEXT,"
                     + Constants.UNIT_RESIDENCE_ID + " TEXT,"
                     + Constants.UNIT_AVAILABITLITY + " INTEGER,"
-                    +"PRIMARY KEY ("+ Constants.UNIT_NO + "," + Constants.UNIT_RESIDENCE_ID +");";
+                    +" PRIMARY KEY ("+ Constants.UNIT_NO + "," + Constants.UNIT_RESIDENCE_ID +");";
 
             db.execSQL(CREATE_UNIT_TABLE);
         } catch (Exception e) {
@@ -135,11 +135,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
             ContentValues contentValues = new ContentValues();
 
-            String sql = "SELECT COUNT(*) FROM " + Constants.mhstables[0] + "WHERE userID LIKE 'AP%'";
+
+            String sql = "SELECT * FROM " + Constants.mhstables[0] + " WHERE user_ID LIKE 'AP%';";
             Cursor cursor = db.rawQuery(sql,null);
 
-            int currentIdNum = cursor.getInt(0) + 1;
-            String newUserID = "AP" + String.format("%04d",currentIdNum);
+            int currentIdNum = cursor.getCount();
+            String newUserID = "AP" + String.format("%04d",++currentIdNum);
 
             contentValues.put(Constants.USER_ID,newUserID);
             //contentValues.put(Constants.USER_ID,"AP0001");
@@ -155,7 +156,64 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             Log.d("Add Applicant: ", e.getMessage());
             e.printStackTrace();
         }
+        db.close();
     }
+
+    public void addHousingOfficer(HousingOfficer housingOfficer){
+        SQLiteDatabase db = this.getWritableDatabase();
+        try{
+
+            ContentValues contentValues = new ContentValues();
+
+
+            String sql = "SELECT * FROM " + Constants.mhstables[0] + " WHERE "+Constants.USER_ID+" LIKE 'HO%'";
+            Cursor cursor = db.rawQuery(sql,null);
+
+            int currentIdNum = cursor.getCount();
+            String newUserID = "HO" + String.format("%04d",++currentIdNum);
+
+            contentValues.put(Constants.USER_ID,newUserID);
+            //contentValues.put(Constants.USER_ID,"AP0001");
+            contentValues.put(Constants.USER_USERNAME,housingOfficer.getUsername());
+            contentValues.put(Constants.USER_PASSWORD,housingOfficer.getPassword());
+            contentValues.put(Constants.USER_FULLNAME,housingOfficer.getFullname());
+
+            db.insert(Constants.mhstables[0],null,contentValues);
+
+        } catch (Exception e) {
+            Log.d("Add Housing Offcier: ", e.getMessage());
+            e.printStackTrace();
+        }
+        db.close();
+    }
+
+    public User authenticate(User user){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(Constants.mhstables[0],// Selecting Table
+                new String[]{Constants.USER_ID, Constants.USER_USERNAME, Constants.USER_PASSWORD,Constants.USER_FULLNAME},//Selecting columns want to query
+                Constants.USER_USERNAME + "=?",
+                new String[]{user.getUsername()},//Where clause
+                null, null, null);
+
+
+        if (cursor != null && cursor.moveToFirst() && cursor.getCount() > 0) {
+            //if cursor has value then in user database there is user associated with this given username
+            User user1 = new User(cursor.getString(1), cursor.getString(2),
+                    cursor.getString(3));
+            user1.setUserID(cursor.getString(0));
+
+
+            //Match both passwords check they are same or not
+
+            if (user.getPassword().equalsIgnoreCase(user1.getPassword())) {
+                return user1;
+            }
+        }
+
+        //if user password does not matches or there is no record with that email then return @false
+        return null;
+    }
+
 
     public List<User> getAllUsers(){
         List<User> users = new ArrayList<>();

@@ -31,9 +31,7 @@ public class RegisterHousingOfficer extends AppCompatActivity {
         String fullname = editTextFullname.getText().toString().trim();
         String password =  editTextPass.getText().toString().trim();
         String confpassword = editTextPass2.getText().toString().trim();
-        Double monthlySalary = 0.0;
 
-        //Toast.makeText(this.getBaseContext(),"TEST",Toast.LENGTH_SHORT).show();
 
         //validations
         //1. Can't be empty
@@ -62,7 +60,7 @@ public class RegisterHousingOfficer extends AppCompatActivity {
             editTextPass.requestFocus();
             return;
         }
-        //2. Pass and conform pass must be same
+        //2. Pass and confirm pass must be same
         if(!(password.equals(confpassword))){
             Toast.makeText(this.getBaseContext(),"Please fill in the monthly salary field",Toast.LENGTH_SHORT).show();
             editTextPass.requestFocus();

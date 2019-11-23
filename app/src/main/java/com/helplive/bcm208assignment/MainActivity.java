@@ -10,10 +10,10 @@ import android.widget.Toast;
 
 import com.helplive.bcm208assignment.data.DatabaseHandler;
 import com.helplive.bcm208assignment.model.Applicant;
+import com.helplive.bcm208assignment.model.HousingOfficer;
 import com.helplive.bcm208assignment.model.User;
+import com.helplive.bcm208assignment.util.Constants;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,26 +26,29 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         databaseHandler = new DatabaseHandler(MainActivity.this);
-    }
+}
 
     public void login(View view){
-        List<User> allUsers = databaseHandler.getAllUsers();
         editTextUsername = findViewById(R.id.usernameEditText);
         editTextPassword = findViewById(R.id.passwordEditText);
 
         String username = editTextUsername.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
-        //Test user
-        //allUsers.add(new Applicant("AP0001","karl","12345678","kasdlakdnad",32));
+        User currentUser = databaseHandler.authenticate(new User(username, password,""));
 
-        if(!(allUsers.isEmpty())){
-            //for each
-            for (User u: allUsers) {
-                if (u.getUsername().equals(username) && u.getPassword().equals(password)){
-                    Toast.makeText(this,"Login success",Toast.LENGTH_SHORT).show();
-                }
+        if(currentUser != null){
+            Intent intent;
+            if(currentUser.getUserID().substring(0,2).equalsIgnoreCase("AP")){
+                //Go to applicant
+                Toast.makeText(this,"Applicant",Toast.LENGTH_SHORT).show();
+                //intent = new Intent(MainActivity.this,);
+            }else  if(currentUser.getUserID().substring(0,2).equalsIgnoreCase("HO")){
+                //Go to HO page
+                Toast.makeText(this,"Housing Officer",Toast.LENGTH_SHORT).show();
             }
+        }else{
+            Toast.makeText(this,"Login failed",Toast.LENGTH_SHORT).show();
         }
 
         //Toast.makeText(this.getBaseContext(),allUsers.get(0).toString(),Toast.LENGTH_SHORT).show();
