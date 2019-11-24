@@ -51,7 +51,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try {
             //create residence table
             String CREATE_RESIDENCE_TABLE = "CREATE TABLE " + Constants.mhstables[1] + "("
-                    + Constants.RESIDENCE_ID + " INTEGER PRIMARY KEY,"
+                    + Constants.RESIDENCE_ID + " INTEGER PRIMARY KEY NOT NULL,"
                     + Constants.RESIDENCE_ADDRESS + " TEXT,"
                     + Constants.RESIDENCE_NOOFUNITS + " INTEGER,"
                     + Constants.RESIDENCE_SIZEPERUNIT + " INTEGER,"
@@ -66,7 +66,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try {
             //create application table
             String CREATE_APPLICATION_TABLE = "CREATE TABLE " + Constants.mhstables[2] + "("
-                    + Constants.APPLICATION_ID + " TEXT PRIMARY KEY,"
+                    + Constants.APPLICATION_ID + " INTEGER PRIMARY KEY NOT NULL,"
                     + Constants.APPLICATION_DATE + " TEXT,"
                     + Constants.APPLICATION_REQUIREDMONTH + " INTEGER,"
                     + Constants.APPLICATION_REQUIREDYEAR + " INTEGER,"
@@ -82,7 +82,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try {
             //create allocation table
             String CREATE_ALLOCATION_TABLE = "CREATE TABLE " + Constants.mhstables[3] + "("
-                    + Constants.ALLOCATION_ID + " TEXT PRIMARY KEY,"
+                    + Constants.ALLOCATION_ID + " INTEGER PRIMARY KEY NOT NULL,"
                     + Constants.ALLOCATION_UNITNO+ " TEXT,"
                     + Constants.ALLOCATION_FROMDATE + " TEXT,"
                     + Constants.ALLOCATION_DURATION + " INTEGER,"
@@ -96,8 +96,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try {
             //create unit table
             String CREATE_UNIT_TABLE = "CREATE TABLE " + Constants.mhstables[4] + "("
-                    + Constants.UNIT_NO + " TEXT,"
-                    + Constants.UNIT_RESIDENCE_ID + " TEXT,"
+                    + Constants.UNIT_NO + " INTEGER NOT NULL,"
+                    + Constants.UNIT_RESIDENCE_ID + " INTEGER,"
                     + Constants.UNIT_AVAILABITLITY + " INTEGER,"
                     +" PRIMARY KEY ("+ Constants.UNIT_NO + "," + Constants.UNIT_RESIDENCE_ID +"));";
 
@@ -105,13 +105,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         } catch (Exception e) {
             Log.d("OnCreate unit: ", e.getMessage());
         }
-
-        String sql = "INSERT INTO \"User\" (\"user_ID\",\"username\",\"password\",\"fullname\",\"email\",\"monthly_income\") VALUES " +
-                "('AP0001','user1','goldmon1','ssmdalizjxas','sadas@dflakn',55.0),\n" +
-                " ('AP0002','kam','12345678','mxioasjdnadn','asjkdjkad@saljnajl',89.0),\n" +
-                " ('HO0001','retarded','12345678','asdaklxmzjk',NULL,NULL),\n" +
-                " ('HO0002','kappa','1234abcd','asldandaknll',NULL,NULL);";
-        manipulateDB(sql);
 
     }
 
@@ -388,14 +381,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return residence;
     }
 
-    public List<Residence> GETAllResidences(){
+    public List<Residence> GETAllResidences(String currentUser){
 
         List<Residence> residenceList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         try{
 
-            String selectAll = "SELECT * FROM " + Constants.mhstables[1] + "WHERE owner_id = currentuser_id";
-
+            String selectAll = "SELECT * FROM " + Constants.mhstables[1] + " WHERE " + Constants.RESIDENCE_OWNER_ID +  " = '" + currentUser + "';";
             //only one for rawQuery, query has more than 1
             Cursor cursor = db.rawQuery(selectAll,null);
 

@@ -32,7 +32,7 @@ public class ViewResidenceApplicant extends AppCompatActivity {
 
         List<Residence> residenceList = new ArrayList<>();
 
-        residenceList = databaseHandler.GETAllResidences();
+        //residenceList = databaseHandler.GETAllResidences();
 
         for (Residence residence : residenceList) {
             Log.d("Main", "onCreate: " + residence.getResidenceID());
