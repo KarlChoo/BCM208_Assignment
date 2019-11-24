@@ -184,8 +184,14 @@ public class Residence {
 
     @Override
     public String toString() {
+        return  "ResidenceID: "+ getResidenceID() + ", "
+                + "Address: "+ getAddress() + ", "
+                + "Montly Rental: RM "+ String.format("%.2f",getMonthlyRental()) + ", "
+                + "Size per Unit: "+ getSizePerUnit() + ", "
+                + "No of units: " + getNumUnits();
+        /*
         return "ResidenceID " + getResidenceID() + ", with " + getNumUnits() +
-                " units at " + getAddress();
+                " unit(s) at " + getAddress();*/
     }
 
     // side effect: application added to residence
@@ -195,12 +201,6 @@ public class Residence {
 
     }
 
-    public Application findApplication(String appID) {
-        for (Application anApp: getApplications())
-            if (anApp.getApplicationID().equalsIgnoreCase(appID))
-                return anApp;
-        return null;
-    }
 
     /**
      * @return the staffID

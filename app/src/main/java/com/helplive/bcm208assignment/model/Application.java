@@ -3,10 +3,10 @@ package com.helplive.bcm208assignment.model;
 import java.time.LocalDate;
 
 public class Application {
-    private static int appGenID = 1;
+    //private static int appGenID = 1;
 
-    private String applicationID;
-    private LocalDate applicationDate;
+    private int applicationID;
+    private String applicationDate;
     private int requiredMonth;
     private int requiredYear;
     private String status;
@@ -15,7 +15,7 @@ public class Application {
     private Applicant applicant;
     private Residence residence;
 
-    public Application(String applicationID, LocalDate appDate, int requiredMonth, int requiredYear) {
+    public Application(int applicationID, String appDate, int requiredMonth, int requiredYear) {
         setApplicationID(applicationID);
         setApplicationDate(appDate);
         setRequiredMonth(requiredMonth);
@@ -23,24 +23,19 @@ public class Application {
         setStatus("New");
     }
 
-    /**
-     * @return the appGenID
-     */
-    public static int getAppGenID() {
-        return appGenID;
+    public Application() {
+        setApplicationID(0);
+        setApplicationDate("not set");
+        setRequiredMonth(0);
+        setRequiredYear(0);
+        setStatus("not set");
     }
 
-    /**
-     * @paramaAppGenID the appGenID to set
-     */
-    public static void setAppGenID(int anAppGenID) {
-        appGenID = anAppGenID;
-    }
 
     /**
      * @return the applicationID
      */
-    public String getApplicationID() {
+    public int getApplicationID() {
         return applicationID;
     }
 
@@ -48,21 +43,21 @@ public class Application {
      * @paramapplicationID the applicationID to set
      */
     //to be revised
-    public void setApplicationID(String applicationID) {
+    public void setApplicationID(int applicationID) {
         this.applicationID = applicationID;
     }
 
     /**
      * @return the applicationDate
      */
-    public LocalDate getApplicationDate() {
+    public String getApplicationDate() {
         return applicationDate;
     }
 
     /**
      * @param applicationDate the applicationDate to set
      */
-    public void setApplicationDate(LocalDate applicationDate) {
+    public void setApplicationDate(String applicationDate) {
         this.applicationDate = applicationDate;
     }
 
