@@ -507,8 +507,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         contentValues.put(Constants.APPLICATION_REQUIREDYEAR,application.getRequiredYear());
         contentValues.put(Constants.APPLICATION_STATUS,application.getStatus());
         //pending
-        contentValues.put(Constants.APPLICATION_APPLICANT,dateToStrDB.format(application.getApplicant()));
-        contentValues.put(Constants.APPLICATION_RESIDENCE,application.getResidence().getResidenceID());
+        //contentValues.put(Constants.APPLICATION_APPLICANT,dateToStrDB.format(application.getApplicant()));
+        //contentValues.put(Constants.APPLICATION_RESIDENCE,application.getResidence().getResidenceID());
 
         db.insert(Constants.mhstables[2],null,contentValues);
         db.close();
@@ -516,9 +516,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public List<Application> getAllApplicationApplicant(String currentUser){
         SQLiteDatabase db = this.getReadableDatabase();
+        List<Application> applicationList = new ArrayList<>();
         try{
-            List<Application> applicationList = new ArrayList<>();
-            String sql = "SELECT * FROM " + Constants.mhstables[2] + " WHERE " + Constants.APPLICATION_APPLICANT + " = " + currentUser +" ;";
+            String sql = "SELECT * FROM " + Constants.mhstables[2] + " WHERE " + Constants.APPLICATION_APPLICANT + " = '" + currentUser +"';";
             Cursor cursor = db.rawQuery(sql,null);
 
             Log.d("SQL TEST",sql);
@@ -537,25 +537,25 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 }while(cursor.moveToNext());
             }
 
-
         }catch (Exception e){
             Log.d("Get all application:",e.getMessage());
         }
         db.close();
-        return null;
+        return applicationList;
     }
 
     public List<Application> getAllApplicationHO(){
         SQLiteDatabase db = this.getReadableDatabase();
+        List<Application> applicationList = new ArrayList<>();
+
         try{
-            List<Application> applicationList = new ArrayList<>();
 
 
         }catch (Exception e){
             Log.d("Get all application:",e.getMessage());
         }
         db.close();
-        return null;
+        return applicationList;
     }
 
     public void makeAllocation(Allocation allocation){
@@ -563,7 +563,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(Constants.ALLOCATION_UNITNO,allocation.getResidenceUnit().getUnitNo());
+        //contentValues.put(Constants.ALLOCATION_UNITNO,allocation.getResidenceUnit().getUnitNo());
         //issue with LocalDate
         contentValues.put(Constants.ALLOCATION_FROMDATE,dateToStrDB.format(allocation.getFromDate()));
         contentValues.put(Constants.ALLOCATION_DURATION,allocation.getDuration());

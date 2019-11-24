@@ -10,10 +10,26 @@ public class Application {
     private int requiredMonth;
     private int requiredYear;
     private String status;
+    private String applicant;
+    private int residenceID;
 
-    private Allocation allocation;
-    private Applicant applicant;
-    private Residence residence;
+    public String getApplicant() {
+        return applicant;
+    }
+
+    public void setApplicant(String applicant) {
+        this.applicant = applicant;
+    }
+
+    public int getResidenceID() {
+        return residenceID;
+    }
+
+    public void setResidenceID(int residenceID) {
+        this.residenceID = residenceID;
+    }
+
+
 
     public Application(int applicationID, String appDate, int requiredMonth, int requiredYear) {
         setApplicationID(applicationID);
@@ -103,51 +119,12 @@ public class Application {
         this.status = status;
     }
 
-    /**
-     * @return the allocation
-     */
-    public Allocation getAllocation() {
-        return allocation;
-    }
-
-    /**
-     * @param allocation the allocation to set
-     */
-    public void setAllocation(Allocation allocation) {
-        this.allocation = allocation;
-    }
-
-    /**
-     * @return the applicant
-     */
-    public Applicant getApplicant() {
-        return applicant;
-    }
-
-    /**
-     * @paramapplicant the applicant to set
-     */
-    public void setApplicant(Applicant applicant) {
-        this.applicant = applicant;
-    }
-
-    /**
-     * @return the residence
-     */
-    public Residence getResidence() {
-        return residence;
-    }
-
-    /**
-     * @param residence the residence to set
-     */
-    public void setResidence(Residence residence) {
-        this.residence = residence;
-    }
 
     public String toString() {
-        return getApplicationID() + " submitted by " +
-                getApplicant().getFullname() + " Status: " +
-                getStatus();
+        return  "Application ID:" + getApplicationID() + "| "
+                +"Application Date: " + getApplicationDate() + "| "
+                + "Required Month: "+ getRequiredMonth() +"| "
+                + "Required Year:" + getRequiredYear() + "| "
+                + "Status: " + getStatus();
     }
 }
