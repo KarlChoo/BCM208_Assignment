@@ -24,6 +24,7 @@ public class SetUpNewResidence extends AppCompatActivity {
     DatabaseHandler databaseHandler;
     Residence residence;
     AlertDialog.Builder alert;
+    private String currentUser;
 
     public void editButton(View view){
         //user at least select 1 residence
@@ -31,6 +32,7 @@ public class SetUpNewResidence extends AppCompatActivity {
             Intent intent = new Intent(this, EditResidence.class);
         int x = residence.getResidenceID();
             intent.putExtra("residenceID",x);
+            intent.putExtra("CurrentUser",currentUser);
             startActivity(intent);
         }
     }
@@ -71,6 +73,7 @@ public class SetUpNewResidence extends AppCompatActivity {
 
     public void addButton(View view){
         Intent intent = new Intent(this, AddResidence.class);
+        intent.putExtra("CurrentUser",currentUser);
         startActivity(intent);
     }
 
@@ -78,6 +81,13 @@ public class SetUpNewResidence extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_up_new_residence);
+
+        Bundle extras = getIntent().getExtras();
+        if(extras == null) {
+            currentUser = "Not set";
+        }
+
+        currentUser = extras.getString("CurrentUser");
 
         databaseHandler = new DatabaseHandler(SetUpNewResidence.this);
         allResidencesListView= findViewById(R.id.allResidenceListView);
