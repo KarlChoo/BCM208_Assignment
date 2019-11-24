@@ -9,10 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.helplive.bcm208assignment.data.DatabaseHandler;
-import com.helplive.bcm208assignment.model.Applicant;
-import com.helplive.bcm208assignment.model.HousingOfficer;
 import com.helplive.bcm208assignment.model.User;
-import com.helplive.bcm208assignment.util.Constants;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -27,7 +24,9 @@ public class MainActivity extends AppCompatActivity {
 
         databaseHandler = new DatabaseHandler(MainActivity.this);
         //databaseHandler.initializeData(); //For ardcode insert data
-        //databaseHandler.manipulateDB(); //For hardcode db manipulate
+        String sql = "INSERT INTO Application(application_date,required_month,required_year,status,applicant,residence)\n" +
+                "VALUES (date(\"now\"),4,2020,\"New\",\"AP0001\",1);";
+        databaseHandler.manipulateDB(sql); //For hardcode db manipulate
         //databaseHandler.deleteData(Constants.mhstables[0]); //For hardcode delete all data in table
 }
 
@@ -44,16 +43,23 @@ public class MainActivity extends AppCompatActivity {
             Intent intent;
             if(currentUser.getUserID().substring(0,2).equalsIgnoreCase("AP")){
                 //Go to applicant
-                Toast.makeText(this,"Applicant",Toast.LENGTH_SHORT).show();
-                //intent = new Intent(MainActivity.this,);
+                //Toast.makeText(this,"Applicant",Toast.LENGTH_SHORT).show();
+                intent = new Intent(MainActivity.this, ApplicantMenu.class);
+                intent.putExtra("CurrentUser",currentUser.getUserID());
+                intent.putExtra("UserFullname",currentUser.getFullname());
+                startActivity(intent);
             }else  if(currentUser.getUserID().substring(0,2).equalsIgnoreCase("HO")){
                 //Go to HO page
-                Toast.makeText(this,"Housing Officer",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this,"Housing Officer",Toast.LENGTH_SHORT).show();
+                intent = new Intent(MainActivity.this, ApplicantMenu.class);
+                intent.putExtra("CurrentUser",currentUser.getUserID());
+                startActivity(intent);
             }
+            editTextPassword.setText("");
+            editTextUsername.setText("");
         }else{
             Toast.makeText(this,"User does not exist",Toast.LENGTH_SHORT).show();
         }
-
         //Toast.makeText(this.getBaseContext(),allUsers.get(0).toString(),Toast.LENGTH_SHORT).show();
     }
 

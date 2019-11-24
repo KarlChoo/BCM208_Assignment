@@ -10,6 +10,7 @@
         android:id="@+id/titleRegisterHOTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_thin"
         android:text="Register"
         android:textSize="36sp"
         android:textStyle="bold"
@@ -21,11 +22,12 @@
         app:layout_constraintVertical_bias="0.046" />
 
     <EditText
-        android:id="@+id/nameEditText"
+        android:id="@+id/usernameEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Username"
+        android:fontFamily="@font/roboto_thin"
+        android:hint="@string/hint_username"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,25 +40,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Password"
+        android:fontFamily="@font/roboto_thin"
+        android:hint="@string/hint_password"
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.39" />
+        app:layout_constraintVertical_bias="0.378" />
 
     <EditText
         android:id="@+id/password2EditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Confirm Password"
+        android:fontFamily="@font/roboto_thin"
+        android:hint="@string/hint_confPassword"
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -65,76 +69,87 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="E-mail"
+        android:fontFamily="@font/roboto_thin"
+        android:hint="@string/hint_email"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.627" />
+        app:layout_constraintVertical_bias="0.612" />
 
     <EditText
         android:id="@+id/monthSalEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Monthly Salary"
+        android:fontFamily="@font/roboto_thin"
+        android:hint="@string/hint_monthlySal"
         android:inputType="numberDecimal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.745" />
+        app:layout_constraintVertical_bias="0.718" />
 
     <Button
         android:id="@+id/btnRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="214dp"
+        android:layout_height="60dp"
+        android:background="@android:color/holo_blue_light"
+        android:fontFamily="@font/roboto_thin"
         android:onClick="registerApplicant"
         android:paddingLeft="30dp"
         android:paddingTop="5dp"
         android:paddingRight="30dp"
         android:paddingBottom="5dp"
         android:text="REGISTER"
+        android:textColor="@color/colorWhite"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.169"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.868" />
+        app:layout_constraintVertical_bias="0.843" />
 
     <Button
         android:id="@+id/btnCancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="214dp"
+        android:layout_height="60dp"
+        android:background="@android:color/holo_red_light"
+        android:fontFamily="@font/roboto_thin"
         android:onClick="cancelRegister"
         android:paddingLeft="30dp"
         android:paddingTop="5dp"
         android:paddingRight="30dp"
         android:paddingBottom="5dp"
         android:text="@android:string/cancel"
+        android:textColor="@color/colorWhite"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.843"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.87" />
+        app:layout_constraintVertical_bias="0.97" />
 
     <EditText
         android:id="@+id/editTextFullname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Full Name"
+        android:fontFamily="@font/roboto_thin"
+        android:hint="@string/hint_fullname"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.279" />
+        app:layout_constraintVertical_bias="0.265" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

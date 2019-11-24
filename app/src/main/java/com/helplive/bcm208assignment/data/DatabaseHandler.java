@@ -99,7 +99,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     + Constants.UNIT_NO + " TEXT,"
                     + Constants.UNIT_RESIDENCE_ID + " TEXT,"
                     + Constants.UNIT_AVAILABITLITY + " INTEGER,"
-                    +" PRIMARY KEY ("+ Constants.UNIT_NO + "," + Constants.UNIT_RESIDENCE_ID +");";
+                    +" PRIMARY KEY ("+ Constants.UNIT_NO + "," + Constants.UNIT_RESIDENCE_ID +"));";
 
             db.execSQL(CREATE_UNIT_TABLE);
         } catch (Exception e) {
@@ -149,10 +149,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     };
 
-    public void manipulateDB(){
+    public void manipulateDB(String sql){
         SQLiteDatabase db = getWritableDatabase();
         try{
-            String sql = "DELETE FROM " + Constants.mhstables[0] + " WHERE " + Constants.USER_ID + " IN ('AP0003','AP0004','AP0005')";
             db.execSQL(sql);
         }catch (Exception e){
             Log.d("Manipulate: " , e.getMessage());
@@ -479,6 +478,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         db.insert(Constants.mhstables[2],null,contentValues);
         db.close();
+    }
+
+    public List<Application> getAllApplication(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        try{
+            List<Application> applicationList = new ArrayList<>();
+
+
+        }catch (Exception e){
+            Log.d("Get all application:",e.getMessage());
+        }
+        db.close();
+        return null;
     }
 
     public void makeAllocation(Allocation allocation){

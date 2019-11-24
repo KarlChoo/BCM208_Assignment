@@ -10,6 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ViewApplicationApplicant"></activity>
+        <activity android:name=".ViewResidenceApplicant" />
+        <activity android:name=".ApplicantMenu" />
         <activity android:name=".RegisterHousingOfficer" />
         <activity android:name=".EditResidence" />
         <activity android:name=".SetUpNewResidence" />

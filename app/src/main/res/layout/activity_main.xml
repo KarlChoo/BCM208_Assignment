@@ -4,8 +4,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F2F2F2"
     tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/mainIconImgView"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.033"
+        app:srcCompat="@drawable/house_icon" />
+
+    <TextView
+        android:id="@+id/titleTextView"
+        style="@android:style/Widget.Holo.Light.TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/roboto_thin"
+        android:text="Welcome to MicroHousing System"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainIconImgView" />
+
+    <TextView
+        android:id="@+id/registerHOTextField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/roboto_thin"
+        android:onClick="goRegisterHO"
+        android:text="Register as Housing Officer"
+        android:textColor="#2196F3"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
 
     <EditText
         android:id="@+id/usernameEditText"
@@ -13,97 +54,67 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Username"
+        android:fontFamily="@font/roboto_thin"
+        android:hint="@string/hint_username"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.297" />
-
-    <EditText
-        android:id="@+id/passwordEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.46" />
+        app:layout_constraintVertical_bias="0.471" />
 
     <Button
         android:id="@+id/loginBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="213dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="12dp"
+        android:background="@android:color/holo_blue_dark"
+        android:fontFamily="@font/roboto_thin"
         android:onClick="login"
         android:paddingLeft="30dp"
         android:paddingTop="5dp"
         android:paddingRight="30dp"
         android:paddingBottom="5dp"
         android:text="LOGIN"
+        android:textColor="@color/colorWhite"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.585" />
-
-    <TextView
-        android:id="@+id/titleTextView"
-        style="@android:style/Widget.Holo.Light.TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto_thin"
-        android:text="Welcome to MicroHousing System"
-        android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/usernameEditText"
+        app:layout_constraintBottom_toTopOf="@+id/registerHOTextField"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.448"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.699" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
 
     <TextView
         android:id="@+id/registerApplicantTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="412dp"
+        android:fontFamily="@font/roboto_thin"
         android:onClick="goRegisterApplicant"
         android:text="Register as Applicant"
         android:textColor="#2196F3"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/registerHOTextField"
+        app:layout_constraintVertical_bias="0.175" />
 
-    <TextView
-        android:id="@+id/registerHOTextField"
+    <EditText
+        android:id="@+id/passwordEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#2196F3"
-        android:onClick="goRegisterHO"
-        android:text="Register as Housing Officer"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:fontFamily="@font/roboto_thin"
+        android:hint="@string/hint_password"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/loginBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerApplicantTextView"
-        app:layout_constraintVertical_bias="0.113" />
+        app:layout_constraintTop_toBottomOf="@+id/usernameEditText" />
 
-    <ImageView
-        android:id="@+id/mainIconImgView"
-        android:layout_width="80dp"
-        android:layout_height="90dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.468"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.005"
-        app:srcCompat="@drawable/house_icon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
