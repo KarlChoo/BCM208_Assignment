@@ -220,7 +220,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             db.insert(Constants.mhstables[0],null,contentValues);
 
         } catch (Exception e) {
-            Log.d("Add Housing Offcier: ", e.getMessage());
+            Log.d("Add Housing Officer: ", e.getMessage());
             e.printStackTrace();
         }
         db.close();
