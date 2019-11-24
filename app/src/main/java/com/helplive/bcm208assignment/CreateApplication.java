@@ -77,6 +77,8 @@ public class CreateApplication extends AppCompatActivity {
         a.setResidenceID(residenceID);
 
         databaseHandler.createApplication(a);
+        Toast.makeText(this,"Application created",Toast.LENGTH_SHORT).show();
+
         databaseHandler.close();
         finish();
 

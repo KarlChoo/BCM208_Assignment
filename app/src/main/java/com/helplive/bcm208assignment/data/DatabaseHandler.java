@@ -99,9 +99,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             String CREATE_UNIT_TABLE = "CREATE TABLE " + Constants.mhstables[4] + "("
                     + Constants.UNIT_NO + " INTEGER NOT NULL,"
                     + Constants.UNIT_RESIDENCE_ID + " INTEGER,"
-                    + Constants.UNIT_RESIDENCE_ID + " INTEGER,"
                     + Constants.UNIT_AVAILABITLITY + " INTEGER,"
                     +" PRIMARY KEY ("+ Constants.UNIT_NO + "," + Constants.UNIT_RESIDENCE_ID +"));";
+
+            Log.d("SQL HERE",CREATE_UNIT_TABLE);
 
             db.execSQL(CREATE_UNIT_TABLE);
         } catch (Exception e) {
