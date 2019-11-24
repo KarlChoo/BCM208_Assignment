@@ -67,7 +67,7 @@
 
             <TextView
                 android:id="@+id/lblDecision"
-                android:layout_width="1dp"
+                android:layout_width="149dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Decision"

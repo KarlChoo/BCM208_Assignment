@@ -16,7 +16,7 @@ public class Unit {
         this.unitNo = unitNo;
     }
 
-    public boolean isAvailability() {
+    public int isAvailability() {
         return availability;
     }
 
@@ -24,10 +24,10 @@ public class Unit {
         this.availability = availability;
     }
 
-    private boolean availability;
-    private Residence residence;
+    private int availability;
+    private int residence;
 
-    public Residence getResidence() {
+    public int getResidence() {
         return residence;
     }
 
@@ -37,7 +37,7 @@ public class Unit {
 
     public Unit(int unitNo) {
         setUnitNo(0);
-        setAvailability(true);
+        setAvailability(1);
     }
 
 }
