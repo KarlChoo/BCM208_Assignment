@@ -20,6 +20,7 @@ public class EditResidence extends AppCompatActivity {
     Residence residence;
 
     public void updateResidenceButton(View view){
+
         residence.setAddress(addressEditText2.getText().toString().trim());
         residence.setNumUnits(Integer.parseInt(numOfUnitsEditText2.getText().toString().trim()));
         residence.setSizePerUnit(Integer.parseInt(sizeOfUnitEditText2.getText().toString().trim()));

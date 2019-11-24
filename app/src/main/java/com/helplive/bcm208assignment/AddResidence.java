@@ -20,6 +20,9 @@ public class AddResidence extends AppCompatActivity {
     private String currentUser;
 
     public void addResidence(View view){
+        Bundle extras = getIntent().getExtras();
+        currentUser = extras.getString("CurrentUser");
+
         Residence residence = new Residence();
         residence.setAddress(addressEditText1.getText().toString().trim());
         residence.setNumUnits(Integer.parseInt(numOfUnitsEditText1.getText().toString().trim()));

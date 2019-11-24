@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -84,10 +83,6 @@ public class SetUpNewResidence extends AppCompatActivity {
         setContentView(R.layout.activity_set_up_new_residence);
 
         Bundle extras = getIntent().getExtras();
-        if(extras == null) {
-            currentUser = "Not set";
-        }
-
         currentUser = extras.getString("CurrentUser");
 
         databaseHandler = new DatabaseHandler(SetUpNewResidence.this);
