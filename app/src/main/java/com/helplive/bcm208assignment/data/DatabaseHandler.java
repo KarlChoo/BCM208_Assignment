@@ -388,7 +388,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return residence;
     }
 
-    public List<Residence> getAllResidences(){
+    public List<Residence> GETAllResidences(){
 
         List<Residence> residenceList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
