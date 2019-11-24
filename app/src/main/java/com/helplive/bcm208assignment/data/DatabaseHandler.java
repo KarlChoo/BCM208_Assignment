@@ -544,11 +544,29 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return applicationList;
     }
 
-    public List<Application> getAllApplicationHO(){
+    public List<Application> getAllApplicationHO(String currentUser){
         SQLiteDatabase db = this.getReadableDatabase();
         List<Application> applicationList = new ArrayList<>();
 
         try{
+            String sql = "SELECT * FROM " + Constants.mhstables[2] + " WHERE RESIDENCE IN ( SELECT "  + Constants.RESIDENCE_ID + " FROM " + Constants.mhstables[1] + " WHERE " + Constants.RESIDENCE_OWNER_ID + " = '" + currentUser +"';";
+            Cursor cursor = db.rawQuery(sql,null);
+            Log.d("SQL TEST",sql);
+
+            if(cursor.moveToFirst() == true){
+                //do-while moveToNext returns false
+                do{
+                    Application application = new Application();
+                    application.setApplicationID(Integer.parseInt(cursor.getString(0)));
+                    application.setApplicationDate(cursor.getString(1));
+                    application.setRequiredMonth(Integer.parseInt(cursor.getString(2)));
+                    application.setRequiredYear(Integer.parseInt(cursor.getString(3)));
+                    application.setStatus(cursor.getString(4));
+
+                    applicationList.add(application);
+                }while(cursor.moveToNext());
+            }
+
 
 
         }catch (Exception e){
