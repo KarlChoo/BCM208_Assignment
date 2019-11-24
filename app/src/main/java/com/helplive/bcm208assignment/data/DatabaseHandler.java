@@ -632,14 +632,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         ContentValues contentValues = new ContentValues();
 
-        String newAvailability = "available";
+        int newAvailability = 1;
 
         for(int i=0; i<numOfUnits; i++) {
-
-            contentValues.put(Constants.UNIT_RESIDENCE_ID, residenceID);
+            contentValues.put(Constants.UNIT_NO,i+1);
+            contentValues.put(Constants.UNIT_RESIDENCE_ID, residenceID+1);
             contentValues.put(Constants.UNIT_AVAILABITLITY, newAvailability);
 
             db.insert(Constants.mhstables[4], null, contentValues);
+
         }
         db.close();
     }

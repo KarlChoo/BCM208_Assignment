@@ -32,7 +32,7 @@ public class Unit {
     }
 
     public Unit(int unitNo) {
-        setUnitNo(unitNo);
+        setUnitNo(0);
         setAvailability(true);
     }
 }
