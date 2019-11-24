@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
         databaseHandler = new DatabaseHandler(MainActivity.this);
         //databaseHandler.initializeData(); //For ardcode insert data
         //databaseHandler.manipulateDB(sql); //For hardcode db manipulate
+
+
         //databaseHandler.deleteData(Constants.mhstables[0]); //For hardcode delete all data in table
 }
 

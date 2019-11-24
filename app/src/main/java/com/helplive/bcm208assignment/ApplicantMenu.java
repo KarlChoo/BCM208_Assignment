@@ -39,11 +39,13 @@ public class ApplicantMenu extends AppCompatActivity {
 
     public void goViewApplication(View view){
         Intent intent = new Intent(ApplicantMenu.this,ViewApplicationApplicant.class);
+        intent.putExtra("CurrentUser",currentUser);
         startActivity(intent);
     }
 
     public void goViewResidence(View view){
         Intent intent = new Intent(ApplicantMenu.this,ViewResidenceApplicant.class);
+        intent.putExtra("CurrentUser",currentUser);
         startActivity(intent);
     }
 
