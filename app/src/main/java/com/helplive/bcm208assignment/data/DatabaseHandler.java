@@ -467,7 +467,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try{
             String deleteUnits = "DELETE FROM " + Constants.mhstables[4] + " WHERE " + Constants.UNIT_RESIDENCE_ID
                     + " = " + residence.getResidenceID() +";";
-            Log.d("SQL HERE",deleteUnits);
             db.execSQL(deleteUnits);
 
             db.delete(Constants.mhstables[1], Constants.RESIDENCE_ID + "=?",
