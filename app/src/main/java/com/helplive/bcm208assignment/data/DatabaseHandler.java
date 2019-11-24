@@ -51,7 +51,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try {
             //create residence table
             String CREATE_RESIDENCE_TABLE = "CREATE TABLE " + Constants.mhstables[1] + "("
-                    + Constants.RESIDENCE_ID + " TEXT PRIMARY KEY,"
+                    + Constants.RESIDENCE_ID + " INTEGER PRIMARY KEY,"
                     + Constants.RESIDENCE_ADDRESS + " TEXT,"
                     + Constants.RESIDENCE_NOOFUNITS + " INTEGER,"
                     + Constants.RESIDENCE_SIZEPERUNIT + " INTEGER,"
