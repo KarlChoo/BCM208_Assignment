@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.helplive.bcm208assignment.model.Unit;
 import com.helplive.bcm208assignment.model.User;
 import com.helplive.bcm208assignment.model.Allocation;
 import com.helplive.bcm208assignment.model.Applicant;
@@ -98,7 +99,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             //create unit table
             String CREATE_UNIT_TABLE = "CREATE TABLE " + Constants.mhstables[4] + "("
                     + Constants.UNIT_NO + " INTEGER NOT NULL,"
-                    + Constants.UNIT_RESIDENCE_ID + " INTEGER,"
                     + Constants.UNIT_RESIDENCE_ID + " INTEGER,"
                     + Constants.UNIT_AVAILABITLITY + " INTEGER,"
                     +" PRIMARY KEY ("+ Constants.UNIT_NO + "," + Constants.UNIT_RESIDENCE_ID +"));";
@@ -644,4 +644,32 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    public List<Unit> getAllUnits(){
+
+        List<Unit> unitList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        try{
+
+            String selectAll = "SELECT * FROM " + Constants.mhstables[4] ;
+            //only one for rawQuery, query has more than 1
+            Cursor cursor = db.rawQuery(selectAll,null);
+
+            if(cursor.moveToFirst() == true){
+                //do-while moveToNext returns false
+                do{
+                    Unit unit = new Unit();
+                    unit.setUnitNo(Integer.parseInt(cursor.getString(0)));
+                    unit.setResidence(Integer.parseInt(cursor.getString(1)));
+                    unit.setAvailability(Integer.parseInt(cursor.getString(2)));
+
+                    unitList.add(unit);
+                }while(cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.d("GET All Residence: ", e.getMessage());
+            e.printStackTrace();
+        }
+        db.close();
+        return unitList;
+    }
 }

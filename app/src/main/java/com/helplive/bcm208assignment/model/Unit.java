@@ -4,6 +4,10 @@ public class Unit {
 
     private int unitNo;
 
+    public Unit() {
+
+    }
+
     public int getUnitNo() {
         return unitNo;
     }

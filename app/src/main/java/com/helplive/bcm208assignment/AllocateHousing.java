@@ -15,6 +15,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.helplive.bcm208assignment.data.DatabaseHandler;
+import com.helplive.bcm208assignment.model.Residence;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -28,6 +31,18 @@ public class AllocateHousing extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_allocate_housing);
+
+        DatabaseHandler databaseHandler = new DatabaseHandler(this);
+        List<Residence> listResidenceID = databaseHandler.getAllResidences();
+        Spinner spinnerResidenceID = (Spinner) findViewById(R.id.spinnerResidenceID);
+        ArrayAdapter<String> adapterResidenceID = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item);
+        spinnerResidenceID.setAdapter(adapterResidenceID);
+
+        Spinner spinnerunitNo = (Spinner) findViewById(R.id.spinnerUnitNo);
+        List<Residence> unitNo = databaseHandler.getAllUnits();
+        Spinner spinnerUnitNo = (Spinner) findViewById(R.id.spinnerUnitNo);
+        ArrayAdapter<String> adapterUnitNo = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item);
+        spinnerResidenceID.setAdapter(adapterUnitNo);
 
         // Get reference of widgets from XML layout
         final Spinner spinner = (Spinner) findViewById(R.id.spinnerDuration);
