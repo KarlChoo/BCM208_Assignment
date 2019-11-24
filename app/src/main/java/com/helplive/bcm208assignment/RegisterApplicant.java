@@ -23,7 +23,7 @@ public class RegisterApplicant extends AppCompatActivity {
     }
 
     public void registerApplicant(View view){
-        EditText editTextName = findViewById(R.id.nameEditText);
+        EditText editTextName = findViewById(R.id.usernameEditText);
         EditText editTextFullname = findViewById(R.id.editTextFullname);
         EditText editTextPass = findViewById(R.id.passwordEditText);
         EditText editTextPass2 = findViewById(R.id.password2EditText);

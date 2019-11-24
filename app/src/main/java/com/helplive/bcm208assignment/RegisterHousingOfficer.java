@@ -22,7 +22,7 @@ public class RegisterHousingOfficer extends AppCompatActivity {
     }
 
     public void registerHousingOfficer(View view){
-        EditText editTextName = findViewById(R.id.nameEditText);
+        EditText editTextName = findViewById(R.id.usernameEditText);
         EditText editTextFullname = findViewById(R.id.editTextFullname);
         EditText editTextPass = findViewById(R.id.passwordEditText);
         EditText editTextPass2 = findViewById(R.id.password2EditText);
@@ -66,7 +66,7 @@ public class RegisterHousingOfficer extends AppCompatActivity {
             editTextPass.requestFocus();
             return;
         }
-        
+
         //Validate for repeat username
         if(databaseHandler.validateUsername(name)){
             //registration successful
