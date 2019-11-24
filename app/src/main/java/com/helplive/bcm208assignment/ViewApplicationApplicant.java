@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.helplive.bcm208assignment.data.DatabaseHandler;
 import com.helplive.bcm208assignment.model.Applicant;
@@ -99,6 +100,8 @@ public class ViewApplicationApplicant extends AppCompatActivity {
                 }
             });
             alert.show();
+        }else{
+            Toast.makeText(this,"Please select an application first!",Toast.LENGTH_SHORT).show();
         }
     }
 }

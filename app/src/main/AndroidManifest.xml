@@ -9,15 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ViewApplicationHO"></activity>
+        <activity android:name=".CreateApplication"></activity>
+        <activity android:name=".ViewApplicationHO" />
         <activity android:name=".HousingOfficerMenu" />
         <activity android:name=".ViewApplicationApplicant" />
         <activity android:name=".ViewResidenceApplicant" />
         <activity android:name=".ApplicantMenu" />
         <activity android:name=".RegisterHousingOfficer" />
         <activity android:name=".EditResidence" />
-        <activity android:name=".SetUpNewResidence"></activity>
-        <activity android:name=".AllocateHousing"></activity>
+        <activity android:name=".SetUpNewResidence" />
+        <activity android:name=".AllocateHousing" />
         <activity android:name=".AddResidence" />
         <activity android:name=".MainActivity">
             <intent-filter>
