@@ -106,6 +106,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             Log.d("OnCreate unit: ", e.getMessage());
         }
 
+        String sql = "INSERT INTO \"User\" (\"user_ID\",\"username\",\"password\",\"fullname\",\"email\",\"monthly_income\") VALUES " +
+                "('AP0001','user1','goldmon1','ssmdalizjxas','sadas@dflakn',55.0),\n" +
+                " ('AP0002','kam','12345678','mxioasjdnadn','asjkdjkad@saljnajl',89.0),\n" +
+                " ('HO0001','retarded','12345678','asdaklxmzjk',NULL,NULL),\n" +
+                " ('HO0002','kappa','1234abcd','asldandaknll',NULL,NULL);";
+        manipulateDB(sql);
+
     }
 
     @Override
