@@ -102,8 +102,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     + Constants.UNIT_AVAILABITLITY + " INTEGER,"
                     +" PRIMARY KEY ("+ Constants.UNIT_NO + "," + Constants.UNIT_RESIDENCE_ID +"));";
 
-            Log.d("SQL HERE",CREATE_UNIT_TABLE);
-
             db.execSQL(CREATE_UNIT_TABLE);
         } catch (Exception e) {
             Log.d("OnCreate unit: ", e.getMessage());
@@ -335,7 +333,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
             db.insert(Constants.mhstables[1],null,contentValues);
 
-            addUnit(residence.getNumUnits(),residence.getResidenceID());
+
+            String sql = "SELECT MAX("+Constants.RESIDENCE_ID+") FROM " + Constants.mhstables[1]+";"; //Choose the newly added residence
+
+            Cursor cursor = db.rawQuery(sql,null);
+            cursor.moveToFirst();
+
+            addUnit(residence.getNumUnits(),Integer.parseInt(cursor.getString(0)));
+            //addUnit(residence.getNumUnits(),residence.getResidenceID());
 
 
         } catch (Exception e) {
@@ -637,7 +642,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         for(int i=0; i<numOfUnits; i++) {
             contentValues.put(Constants.UNIT_NO,i+1);
-            contentValues.put(Constants.UNIT_RESIDENCE_ID, residenceID+1);
+            contentValues.put(Constants.UNIT_RESIDENCE_ID, residenceID);
             contentValues.put(Constants.UNIT_AVAILABITLITY, newAvailability);
 
             db.insert(Constants.mhstables[4], null, contentValues);
