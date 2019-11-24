@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.helplive.bcm208assignment.data.DatabaseHandler;
-import com.helplive.bcm208assignment.model.HousingOfficer;
 import com.helplive.bcm208assignment.model.User;
 
 
