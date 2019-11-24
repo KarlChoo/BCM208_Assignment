@@ -141,29 +141,35 @@ public class AllocateHousing extends AppCompatActivity{
         rdbtnApprove.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                spinnerUnitNo.setEnabled(true);
-                fromDate.setEnabled(true);
-                spinner.setEnabled(true);
+                if(isChecked) {
+                    spinnerUnitNo.setEnabled(true);
+                    fromDate.setEnabled(true);
+                    spinner.setEnabled(true);
+                }
             }
         });
 
         rdbtnReject.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                spinnerUnitNo.setEnabled(false);
-                fromDate.setEnabled(false);
-                fromDate.setText("Select a date");
-                spinner.setEnabled(false);
+                if(isChecked) {
+                    spinnerUnitNo.setEnabled(false);
+                    fromDate.setEnabled(false);
+                    fromDate.setText("Select a date");
+                    spinner.setEnabled(false);
+                }
             }
         });
 
         rdbtnWaitlist.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                spinnerUnitNo.setEnabled(false);
-                fromDate.setEnabled(false);
-                fromDate.setText("Select a date");
-                spinner.setEnabled(false);
+                if(isChecked) {
+                    spinnerUnitNo.setEnabled(false);
+                    fromDate.setEnabled(false);
+                    fromDate.setText("Select a date");
+                    spinner.setEnabled(false);
+                }
             }
         });
     }
