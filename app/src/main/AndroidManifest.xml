@@ -16,7 +16,9 @@
         <activity android:name=".RegisterHousingOfficer" />
         <activity android:name=".EditResidence" />
         <activity android:name=".SetUpNewResidence"/>
-        <activity android:name=".AllocateHousing" />
+        <activity android:name=".AllocateHousing">
+
+        </activity>
         <activity android:name=".AddResidence" />
         <activity android:name=".MainActivity">
             <intent-filter>

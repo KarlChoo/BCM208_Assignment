@@ -107,7 +107,7 @@ public class SetUpNewResidence extends AppCompatActivity {
     }
     public void getAllResidences(){
         residence = null;
-        List<Residence> residenceList  = databaseHandler.GetAllResidences();
+        List<Residence> residenceList  = databaseHandler.GETAllResidences();
         ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, residenceList);
         allResidencesListView.setAdapter(adapter);
     }

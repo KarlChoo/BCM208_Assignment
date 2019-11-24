@@ -388,13 +388,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return residence;
     }
 
-    public List<Residence> GetAllResidences(){
+    public List<Residence> GETAllResidences(){
 
         List<Residence> residenceList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         try{
 
-            String selectAll = "SELECT * FROM " + Constants.mhstables[1];
+            String selectAll = "SELECT * FROM " + Constants.mhstables[1] + "WHERE owner_id = currentuser_id";
 
             //only one for rawQuery, query has more than 1
             Cursor cursor = db.rawQuery(selectAll,null);
