@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +26,9 @@ import java.util.Calendar;
 import java.util.List;
 
 public class AllocateHousing extends AppCompatActivity{
+    private RadioButton rdbtnApprove;
+    private RadioButton rdbtnReject;
+    private RadioButton rdbtnWaitlist;
     private TextView fromDate;
     DatePickerDialog datePickerDialog;
 
@@ -43,6 +47,7 @@ public class AllocateHousing extends AppCompatActivity{
         Spinner spinnerUnitNo = (Spinner) findViewById(R.id.spinnerUnitNo);
         ArrayAdapter<String> adapterUnitNo = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item);
         spinnerUnitNo.setAdapter(adapterUnitNo);
+
 
         // Get reference of widgets from XML layout
         final Spinner spinner = (Spinner) findViewById(R.id.spinnerDuration);
@@ -127,5 +132,15 @@ public class AllocateHousing extends AppCompatActivity{
                 datePickerDialog.show();
             }
         });
+
+        rdbtnApprove = findViewById(R.id.rdbtnApprove);
+        rdbtnReject = findViewById(R.id.rdbtnReject);
+        rdbtnWaitlist = findViewById(R.id.rdbtnWaitlist);
+
+        if((rdbtnReject.isSelected()) || (rdbtnWaitlist.isSelected())) {
+            spinnerUnitNo.setEnabled(false);
+            fromDate.setEnabled(false);
+            spinner.setEnabled(false);
+        }
     }
 }
