@@ -24,9 +24,11 @@ public class MainActivity extends AppCompatActivity {
 
         databaseHandler = new DatabaseHandler(MainActivity.this);
         //databaseHandler.initializeData(); //For hardcode insert data
-        String sql = "INSERT INTO Application(application_date,required_month,required_year,status,applicant,residence)\n" +
-                "VALUES (date(\"now\"),4,2020,\"New\",\"AP0001\",1);";
-        databaseHandler.manipulateDB(sql); //For hardcode db manipulate
+        //String sql = "INSERT INTO Application(application_date,required_month,required_year,status,applicant,residence)\n" +
+                //"VALUES (date(\"now\"),4,2020,\"New\",\"AP0001\",1);";
+        String sql1 = "INSERT INTO User(user_id,user_username,user_password,user_fullname)\n" +
+                "VALUES (\"HO0001\",\"ben\",\"11111111\",\"benjamin\");";
+        databaseHandler.manipulateDB(sql1); //For hardcode db manipulate
         //databaseHandler.deleteData(Constants.mhstables[0]); //For hardcode delete all data in table
 }
 
