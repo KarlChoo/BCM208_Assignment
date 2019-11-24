@@ -505,19 +505,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public void createApplication(Application application){
         SQLiteDatabase db = this.getWritableDatabase();
+        try{
+            ContentValues contentValues = new ContentValues();
 
-        ContentValues contentValues = new ContentValues();
+            contentValues.put(Constants.APPLICATION_DATE,application.getApplicationDate());
+            contentValues.put(Constants.APPLICATION_REQUIREDMONTH,application.getRequiredMonth());
+            contentValues.put(Constants.APPLICATION_REQUIREDYEAR,application.getRequiredYear());
+            contentValues.put(Constants.APPLICATION_STATUS,application.getStatus());
+            contentValues.put(Constants.APPLICATION_APPLICANT,application.getApplicant());
+            contentValues.put(Constants.APPLICATION_RESIDENCE,application.getResidenceID());
 
-        //issue with LocalDate
-        contentValues.put(Constants.APPLICATION_DATE,dateToStrDB.format(application.getApplicationDate()));
-        contentValues.put(Constants.APPLICATION_REQUIREDMONTH,application.getRequiredMonth());
-        contentValues.put(Constants.APPLICATION_REQUIREDYEAR,application.getRequiredYear());
-        contentValues.put(Constants.APPLICATION_STATUS,application.getStatus());
-        //pending
-        //contentValues.put(Constants.APPLICATION_APPLICANT,dateToStrDB.format(application.getApplicant()));
-        //contentValues.put(Constants.APPLICATION_RESIDENCE,application.getResidence().getResidenceID());
-
-        db.insert(Constants.mhstables[2],null,contentValues);
+            db.insert(Constants.mhstables[2],null,contentValues);
+        }catch (Exception e){
+            Log.d("Application create:",e.getMessage());
+        }
         db.close();
     }
 
@@ -569,7 +570,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         List<Application> applicationList = new ArrayList<>();
 
         try{
-            String sql = "SELECT * FROM " + Constants.mhstables[2] + " WHERE RESIDENCE IN ( SELECT "  + Constants.RESIDENCE_ID + " FROM " + Constants.mhstables[1] + " WHERE " + Constants.RESIDENCE_OWNER_ID + " = '" + currentUser +"';";
+            String sql = "SELECT * FROM " + Constants.mhstables[2] + " WHERE RESIDENCE IN ( SELECT "  + Constants.RESIDENCE_ID + " FROM " + Constants.mhstables[1] + " WHERE " + Constants.RESIDENCE_OWNER_ID + " = '" + currentUser +"');";
             Cursor cursor = db.rawQuery(sql,null);
 
             Log.d("SQL TEST",sql);

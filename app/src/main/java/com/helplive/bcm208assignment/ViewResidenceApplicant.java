@@ -34,6 +34,7 @@ public class ViewResidenceApplicant extends AppCompatActivity {
             Intent intent = new Intent(ViewResidenceApplicant.this,CreateApplication.class);
             intent.putExtra("CurrentUser",currentUser);
             intent.putExtra("ResidenceID",residence.getResidenceID());
+            startActivity(intent);
         }else{
             Toast.makeText(this,"Please select a residence first!",Toast.LENGTH_SHORT).show();
         }
