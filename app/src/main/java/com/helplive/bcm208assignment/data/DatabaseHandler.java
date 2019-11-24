@@ -334,7 +334,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
             db.insert(Constants.mhstables[1],null,contentValues);
 
-            //addUnit(residence.getUnit(),residence.getResidenceID());
+            addUnit(residence.getNumUnits(),residence.getResidenceID());
 
 
         } catch (Exception e) {
@@ -569,7 +569,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         List<Application> applicationList = new ArrayList<>();
 
         try{
-            String sql = "SELECT * FROM " + Constants.mhstables[2] + " WHERE RESIDENCE IN ( SELECT "  + Constants.RESIDENCE_ID + " FROM " + Constants.mhstables[1] + " WHERE " + Constants.RESIDENCE_OWNER_ID + " = '" + currentUser +"';";
+            String sql = "SELECT * FROM " + Constants.mhstables[2] + " WHERE RESIDENCE IN ( SELECT "  + Constants.RESIDENCE_ID + " FROM " + Constants.mhstables[1] + " WHERE " + Constants.RESIDENCE_OWNER_ID + " = '" + currentUser +"');";
             Cursor cursor = db.rawQuery(sql,null);
 
             Log.d("SQL TEST",sql);
@@ -631,24 +631,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         ContentValues contentValues = new ContentValues();
 
-        int count = 1;
-
-        String newUnitNo;
-
         String newAvailability = "available";
 
         for(int i=0; i<numOfUnits; i++) {
 
-            newUnitNo = "UN" + String.format("%04d",count);
-            contentValues.put(Constants.UNIT_NO, newUnitNo);
             contentValues.put(Constants.UNIT_RESIDENCE_ID, residenceID);
             contentValues.put(Constants.UNIT_AVAILABITLITY, newAvailability);
 
             db.insert(Constants.mhstables[4], null, contentValues);
-            count++;
         }
         db.close();
     }
-
 
 }
