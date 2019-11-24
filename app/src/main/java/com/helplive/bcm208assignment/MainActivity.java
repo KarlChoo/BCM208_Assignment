@@ -25,10 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         databaseHandler = new DatabaseHandler(MainActivity.this);
         //databaseHandler.initializeData(); //For hardcode insert data
-        String sql = "DELETE FROM residence";
-        String sql1 = "DELETE FROM unit";
-        databaseHandler.manipulateDB(sql); //For hardcode db manipulate
-        databaseHandler.manipulateDB(sql1);
+        //databaseHandler.manipulateDB(sql); //For hardcode db manipulate
 }
 
     public void login(View view){

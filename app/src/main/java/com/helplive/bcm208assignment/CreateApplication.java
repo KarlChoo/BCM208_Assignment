@@ -58,7 +58,7 @@ public class CreateApplication extends AppCompatActivity {
         }
 
         //year validate
-        if (year > 2018 && year < 2100){
+        if (year < 2018 && year > 2100){
             Toast.makeText(this,"Please enter values between 2019 - 2100 for year",Toast.LENGTH_SHORT).show();
             return;
         }
