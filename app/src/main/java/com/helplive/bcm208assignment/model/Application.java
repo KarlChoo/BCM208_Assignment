@@ -3,19 +3,35 @@ package com.helplive.bcm208assignment.model;
 import java.time.LocalDate;
 
 public class Application {
-    private static int appGenID = 1;
+    //private static int appGenID = 1;
 
-    private String applicationID;
-    private LocalDate applicationDate;
+    private int applicationID;
+    private String applicationDate;
     private int requiredMonth;
     private int requiredYear;
     private String status;
+    private String applicant;
+    private int residenceID;
 
-    private Allocation allocation;
-    private Applicant applicant;
-    private Residence residence;
+    public String getApplicant() {
+        return applicant;
+    }
 
-    public Application(String applicationID, LocalDate appDate, int requiredMonth, int requiredYear) {
+    public void setApplicant(String applicant) {
+        this.applicant = applicant;
+    }
+
+    public int getResidenceID() {
+        return residenceID;
+    }
+
+    public void setResidenceID(int residenceID) {
+        this.residenceID = residenceID;
+    }
+
+
+
+    public Application(int applicationID, String appDate, int requiredMonth, int requiredYear) {
         setApplicationID(applicationID);
         setApplicationDate(appDate);
         setRequiredMonth(requiredMonth);
@@ -23,24 +39,19 @@ public class Application {
         setStatus("New");
     }
 
-    /**
-     * @return the appGenID
-     */
-    public static int getAppGenID() {
-        return appGenID;
+    public Application() {
+        setApplicationID(0);
+        setApplicationDate("not set");
+        setRequiredMonth(0);
+        setRequiredYear(0);
+        setStatus("not set");
     }
 
-    /**
-     * @paramaAppGenID the appGenID to set
-     */
-    public static void setAppGenID(int anAppGenID) {
-        appGenID = anAppGenID;
-    }
 
     /**
      * @return the applicationID
      */
-    public String getApplicationID() {
+    public int getApplicationID() {
         return applicationID;
     }
 
@@ -48,21 +59,21 @@ public class Application {
      * @paramapplicationID the applicationID to set
      */
     //to be revised
-    public void setApplicationID(String applicationID) {
+    public void setApplicationID(int applicationID) {
         this.applicationID = applicationID;
     }
 
     /**
      * @return the applicationDate
      */
-    public LocalDate getApplicationDate() {
+    public String getApplicationDate() {
         return applicationDate;
     }
 
     /**
      * @param applicationDate the applicationDate to set
      */
-    public void setApplicationDate(LocalDate applicationDate) {
+    public void setApplicationDate(String applicationDate) {
         this.applicationDate = applicationDate;
     }
 
@@ -108,51 +119,12 @@ public class Application {
         this.status = status;
     }
 
-    /**
-     * @return the allocation
-     */
-    public Allocation getAllocation() {
-        return allocation;
-    }
-
-    /**
-     * @param allocation the allocation to set
-     */
-    public void setAllocation(Allocation allocation) {
-        this.allocation = allocation;
-    }
-
-    /**
-     * @return the applicant
-     */
-    public Applicant getApplicant() {
-        return applicant;
-    }
-
-    /**
-     * @paramapplicant the applicant to set
-     */
-    public void setApplicant(Applicant applicant) {
-        this.applicant = applicant;
-    }
-
-    /**
-     * @return the residence
-     */
-    public Residence getResidence() {
-        return residence;
-    }
-
-    /**
-     * @param residence the residence to set
-     */
-    public void setResidence(Residence residence) {
-        this.residence = residence;
-    }
 
     public String toString() {
-        return getApplicationID() + " submitted by " +
-                getApplicant().getFullname() + " Status: " +
-                getStatus();
+        return  "Application ID:" + getApplicationID() + "| "
+                +"Application Date: " + getApplicationDate() + "| "
+                + "Required Month: "+ getRequiredMonth() +"| "
+                + "Required Year:" + getRequiredYear() + "| "
+                + "Status: " + getStatus();
     }
 }

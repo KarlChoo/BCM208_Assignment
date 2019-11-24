@@ -86,7 +86,7 @@ public class SetUpNewResidence extends AppCompatActivity {
         currentUser = extras.getString("CurrentUser");
 
         databaseHandler = new DatabaseHandler(SetUpNewResidence.this);
-        allResidencesListView= findViewById(R.id.allResidenceListView);
+        allResidencesListView= findViewById(R.id.allApplicationListView);
 
         alert = new AlertDialog.Builder(this);
         alert.setTitle("Delete Residence");

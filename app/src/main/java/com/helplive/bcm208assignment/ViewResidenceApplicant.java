@@ -2,10 +2,14 @@ package com.helplive.bcm208assignment;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.core.content.ContextCompat;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.helplive.bcm208assignment.data.DatabaseHandler;
@@ -20,23 +24,66 @@ public class ViewResidenceApplicant extends AppCompatActivity {
     private DatabaseHandler databaseHandler;
     private List<Residence> residenceList;
     AlertDialog.Builder alert;
+    Residence residence;
+    private String currentUser;
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getResidenceApplicant();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_residence_applicant);
 
-        databaseHandler = new DatabaseHandler(this);
 
+        Bundle extras = getIntent().getExtras();
+        if(extras == null) {
+            currentUser = "Not set";
+        }
+        currentUser = extras.getString("CurrentUser");
+
+        databaseHandler = new DatabaseHandler(this);
+        residenceListView = findViewById(R.id.allApplicationListView);
 
         List<Residence> residenceList = new ArrayList<>();
 
-        //residenceList = databaseHandler.GETAllResidences();
+        /*
+        alert = new AlertDialog.Builder(this);
+        alert.setTitle("Delete Residence");
+        alert.setMessage("Are you sure you want to delete?");
+        alert.setIcon(R.drawable.delete_icon);*/
 
         for (Residence residence : residenceList) {
             Log.d("Main", "onCreate: " + residence.getResidenceID());
         }
 
+        residenceListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                residence = (Residence) residenceListView.getItemAtPosition(position);
+
+                for (int i=0; i<residenceListView.getChildCount(); i++){
+                    if(position == i){
+                        residenceListView.getChildAt(i).setBackgroundColor(ContextCompat.getColor(getApplicationContext(),
+                                R.color.selectItem));
+                    }
+                    else{
+                        residenceListView.getChildAt(i).setBackgroundColor(Color.TRANSPARENT);
+                    }
+                }
+            }
+        });
+        getResidenceApplicant();
+    }
+
+    public void getResidenceApplicant(){
+        residence = null;
+        List<Residence> residenceList = databaseHandler.getAllResidences();
+        ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, residenceList);
+        residenceListView.setAdapter(adapter);
     }
 }

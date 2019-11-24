@@ -4,12 +4,10 @@ import java.util.ArrayList;
 
 public class HousingOfficer extends User{
 
-    private ArrayList<Residence> residences;
 
     public HousingOfficer(String username, String password,
                           String fullname) {
         super(username, password, fullname);
-        this.residences = new ArrayList<>();
     }
     public HousingOfficer(){
 
@@ -29,26 +27,5 @@ public class HousingOfficer extends User{
         System.out.println(s[109]);
     }*/
 
-    /**
-     * @return the residences
-     */
-    public ArrayList<Residence> getResidences() {
-        return residences;
-    }
-
-    /**
-     * @paramresidences the residences to set
-     */
-    public void setResidences(ArrayList<Residence> residences) {
-        this.residences = residences;
-    }
-
-    public void addResidence(Residence r) {
-        getResidences().add(r);
-    }
-
-    public int noOfResidences() {
-        return getResidences().size();
-    }
 }
 

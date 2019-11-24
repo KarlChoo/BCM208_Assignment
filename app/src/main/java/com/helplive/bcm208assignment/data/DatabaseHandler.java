@@ -17,6 +17,7 @@ import com.helplive.bcm208assignment.util.Constants;
 
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,6 +98,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             //create unit table
             String CREATE_UNIT_TABLE = "CREATE TABLE " + Constants.mhstables[4] + "("
                     + Constants.UNIT_NO + " INTEGER NOT NULL,"
+                    + Constants.UNIT_RESIDENCE_ID + " INTEGER,"
                     + Constants.UNIT_RESIDENCE_ID + " INTEGER,"
                     + Constants.UNIT_AVAILABITLITY + " INTEGER,"
                     +" PRIMARY KEY ("+ Constants.UNIT_NO + "," + Constants.UNIT_RESIDENCE_ID +"));";
@@ -381,6 +383,39 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return residence;
     }
 
+    //For applicant view
+    public List<Residence> getAllResidences(){
+
+        List<Residence> residenceList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        try{
+
+            String selectAll = "SELECT * FROM " + Constants.mhstables[1] ;
+            //only one for rawQuery, query has more than 1
+            Cursor cursor = db.rawQuery(selectAll,null);
+
+            if(cursor.moveToFirst() == true){
+                //do-while moveToNext returns false
+                do{
+                    Residence residence = new Residence();
+                    residence.setResidenceID(Integer.parseInt(cursor.getString(0)));
+                    residence.setAddress(cursor.getString(1));
+                    residence.setNumUnits(Integer.parseInt(cursor.getString(2)));
+                    residence.setSizePerUnit(Integer.parseInt(cursor.getString(3)));
+                    residence.setMonthlyRental(Integer.parseInt(cursor.getString(4)));
+
+                    residenceList.add(residence);
+                }while(cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.d("GET All Residence: ", e.getMessage());
+            e.printStackTrace();
+        }
+        db.close();
+        return residenceList;
+    }
+
+    //For housing officer view
     public List<Residence> GETAllResidences(String currentUser){
 
         List<Residence> residenceList = new ArrayList<>();
@@ -472,24 +507,55 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         contentValues.put(Constants.APPLICATION_REQUIREDYEAR,application.getRequiredYear());
         contentValues.put(Constants.APPLICATION_STATUS,application.getStatus());
         //pending
-        contentValues.put(Constants.APPLICATION_APPLICANT,dateToStrDB.format(application.getApplicant()));
-        contentValues.put(Constants.APPLICATION_RESIDENCE,application.getResidence().getResidenceID());
+        //contentValues.put(Constants.APPLICATION_APPLICANT,dateToStrDB.format(application.getApplicant()));
+        //contentValues.put(Constants.APPLICATION_RESIDENCE,application.getResidence().getResidenceID());
 
         db.insert(Constants.mhstables[2],null,contentValues);
         db.close();
     }
 
-    public List<Application> getAllApplication(){
+    public List<Application> getAllApplicationApplicant(String currentUser){
         SQLiteDatabase db = this.getReadableDatabase();
+        List<Application> applicationList = new ArrayList<>();
         try{
-            List<Application> applicationList = new ArrayList<>();
+            String sql = "SELECT * FROM " + Constants.mhstables[2] + " WHERE " + Constants.APPLICATION_APPLICANT + " = '" + currentUser +"';";
+            Cursor cursor = db.rawQuery(sql,null);
+
+            Log.d("SQL TEST",sql);
+
+            if(cursor.moveToFirst() == true){
+                //do-while moveToNext returns false
+                do{
+                    Application application = new Application();
+                    application.setApplicationID(Integer.parseInt(cursor.getString(0)));
+                    application.setApplicationDate(cursor.getString(1));
+                    application.setRequiredMonth(Integer.parseInt(cursor.getString(2)));
+                    application.setRequiredYear(Integer.parseInt(cursor.getString(3)));
+                    application.setStatus(cursor.getString(4));
+
+                    applicationList.add(application);
+                }while(cursor.moveToNext());
+            }
+
+        }catch (Exception e){
+            Log.d("Get all application:",e.getMessage());
+        }
+        db.close();
+        return applicationList;
+    }
+
+    public List<Application> getAllApplicationHO(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Application> applicationList = new ArrayList<>();
+
+        try{
 
 
         }catch (Exception e){
             Log.d("Get all application:",e.getMessage());
         }
         db.close();
-        return null;
+        return applicationList;
     }
 
     public void makeAllocation(Allocation allocation){
@@ -497,7 +563,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(Constants.ALLOCATION_UNITNO,allocation.getResidenceUnit().getUnitNo());
+        //contentValues.put(Constants.ALLOCATION_UNITNO,allocation.getResidenceUnit().getUnitNo());
         //issue with LocalDate
         contentValues.put(Constants.ALLOCATION_FROMDATE,dateToStrDB.format(allocation.getFromDate()));
         contentValues.put(Constants.ALLOCATION_DURATION,allocation.getDuration());

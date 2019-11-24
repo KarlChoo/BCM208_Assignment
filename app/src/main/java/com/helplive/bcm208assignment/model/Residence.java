@@ -10,76 +10,16 @@ public class Residence {
     private int sizePerUnit;
     private double monthlyRental;
 
-    private ArrayList<Application> applications;
-    private ArrayList<Unit> units;
+    public String getStaffID() {
+        return staffID;
+    }
+
+    public void setStaffID(String staffID) {
+        this.staffID = staffID;
+    }
+
     private String staffID;
 
-    public class Unit {
-        private int unitNo;
-        private boolean availability;
-        private Allocation allocation;
-        private Residence residence;
-
-        public Residence getResidence() {
-            return residence;
-        }
-
-        public void setResidence(Residence residence) {
-            this.residence = residence;
-        }
-
-        public Unit(int unitNo) {
-            setUnitNo(unitNo);
-            setAvailability(true);
-        }
-        /**
-         * @return the unitNo
-         */
-        public int getUnitNo() {
-            return unitNo;
-        }
-
-        /**
-         * @paramunitNo the unitNo to set
-         */
-        public void setUnitNo(int unitNo) {
-            this.unitNo = unitNo;
-        }
-
-        /**
-         * @return the availability
-         */
-        public boolean isAvailability() {
-            return availability;
-        }
-
-        /**
-         * @paramavailability the availability to set
-         */
-        public void setAvailability(boolean availability) {
-            this.availability = availability;
-        }
-
-        public String toString() {
-            return String.format("%s: Unit%03d, ", getResidenceID(), +
-                    getUnitNo()) + (isAvailability()? "is available":
-                    "has been allocated");
-        }
-
-        /**
-         * @return the allocation
-         */
-        public Allocation getAllocation() {
-            return allocation;
-        }
-
-        /**
-         * @param allocation the allocation to set
-         */
-        public void setAllocation(Allocation allocation) {
-            this.allocation = allocation;
-        }
-    }
 
     public Residence(String address, int numUnits, int sizePerUnit,
                      double monthlyRental) {
@@ -88,29 +28,11 @@ public class Residence {
         setNumUnits(numUnits);
         setSizePerUnit(sizePerUnit);
         setMonthlyRental(monthlyRental);
-        setApplications(new ArrayList<Application>());
 
-        initialisedAllUnits();
     }
 
     public Residence(){};
 
-    public Unit getUnit(int unitNo) {
-        return getUnits().get(unitNo-1);
-    }
-
-    private void initialisedAllUnits() {
-        units = new ArrayList<Unit>(getNumUnits());
-
-        for (int i = 0; i < getNumUnits(); i++) { // units.size(); i++) {
-            Unit aUnit = new Unit(i+1);
-            units.add(aUnit);
-        }
-    }
-
-    public ArrayList<Unit> getUnits() {
-        return units;
-    }
 
     /**
      * @return the residenceID
@@ -184,71 +106,18 @@ public class Residence {
 
     @Override
     public String toString() {
+        return  "ResidenceID: "+ getResidenceID() + "| "
+                + "Address: "+ getAddress() + "| "
+                + "Monthly Rental: RM"+ String.format("%.2f",getMonthlyRental()) + "| "
+                + "Size per Unit: "+ getSizePerUnit() + "| "
+                + "No of units: " + getNumUnits();
+        /*
         return "ResidenceID " + getResidenceID() + ", with " + getNumUnits() +
-                " units at " + getAddress();
+                " unit(s) at " + getAddress();*/
     }
 
-    // side effect: application added to residence
-    public void addApplication(Application app) {
-        getApplications().add(app);
-        app.setResidence(this);
 
-    }
 
-    public Application findApplication(String appID) {
-        for (Application anApp: getApplications())
-            if (anApp.getApplicationID().equalsIgnoreCase(appID))
-                return anApp;
-        return null;
-    }
-
-    /**
-     * @return the staffID
-     */
-    public String getStaffID() {
-        return staffID;
-    }
-
-    /**
-     * @param staffID the staffID to set
-     */
-    public void setStaffID(String staffID) {
-        this.staffID = staffID;
-    }
-
-    /**
-     * @return the applicatiions
-     */
-    public ArrayList<Application> getApplications() {
-        return applications;
-    }
-
-    /**
-     * @paramapplications the applicatiions to set
-     */
-    public void setApplications(ArrayList<Application> applicatiions) {
-        this.applications = applicatiions;
-    }
-
-    public int getNoOfAvailableUnits() {
-        int count = 0;
-        for (Residence.Unit aUnit: getUnits())
-            if (aUnit.isAvailability())
-                count ++;
-        return count;
-    }
-
-    public String getAvailableUnitNos() {
-        if (getNoOfAvailableUnits() == 0)
-            return "All units in this residence have been taken.";
-        StringBuffer sb = new StringBuffer();
-        for (Residence.Unit aUnit: getUnits())
-            if (aUnit.isAvailability()) {
-                sb.append(aUnit.getUnitNo());
-                sb.append(" ");
-            }
-        return sb.toString();
-    }
 /*
     public static void main(String[] args) {
         Residence sunway = new Residence("SUNWAY", 20, 200, 250);
