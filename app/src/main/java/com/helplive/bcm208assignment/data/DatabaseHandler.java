@@ -571,6 +571,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try{
             String sql = "SELECT * FROM " + Constants.mhstables[2] + " WHERE RESIDENCE IN ( SELECT "  + Constants.RESIDENCE_ID + " FROM " + Constants.mhstables[1] + " WHERE " + Constants.RESIDENCE_OWNER_ID + " = '" + currentUser +"';";
             Cursor cursor = db.rawQuery(sql,null);
+
             Log.d("SQL TEST",sql);
 
             if(cursor.moveToFirst() == true){
@@ -586,7 +587,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     applicationList.add(application);
                 }while(cursor.moveToNext());
             }
-
 
 
         }catch (Exception e){

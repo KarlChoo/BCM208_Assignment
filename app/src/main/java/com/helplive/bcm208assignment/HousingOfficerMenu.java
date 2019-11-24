@@ -20,7 +20,6 @@ public class HousingOfficerMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_housing_officer_menu);
 
-
         Bundle extras = getIntent().getExtras();
 
         //Test this page
@@ -38,12 +37,13 @@ public class HousingOfficerMenu extends AppCompatActivity {
 
 
     public void goViewApplication(View view){
-        //Intent intent = new Intent(this,ViewApplicationApplicant.class);
-        //startActivity(intent);
+        Intent intent = new Intent(HousingOfficerMenu.this,ViewApplicationHO.class);
+        intent.putExtra("CurrentUser",currentUser);
+        startActivity(intent);
     }
 
     public void goViewResidence(View view){
-        Intent intent = new Intent(this,SetUpNewResidence.class);
+        Intent intent = new Intent(HousingOfficerMenu.this,SetUpNewResidence.class);
         intent.putExtra("CurrentUser",currentUser);
         startActivity(intent);
     }
