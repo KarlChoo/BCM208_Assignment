@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.helplive.bcm208assignment.data.DatabaseHandler;
 import com.helplive.bcm208assignment.model.User;
+import com.helplive.bcm208assignment.util.Constants;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -24,8 +25,10 @@ public class MainActivity extends AppCompatActivity {
 
         databaseHandler = new DatabaseHandler(MainActivity.this);
         //databaseHandler.initializeData(); //For hardcode insert data
-        //databaseHandler.manipulateDB(sql); //For hardcode db manipulate
-        //databaseHandler.deleteData(Constants.mhstables[0]); //For hardcode delete all data in table
+        String sql = "DELETE FROM residence";
+        String sql1 = "DELETE FROM unit";
+        databaseHandler.manipulateDB(sql); //For hardcode db manipulate
+        databaseHandler.manipulateDB(sql1);
 }
 
     public void login(View view){

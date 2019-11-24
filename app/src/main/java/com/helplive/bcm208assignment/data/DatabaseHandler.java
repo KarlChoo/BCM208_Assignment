@@ -18,7 +18,6 @@ import com.helplive.bcm208assignment.util.Constants;
 
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -140,16 +139,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void deleteData(String tablename){
-        SQLiteDatabase db = getWritableDatabase();
-        try{
-            String sql = "DELETE * FROM " + tablename + ";";
-            db.execSQL(sql);
-        }catch (Exception e){
-            Log.d("Delete table data: " , e.getMessage());
-        }
-        db.close();
-    };
 
     public void manipulateDB(String sql){
         SQLiteDatabase db = getWritableDatabase();
@@ -454,11 +443,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return residenceList;
     }
 
-    public void DeleteAllResidences(){
+    public void DeleteAllResidences(String currentUser){
         SQLiteDatabase db = this.getWritableDatabase();
         try{
-            String deleteAll = "DELETE FROM " + Constants.mhstables[1];
+            //Delete all units from the residence
+            String deleteUnits = "DELETE FROM " + Constants.mhstables[4] + " WHERE "
+                    + Constants.UNIT_RESIDENCE_ID + " IN(SELECT " + Constants.RESIDENCE_ID + " FROM "
+                    + Constants.mhstables[1] + " WHERE " + Constants.RESIDENCE_OWNER_ID + " ='" + currentUser + "');";
+            db.execSQL(deleteUnits);
 
+            //Delete all residence
+            String deleteAll = "DELETE FROM " + Constants.mhstables[1] + " WHERE " + Constants.RESIDENCE_OWNER_ID + " = '" +currentUser +"';";
             db.execSQL(deleteAll);
         } catch (Exception e) {
             Log.d("Delete All Residence: ", e.getMessage());
@@ -470,6 +465,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void DeleteResidence(Residence residence) {
         SQLiteDatabase db = this.getWritableDatabase();
         try{
+            String deleteUnits = "DELETE FROM " + Constants.mhstables[4] + " WHERE " + Constants.UNIT_RESIDENCE_ID
+                    + " = " + residence.getResidenceID() +";";
+            Log.d("SQL HERE",deleteUnits);
+            db.execSQL(deleteUnits);
 
             db.delete(Constants.mhstables[1], Constants.RESIDENCE_ID + "=?",
                     new String[]{String.valueOf(residence.getResidenceID())});
