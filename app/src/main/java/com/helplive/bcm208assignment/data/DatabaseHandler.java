@@ -103,6 +103,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     + Constants.UNIT_AVAILABITLITY + " INTEGER,"
                     +" PRIMARY KEY ("+ Constants.UNIT_NO + "," + Constants.UNIT_RESIDENCE_ID +"));";
 
+            Log.d("SQL HERE",CREATE_UNIT_TABLE);
+
             db.execSQL(CREATE_UNIT_TABLE);
         } catch (Exception e) {
             Log.d("OnCreate unit: ", e.getMessage());
@@ -505,19 +507,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public void createApplication(Application application){
         SQLiteDatabase db = this.getWritableDatabase();
+        try{
+            ContentValues contentValues = new ContentValues();
 
-        ContentValues contentValues = new ContentValues();
+            contentValues.put(Constants.APPLICATION_DATE,application.getApplicationDate());
+            contentValues.put(Constants.APPLICATION_REQUIREDMONTH,application.getRequiredMonth());
+            contentValues.put(Constants.APPLICATION_REQUIREDYEAR,application.getRequiredYear());
+            contentValues.put(Constants.APPLICATION_STATUS,application.getStatus());
+            contentValues.put(Constants.APPLICATION_APPLICANT,application.getApplicant());
+            contentValues.put(Constants.APPLICATION_RESIDENCE,application.getResidenceID());
 
-        //issue with LocalDate
-        contentValues.put(Constants.APPLICATION_DATE,dateToStrDB.format(application.getApplicationDate()));
-        contentValues.put(Constants.APPLICATION_REQUIREDMONTH,application.getRequiredMonth());
-        contentValues.put(Constants.APPLICATION_REQUIREDYEAR,application.getRequiredYear());
-        contentValues.put(Constants.APPLICATION_STATUS,application.getStatus());
-        //pending
-        //contentValues.put(Constants.APPLICATION_APPLICANT,dateToStrDB.format(application.getApplicant()));
-        //contentValues.put(Constants.APPLICATION_RESIDENCE,application.getResidence().getResidenceID());
-
-        db.insert(Constants.mhstables[2],null,contentValues);
+            db.insert(Constants.mhstables[2],null,contentValues);
+        }catch (Exception e){
+            Log.d("Application create:",e.getMessage());
+        }
         db.close();
     }
 
