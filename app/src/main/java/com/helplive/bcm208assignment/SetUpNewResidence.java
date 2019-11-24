@@ -25,7 +25,7 @@ public class SetUpNewResidence extends AppCompatActivity {
     DatabaseHandler databaseHandler;
     Residence residence;
     AlertDialog.Builder alert;
-    String currentUser;
+    private String currentUser;
 
     public void editButton(View view){
         //user at least select 1 residence
@@ -89,9 +89,6 @@ public class SetUpNewResidence extends AppCompatActivity {
         }
 
         currentUser = extras.getString("CurrentUser");
-
-        //Log.d("Current User:",currentUser);
-        //Log.d("Current User:",currentUser);
 
         databaseHandler = new DatabaseHandler(SetUpNewResidence.this);
         allResidencesListView= findViewById(R.id.allResidenceListView);

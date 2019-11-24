@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         databaseHandler = new DatabaseHandler(MainActivity.this);
-        //databaseHandler.initializeData(); //For ardcode insert data
+        //databaseHandler.initializeData(); //For hardcode insert data
         //databaseHandler.manipulateDB(sql); //For hardcode db manipulate
         //databaseHandler.deleteData(Constants.mhstables[0]); //For hardcode delete all data in table
 }
