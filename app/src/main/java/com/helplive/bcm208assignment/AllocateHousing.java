@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -44,7 +45,7 @@ public class AllocateHousing extends AppCompatActivity{
         spinnerResidenceID.setAdapter(adapterResidenceID);
 
         List<Unit> unitNo = databaseHandler.getAllUnits();
-        Spinner spinnerUnitNo = (Spinner) findViewById(R.id.spinnerUnitNo);
+        final Spinner spinnerUnitNo = (Spinner) findViewById(R.id.spinnerUnitNo);
         ArrayAdapter<String> adapterUnitNo = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item);
         spinnerUnitNo.setAdapter(adapterUnitNo);
 
@@ -137,10 +138,33 @@ public class AllocateHousing extends AppCompatActivity{
         rdbtnReject = findViewById(R.id.rdbtnReject);
         rdbtnWaitlist = findViewById(R.id.rdbtnWaitlist);
 
-        if((rdbtnReject.isSelected()) || (rdbtnWaitlist.isSelected())) {
-            spinnerUnitNo.setEnabled(false);
-            fromDate.setEnabled(false);
-            spinner.setEnabled(false);
-        }
+        rdbtnApprove.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                spinnerUnitNo.setEnabled(true);
+                fromDate.setEnabled(true);
+                spinner.setEnabled(true);
+            }
+        });
+
+        rdbtnReject.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                spinnerUnitNo.setEnabled(false);
+                fromDate.setEnabled(false);
+                fromDate.setText("Select a date");
+                spinner.setEnabled(false);
+            }
+        });
+
+        rdbtnWaitlist.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                spinnerUnitNo.setEnabled(false);
+                fromDate.setEnabled(false);
+                fromDate.setText("Select a date");
+                spinner.setEnabled(false);
+            }
+        });
     }
 }
