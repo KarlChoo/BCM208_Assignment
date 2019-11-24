@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +29,7 @@ public class ViewApplicationApplicant extends AppCompatActivity {
     Application application;
     private String currentUser;
 
+
     @Override
     public void onResume(){
         super.onResume();
@@ -45,6 +47,7 @@ public class ViewApplicationApplicant extends AppCompatActivity {
         }
 
         currentUser = extras.getString("CurrentUser");
+        application = null;
 
         databaseHandler = new DatabaseHandler( this);
         allApplicationListView = findViewById(R.id.allApplicationListView);
@@ -77,5 +80,25 @@ public class ViewApplicationApplicant extends AppCompatActivity {
         List<Application> applicationList = databaseHandler.getAllApplicationApplicant(currentUser);
         ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, applicationList);
         allApplicationListView.setAdapter(adapter);
+    }
+
+    public void withdrawApplication(View view){
+        if(application != null){
+            alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    databaseHandler.withdrawApp(application);
+                    getAllApplication();
+                }
+            });
+
+            alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            alert.show();
+        }
     }
 }

@@ -496,6 +496,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return result;
     }
 
+
+    /**
+     *
+     *  Application table methods
+     *
+     */
+
     public void createApplication(Application application){
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -514,14 +521,27 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void withdrawApp(Application application){
+        SQLiteDatabase db = this.getWritableDatabase();
+        try{
+            String sql = "UPDATE " + Constants.mhstables[2] +" SET status = 'Withdraw' WHERE "+ Constants.APPLICATION_ID
+                    + " = " + application.getApplicationID() +";";
+
+            db.execSQL(sql);
+
+        }catch (Exception e){
+            Log.d("Withdraw application",e.getMessage());
+        }
+        db.close();
+    }
+
     public List<Application> getAllApplicationApplicant(String currentUser){
         SQLiteDatabase db = this.getReadableDatabase();
         List<Application> applicationList = new ArrayList<>();
         try{
-            String sql = "SELECT * FROM " + Constants.mhstables[2] + " WHERE " + Constants.APPLICATION_APPLICANT + " = '" + currentUser +"';";
+            String sql = "SELECT * FROM " + Constants.mhstables[2] + " WHERE "
+                    + Constants.APPLICATION_APPLICANT + " = '" + currentUser +"';";
             Cursor cursor = db.rawQuery(sql,null);
-
-            Log.d("SQL TEST",sql);
 
             if(cursor.moveToFirst() == true){
                 //do-while moveToNext returns false
@@ -576,6 +596,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return applicationList;
     }
 
+
+    /**
+     *
+     * Allocation table methods
+     *
+     */
     public void makeAllocation(Allocation allocation){
         SQLiteDatabase db = this.getWritableDatabase();
 
