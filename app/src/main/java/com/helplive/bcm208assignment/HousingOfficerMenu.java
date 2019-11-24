@@ -2,15 +2,14 @@ package com.helplive.bcm208assignment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class ApplicantMenu extends AppCompatActivity {
+import com.helplive.bcm208assignment.model.HousingOfficer;
 
+public class HousingOfficerMenu extends AppCompatActivity {
 
     private String currentUser;
     private String fullname;
@@ -19,14 +18,15 @@ public class ApplicantMenu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_applicant_menu);
+        setContentView(R.layout.activity_housing_officer_menu);
+
 
         Bundle extras = getIntent().getExtras();
 
-        //For testing this page
+        //Test this page
         if(extras == null){
             currentUser = "Not set";
-            fullname = "Test Applicant";
+            fullname = "Test Housing Officer";
         }
         currentUser = extras.getString("CurrentUser");
         fullname = extras.getString("UserFullname");
@@ -34,16 +34,17 @@ public class ApplicantMenu extends AppCompatActivity {
         welcomeText = findViewById(R.id.welcomeTextView);
         welcomeText.setText("Welcome, "+ fullname);
 
-        //Toast.makeText(this,currentUser,Toast.LENGTH_SHORT).show();
     }
 
+
     public void goViewApplication(View view){
-        Intent intent = new Intent(ApplicantMenu.this,ViewApplicationApplicant.class);
-        startActivity(intent);
+        //Intent intent = new Intent(this,ViewApplicationApplicant.class);
+        //startActivity(intent);
     }
 
     public void goViewResidence(View view){
-        Intent intent = new Intent(ApplicantMenu.this,ViewResidenceApplicant.class);
+        Intent intent = new Intent(this,SetUpNewResidence.class);
+        intent.putExtra("CurrentUser",currentUser);
         startActivity(intent);
     }
 

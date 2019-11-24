@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.helplive.bcm208assignment.data.DatabaseHandler;
+import com.helplive.bcm208assignment.model.HousingOfficer;
 import com.helplive.bcm208assignment.model.User;
 
 
@@ -49,8 +50,9 @@ public class MainActivity extends AppCompatActivity {
             }else  if(currentUser.getUserID().substring(0,2).equalsIgnoreCase("HO")){
                 //Go to HO page
                 //Toast.makeText(this,"Housing Officer",Toast.LENGTH_SHORT).show();
-                intent = new Intent(MainActivity.this, ApplicantMenu.class);
+                intent = new Intent(MainActivity.this, HousingOfficerMenu.class);
                 intent.putExtra("CurrentUser",currentUser.getUserID());
+                intent.putExtra("UserFullname",currentUser.getFullname());
                 startActivity(intent);
             }
             editTextPassword.setText("");

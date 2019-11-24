@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ApplicantMenu">
+    tools:context=".HousingOfficerMenu">
 
     <TextView
         android:id="@+id/welcomeTextView"
@@ -72,7 +72,7 @@
         android:paddingTop="5dp"
         android:paddingRight="30dp"
         android:paddingBottom="5dp"
-        android:text="View Residences"
+        android:text="Setup Residences"
         android:textColor="@color/colorWhite"
         android:textSize="20sp"
         android:textStyle="bold"
