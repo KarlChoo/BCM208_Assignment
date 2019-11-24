@@ -20,7 +20,7 @@ public class Unit {
         return availability;
     }
 
-    public void setAvailability(boolean availability) {
+    public void setAvailability(int availability) {
         this.availability = availability;
     }
 
@@ -31,7 +31,7 @@ public class Unit {
         return residence;
     }
 
-    public void setResidence(Residence residence) {
+    public void setResidence(int residence) {
         this.residence = residence;
     }
 
@@ -39,4 +39,5 @@ public class Unit {
         setUnitNo(0);
         setAvailability(true);
     }
+
 }

@@ -59,7 +59,49 @@
                 android:layout_weight="1" />
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:paddingTop="35dp">
 
+            <TextView
+                android:id="@+id/lblDecision"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Decision"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rdbtnApprove"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:checked="true"
+                    android:text="Approve" />
+
+                <RadioButton
+                    android:id="@+id/rdbtnReject"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Reject" />
+
+                <RadioButton
+                    android:id="@+id/rdbtnWaitlist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Waitlist" />
+
+            </RadioGroup>
+
+
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -82,6 +124,7 @@
                 android:layout_marginRight="25dp"
                 android:layout_weight="1" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
