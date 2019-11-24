@@ -48,6 +48,12 @@ public class HousingOfficerMenu extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void goAllocateHousing(View view){
+        Intent intent = new Intent(HousingOfficerMenu.this,AllocateHousing.class);
+        intent.putExtra("CurrentUser",currentUser);
+        startActivity(intent);
+    }
+
     public void logout(View view){
         finish();
     }
