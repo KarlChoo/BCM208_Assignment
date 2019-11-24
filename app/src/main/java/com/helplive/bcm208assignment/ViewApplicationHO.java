@@ -19,7 +19,6 @@ public class ViewApplicationHO extends AppCompatActivity {
 
     private DatabaseHandler databaseHandler;
     private ListView allApplicationListView;
-    AlertDialog.Builder alert;
     Application application;
     private String currentUser;
 
@@ -32,7 +31,7 @@ public class ViewApplicationHO extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_application_applicant);
+        setContentView(R.layout.activity_view_application_ho);
 
         Bundle extras = getIntent().getExtras();
         if(extras == null) {
@@ -43,11 +42,6 @@ public class ViewApplicationHO extends AppCompatActivity {
 
         databaseHandler = new DatabaseHandler( this);
         allApplicationListView = findViewById(R.id.allApplicationListView);
-
-        alert = new AlertDialog.Builder(this);
-        alert.setTitle("Withdraw Application");
-        alert.setMessage("Are you sure you want to withdraw?");
-        alert.setIcon(R.drawable.delete_icon);
 
         allApplicationListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {

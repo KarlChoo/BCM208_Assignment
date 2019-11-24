@@ -121,10 +121,10 @@ public class Application {
 
 
     public String toString() {
-        return  "Application ID:" + getApplicationID() + "| "
-                +"Application Date: " + getApplicationDate() + "| "
-                + "Required Month: "+ getRequiredMonth() +"| "
-                + "Required Year:" + getRequiredYear() + "| "
+        return  "Application ID:" + getApplicationID() + " | "
+                +"Application Date: " + getApplicationDate() + " | "
+                + "Required Month: "+ getRequiredMonth() +" | "
+                + "Required Year:" + getRequiredYear() + " | "
                 + "Status: " + getStatus();
     }
 }
