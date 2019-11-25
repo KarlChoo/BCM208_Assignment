@@ -197,6 +197,11 @@ public class AllocateHousing extends AppCompatActivity implements AdapterView.On
 
         List<String> applicationIDList = db.getAllApplicationID(currentUser);
 
+        if(applicationIDList.isEmpty()){
+            Toast.makeText(this, "No applications to allocate", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, applicationIDList);
 
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
