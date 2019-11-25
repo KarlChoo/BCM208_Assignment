@@ -105,7 +105,7 @@ public class ViewApplicationApplicant extends AppCompatActivity {
                 Toast.makeText(this, "Rejected, Approved and Withdrawn applications cannot be withdrawn", Toast.LENGTH_SHORT).show();
             }
         }else{
-            Toast.makeText(this,"Please select an application first!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Please select an application first.",Toast.LENGTH_SHORT).show();
         }
     }
 }

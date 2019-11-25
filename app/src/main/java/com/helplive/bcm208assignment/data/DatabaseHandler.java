@@ -579,7 +579,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         List<Application> applicationList = new ArrayList<>();
 
         try{
-            String sql = "SELECT * FROM " + Constants.mhstables[2] + " WHERE RESIDENCE IN ( SELECT "  + Constants.RESIDENCE_ID + " FROM " + Constants.mhstables[1] + " WHERE " + Constants.RESIDENCE_OWNER_ID + " = '" + currentUser +"');";
+            String sql = "SELECT * FROM " + Constants.mhstables[2] + " WHERE RESIDENCE IN ( SELECT "  + Constants.RESIDENCE_ID + " FROM " + Constants.mhstables[1] + " WHERE " + Constants.RESIDENCE_OWNER_ID + " = '" + currentUser +
+                    "' ) AND " + Constants.APPLICATION_STATUS + " IN ('New','Waitlist');";
             Cursor cursor = db.rawQuery(sql,null);
 
 
@@ -660,7 +661,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         try{
 
-            String selectAll = "SELECT * FROM " + Constants.mhstables[2] + " WHERE RESIDENCE IN ( SELECT "  + Constants.RESIDENCE_ID + " FROM " + Constants.mhstables[1] + " WHERE " + Constants.RESIDENCE_OWNER_ID + " = '" + currentUser +"');";
+            String selectAll = "SELECT * FROM " + Constants.mhstables[2] + " WHERE RESIDENCE IN ( SELECT "  + Constants.RESIDENCE_ID + " FROM " + Constants.mhstables[1] + " WHERE " + Constants.RESIDENCE_OWNER_ID + " = '" + currentUser +
+                    "' ) AND " + Constants.APPLICATION_STATUS + " IN ('New','Waitlist');";
             //only one for rawQuery, query has more than 1
             Cursor cursor = db.rawQuery(selectAll,null);
 
