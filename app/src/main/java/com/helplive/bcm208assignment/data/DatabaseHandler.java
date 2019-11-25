@@ -685,6 +685,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try{
             String selectAll = "SELECT * FROM " + Constants.mhstables[4] + " WHERE " + Constants.UNIT_RESIDENCE_ID + " = " + applicationID + ";";
             //only one for rawQuery, query has more than 1
+            Log.d("SQL TEST",selectAll);
             Cursor cursor = db.rawQuery(selectAll,null);
 
             if(cursor.moveToFirst() == true){

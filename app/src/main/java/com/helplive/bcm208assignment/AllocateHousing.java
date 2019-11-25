@@ -220,7 +220,7 @@ public class AllocateHousing extends AppCompatActivity implements AdapterView.On
             case R.id.spinnerApplicationID:
                 applicationID = Integer.parseInt(spinnerApplicationID.getSelectedItem().toString());
                 loadSpinnerUnitNo(applicationID);
-                Log.d("ITEMSELECTED", String.valueOf(applicationID));
+                
                 break;
             default:
                 break;
