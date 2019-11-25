@@ -52,7 +52,7 @@
                 android:textSize="20sp" />
 
             <Spinner
-                android:id="@+id/spinnerResidenceID"
+                android:id="@+id/spinnerApplicationID"
                 android:layout_width="10dp"
                 android:layout_height="30dp"
                 android:layout_marginRight="25dp"
@@ -189,6 +189,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
+                android:onClick="allocateButton"
                 android:text="Allocate" />
 
             <Button
@@ -198,6 +199,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
+                android:onClick="cancelButton"
                 android:text="Cancel" />
         </LinearLayout>
 

@@ -651,32 +651,70 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public List<Unit> getAllUnits(){
+    public List<String> getAllApplicationID(String currentUser){
 
-        List<Unit> unitList = new ArrayList<>();
+        List<String> applicationIDList = new ArrayList<String>();
         SQLiteDatabase db = this.getReadableDatabase();
         try{
 
-            String selectAll = "SELECT * FROM " + Constants.mhstables[4] ;
+            String selectAll = "SELECT * FROM " + Constants.mhstables[2] + " WHERE RESIDENCE IN ( SELECT "  + Constants.RESIDENCE_ID + " FROM " + Constants.mhstables[1] + " WHERE " + Constants.RESIDENCE_OWNER_ID + " = '" + currentUser +"');";
+            Log.d("SQL HERE",selectAll);
             //only one for rawQuery, query has more than 1
             Cursor cursor = db.rawQuery(selectAll,null);
 
             if(cursor.moveToFirst() == true){
                 //do-while moveToNext returns false
                 do{
-                    Unit unit = new Unit();
-                    unit.setUnitNo(Integer.parseInt(cursor.getString(0)));
-                    unit.setResidence(Integer.parseInt(cursor.getString(1)));
-                    unit.setAvailability(Integer.parseInt(cursor.getString(2)));
-
-                    unitList.add(unit);
+                    applicationIDList.add(cursor.getString(0));
                 }while(cursor.moveToNext());
             }
         } catch (Exception e) {
-            Log.d("GET All Residence: ", e.getMessage());
+            Log.d("Get all applicaitonID ", e.getMessage());
             e.printStackTrace();
         }
         db.close();
-        return unitList;
+        return applicationIDList;
+    }
+
+    public List<String> getAllUnitNo(int applicationID){
+
+        List<String> unitNoList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        try{
+            String selectAll = "SELECT * FROM " + Constants.mhstables[4] ;
+            //String selectAll = "SELECT * FROM " + Constants.mhstables[4] + " WHERE " + Constants.UNIT_RESIDENCE_ID + " = " + applicationID + ";";
+            //only one for rawQuery, query has more than 1
+            Cursor cursor = db.rawQuery(selectAll,null);
+
+            if(cursor.moveToFirst() == true){
+                //do-while moveToNext returns false
+                do{
+                    unitNoList.add(cursor.getString(0));
+                }while(cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.d("Get all unitNo ", e.getMessage());
+            e.printStackTrace();
+        }
+        db.close();
+        return unitNoList;
+    }
+
+    public void setWaitlist(int applicationID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String sql = "UPDATE " + Constants.mhstables[2] + " SET " + Constants.APPLICATION_STATUS + " = 'Waitlist' WHERE " + Constants.APPLICATION_ID + " = " + applicationID + ";";
+        db.execSQL(sql);
+        Log.d("WAITLIST",sql);
+        db.close();
+    }
+
+    public void setRejected(int applicationID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String sql = "UPDATE " + Constants.mhstables[2] + " SET " + Constants.APPLICATION_STATUS + " = 'Rejected' WHERE " + Constants.APPLICATION_ID + " = " + applicationID + ";";
+        db.execSQL(sql);
+        Log.d("REJECTED",sql);
+        db.close();
     }
 }

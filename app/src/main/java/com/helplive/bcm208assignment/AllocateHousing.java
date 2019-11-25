@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
@@ -20,35 +22,39 @@ import android.widget.Toast;
 import com.helplive.bcm208assignment.data.DatabaseHandler;
 import com.helplive.bcm208assignment.model.Residence;
 import com.helplive.bcm208assignment.model.Unit;
+import com.helplive.bcm208assignment.util.Constants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
-public class AllocateHousing extends AppCompatActivity{
+public class AllocateHousing extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private RadioButton rdbtnApprove;
     private RadioButton rdbtnReject;
     private RadioButton rdbtnWaitlist;
     private TextView fromDate;
+    private String currentUser;
     DatePickerDialog datePickerDialog;
+    DatabaseHandler databaseHandler = new DatabaseHandler(this);
+    Spinner spinnerApplicationID;
+    Spinner spinnerUnitNo;
+    private int applicationID;
+    protected Adapter initializedAdapter= null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_allocate_housing);
 
-        DatabaseHandler databaseHandler = new DatabaseHandler(this);
-        List<Residence> listResidenceID = databaseHandler.getAllResidences();
-        Spinner spinnerResidenceID = (Spinner) findViewById(R.id.spinnerResidenceID);
-        ArrayAdapter<String> adapterResidenceID = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item);
-        spinnerResidenceID.setAdapter(adapterResidenceID);
+        Bundle extras = getIntent().getExtras();
+        currentUser = extras.getString("CurrentUser");
 
-        List<Unit> unitNo = databaseHandler.getAllUnits();
-        final Spinner spinnerUnitNo = (Spinner) findViewById(R.id.spinnerUnitNo);
-        ArrayAdapter<String> adapterUnitNo = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item);
-        spinnerUnitNo.setAdapter(adapterUnitNo);
+        spinnerApplicationID = (Spinner) findViewById(R.id.spinnerApplicationID);
 
+        spinnerUnitNo = (Spinner) findViewById(R.id.spinnerUnitNo);
+
+        loadSpinnerApplicationID();
 
         // Get reference of widgets from XML layout
         final Spinner spinner = (Spinner) findViewById(R.id.spinnerDuration);
@@ -144,6 +150,7 @@ public class AllocateHousing extends AppCompatActivity{
                 if(isChecked) {
                     spinnerUnitNo.setEnabled(true);
                     fromDate.setEnabled(true);
+                    fromDate.setText("Select a date");
                     spinner.setEnabled(true);
                 }
             }
@@ -155,7 +162,7 @@ public class AllocateHousing extends AppCompatActivity{
                 if(isChecked) {
                     spinnerUnitNo.setEnabled(false);
                     fromDate.setEnabled(false);
-                    fromDate.setText("Select a date");
+                    fromDate.setText("Date not applicable");
                     spinner.setEnabled(false);
                 }
             }
@@ -167,10 +174,76 @@ public class AllocateHousing extends AppCompatActivity{
                 if(isChecked) {
                     spinnerUnitNo.setEnabled(false);
                     fromDate.setEnabled(false);
-                    fromDate.setText("Select a date");
+                    fromDate.setText("Date not applicable");
                     spinner.setEnabled(false);
                 }
             }
         });
+    }
+
+    public void loadSpinnerApplicationID() {
+        DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+
+
+        List<String> applicationIDList = db.getAllApplicationID(currentUser);
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, applicationIDList);
+
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerApplicationID.setAdapter(dataAdapter);
+
+    }
+
+    public void loadSpinnerUnitNo(int applicationID){
+        DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+
+        List<String> unitNoList = db.getAllUnitNo(applicationID);
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,unitNoList);
+
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerUnitNo.setAdapter(dataAdapter);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if(initializedAdapter !=parent.getAdapter() ) {
+            initializedAdapter = parent.getAdapter();
+            return;
+        }
+
+        switch(parent.getId()) {
+            case R.id.spinnerApplicationID:
+                applicationID = Integer.parseInt(spinnerApplicationID.getSelectedItem().toString());
+                loadSpinnerUnitNo(applicationID);
+                Log.d("ITEMSELECTED", String.valueOf(applicationID));
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    public void allocateButton(View view) {
+        DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+        if (rdbtnWaitlist.isSelected()) {
+            applicationID = Integer.parseInt(spinnerApplicationID.getSelectedItem().toString());
+            db.setWaitlist(applicationID);
+        }
+        else if(rdbtnReject.isSelected()){
+            applicationID = Integer.parseInt(spinnerApplicationID.getSelectedItem().toString());
+            db.setRejected(applicationID);
+        }
+        finish();
+    }
+
+    public void cancelButton(View view){
+        finish();
     }
 }
