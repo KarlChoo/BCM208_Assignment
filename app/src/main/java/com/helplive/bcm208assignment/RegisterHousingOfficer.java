@@ -59,7 +59,7 @@ public class RegisterHousingOfficer extends AppCompatActivity {
             return;
         }
 
-        //Pass must be >= 8 chars
+        //Pass must be >8 chars
         if(password.length() < 8){
             Toast.makeText(this.getBaseContext(),"Password must be longer than 8 characters",Toast.LENGTH_SHORT).show();
             editTextPass.requestFocus();
