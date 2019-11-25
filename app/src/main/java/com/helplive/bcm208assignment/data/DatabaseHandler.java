@@ -624,8 +624,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         contentValues.put(Constants.ALLOCATION_DURATION,allocation.getDuration());
         contentValues.put(Constants.ALLOCATION_ENDDATE,allocation.getEndDate());
 
-
         db.insert(Constants.mhstables[3],null,contentValues);
+
+        //Set the unit availability to false
+        String sql = "UPDATE " + Constants.mhstables[4] + " SET " + Constants.UNIT_AVAILABITLITY + " = 0 WHERE "
+                + Constants.UNIT_RESIDENCE_ID + " = " + allocation.getResidenceID()
+                + " AND " + Constants.UNIT_NO + " = " + allocation.getUnitNo();
+        Log.d("SQL HERE",sql);
+        db.execSQL(sql);
         db.close();
     }
 
