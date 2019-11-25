@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F7ECAC"
     tools:context=".HousingOfficerMenu">
 
     <TextView
@@ -41,26 +42,26 @@
         app:layout_constraintVertical_bias="0.832" />
 
     <Button
-    android:id="@+id/viewApplicationBtn"
-    android:layout_width="260dp"
-    android:layout_height="60dp"
-    android:background="#2196F3"
-    android:fontFamily="@font/roboto_thin"
-    android:onClick="goViewApplication"
-    android:paddingLeft="30dp"
-    android:paddingTop="5dp"
-    android:paddingRight="30dp"
-    android:paddingBottom="5dp"
-    android:text="View Application"
-    android:textColor="@color/colorWhite"
-    android:textSize="20sp"
-    android:textStyle="bold"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.503"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_bias="0.298" />
+        android:id="@+id/viewApplicationBtn"
+        android:layout_width="260dp"
+        android:layout_height="60dp"
+        android:background="#2196F3"
+        android:fontFamily="@font/roboto_thin"
+        android:onClick="goViewApplication"
+        android:paddingLeft="30dp"
+        android:paddingTop="5dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="5dp"
+        android:text="View Application"
+        android:textColor="@color/colorWhite"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.298" />
 
     <Button
         android:id="@+id/setupResidencesButton"
@@ -105,5 +106,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.65"></Button>
+
+    <ImageView
+        android:id="@+id/profileImgHO"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:srcCompat="@drawable/profile"
+        tools:layout_editor_absoluteX="37dp"
+        tools:layout_editor_absoluteY="25dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
