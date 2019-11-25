@@ -179,6 +179,8 @@ public class AllocateHousing extends AppCompatActivity implements AdapterView.On
                 }
             }
         });
+        spinnerApplicationID.setOnItemSelectedListener(this);
+        spinnerUnitNo.setOnItemSelectedListener(this);
     }
 
     public void loadSpinnerApplicationID() {
@@ -207,13 +209,24 @@ public class AllocateHousing extends AppCompatActivity implements AdapterView.On
         spinnerUnitNo.setAdapter(dataAdapter);
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if(initializedAdapter !=parent.getAdapter() ) {
-            initializedAdapter = parent.getAdapter();
-            return;
-        }
 
+        @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+        switch (view.getId()) {
+
+            case R.id.spinnerApplicationID:
+                int applicationID = (int) parent.getItemAtPosition(position);
+                loadSpinnerUnitNo(applicationID);
+                break;
+            default:
+                break;
+        }
+        /*
+            else if(province.matches("Free State")){
+                spinPro = 2;
+                populateDist();
+            }
         switch(parent.getId()) {
             case R.id.spinnerApplicationID:
                 applicationID = Integer.parseInt(spinnerApplicationID.getSelectedItem().toString());
@@ -222,7 +235,7 @@ public class AllocateHousing extends AppCompatActivity implements AdapterView.On
                 break;
             default:
                 break;
-        }
+        }*/
     }
 
     @Override
@@ -232,13 +245,17 @@ public class AllocateHousing extends AppCompatActivity implements AdapterView.On
 
     public void allocateButton(View view) {
         DatabaseHandler db = new DatabaseHandler(getApplicationContext());
-        if (rdbtnWaitlist.isSelected()) {
-            applicationID = Integer.parseInt(spinnerApplicationID.getSelectedItem().toString());
+        if (rdbtnWaitlist.isChecked()) {
+            applicationID = Integer.parseInt((String)spinnerApplicationID.getSelectedItem());
             db.setWaitlist(applicationID);
         }
-        else if(rdbtnReject.isSelected()){
-            applicationID = Integer.parseInt(spinnerApplicationID.getSelectedItem().toString());
+        else if(rdbtnReject.isChecked()){
+            applicationID = Integer.parseInt((String)spinnerApplicationID.getSelectedItem());
             db.setRejected(applicationID);
+        }
+        else{
+            applicationID = Integer.parseInt((String)spinnerApplicationID.getSelectedItem());
+            db.setApproved(applicationID);
         }
         finish();
     }
@@ -246,4 +263,5 @@ public class AllocateHousing extends AppCompatActivity implements AdapterView.On
     public void cancelButton(View view){
         finish();
     }
+
 }

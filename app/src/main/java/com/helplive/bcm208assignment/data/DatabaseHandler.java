@@ -680,8 +680,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         List<String> unitNoList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         try{
-            String selectAll = "SELECT * FROM " + Constants.mhstables[4] ;
-            //String selectAll = "SELECT * FROM " + Constants.mhstables[4] + " WHERE " + Constants.UNIT_RESIDENCE_ID + " = " + applicationID + ";";
+            String selectAll = "SELECT * FROM " + Constants.mhstables[4] + " WHERE " + Constants.UNIT_RESIDENCE_ID + " = " + applicationID + ";";
             //only one for rawQuery, query has more than 1
             Cursor cursor = db.rawQuery(selectAll,null);
 
@@ -714,6 +713,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String sql = "UPDATE " + Constants.mhstables[2] + " SET " + Constants.APPLICATION_STATUS + " = 'Rejected' WHERE " + Constants.APPLICATION_ID + " = " + applicationID + ";";
         db.execSQL(sql);
         Log.d("REJECTED",sql);
+        db.close();
+    }
+
+    public void setApproved(int applicationID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String sql = "UPDATE " + Constants.mhstables[2] + " SET " + Constants.APPLICATION_STATUS + " = 'Approved' WHERE " + Constants.APPLICATION_ID + " = " + applicationID + ";";
+        db.execSQL(sql);
+        Log.d("APPROVED",sql);
         db.close();
     }
 }
