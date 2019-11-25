@@ -85,21 +85,25 @@ public class ViewApplicationApplicant extends AppCompatActivity {
 
     public void withdrawApplication(View view){
         if(application != null){
-            alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    databaseHandler.withdrawApp(application);
-                    getAllApplication();
-                }
-            });
+            if(application.getStatus().equalsIgnoreCase("New") || application.getStatus().equalsIgnoreCase("Waitlist")){
+                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        databaseHandler.withdrawApp(application);
+                        getAllApplication();
+                    }
+                });
 
-            alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            alert.show();
+                alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                alert.show();
+            }else{
+                Toast.makeText(this, "Rejected, Approved and Withdrawn applications cannot be withdrawn", Toast.LENGTH_SHORT).show();
+            }
         }else{
             Toast.makeText(this,"Please select an application first!",Toast.LENGTH_SHORT).show();
         }
