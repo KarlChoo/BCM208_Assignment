@@ -721,9 +721,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void setApproved(int applicationID) {
         SQLiteDatabase db = this.getWritableDatabase();
 
+        String sqlGetApplicant = "SELECT " + Constants.APPLICATION_APPLICANT + " FROM " + Constants.mhstables[2]
+                + " WHERE " + Constants.APPLICATION_ID + " = " + applicationID +";";
+        Cursor cursor = db.rawQuery(sqlGetApplicant,null);
+        cursor.moveToFirst();
+        String applicantID = cursor.getString(0);
+
+        //Reject all applications made by user, except withdraw which remains
+        String rejectAllSql = "UPDATE " + Constants.mhstables[2] + " SET " + Constants.APPLICATION_STATUS
+                + " = 'Rejected' WHERE " + Constants.APPLICATION_APPLICANT + " = '" + applicantID + "' AND NOT "
+                + Constants.APPLICATION_STATUS + " = 'Withdraw';";
+        db.execSQL(rejectAllSql);
+
         String sql = "UPDATE " + Constants.mhstables[2] + " SET " + Constants.APPLICATION_STATUS + " = 'Approved' WHERE " + Constants.APPLICATION_ID + " = " + applicationID + ";";
         db.execSQL(sql);
-        Log.d("APPROVED",sql);
         db.close();
     }
 

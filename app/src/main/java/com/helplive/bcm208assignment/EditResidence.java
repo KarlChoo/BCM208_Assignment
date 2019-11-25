@@ -100,6 +100,8 @@ public class EditResidence extends AppCompatActivity {
             residence = databaseHandler.GetResidence(residenceID);
             addressEditText2.setText(residence.getAddress());
             numOfUnitsEditText2.setText(String.valueOf(residence.getNumUnits()));
+            //Unit number should not be allowed to edit as it will affect the unit table,
+            //and may affect the any form of allocations made to the unit.
             sizeOfUnitEditText2.setText(String.valueOf(residence.getSizePerUnit()));
             String monthlyRental = new Double(residence.getMonthlyRental()).toString();
             monthlyRentalEditText2.setText(monthlyRental);

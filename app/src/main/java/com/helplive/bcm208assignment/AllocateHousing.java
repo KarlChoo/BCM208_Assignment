@@ -240,21 +240,42 @@ public class AllocateHousing extends AppCompatActivity implements AdapterView.On
         if (rdbtnWaitlist.isChecked()) {
             applicationID = Integer.parseInt((String)spinnerApplicationID.getSelectedItem());
             db.setWaitlist(applicationID);
+            Toast.makeText(this, "Application waitlisted", Toast.LENGTH_SHORT).show();
         }
         else if(rdbtnReject.isChecked()){
             applicationID = Integer.parseInt((String)spinnerApplicationID.getSelectedItem());
             db.setRejected(applicationID);
+            Toast.makeText(this, "Application rejected", Toast.LENGTH_SHORT).show();
         }
         else{
+            //Get application ID
             applicationID = Integer.parseInt((String)spinnerApplicationID.getSelectedItem());
-            db.setApproved(applicationID);
+            db.setApproved(applicationID); //Set to application to approve and the rest to rejected
+
+            //Get unit no
             unitNo = Integer.parseInt((String)spinnerUnitNo.getSelectedItem());
+
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String fromDate = sdf.format(calendar.getTime());
+            String fromDate;
+
+            //Requires validation in case user does not choose a date
+            try {
+                fromDate = sdf.format(calendar.getTime());
+            }catch (Exception e){
+                Toast.makeText(this, "Please select a from date with the calendar", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            //Get duration
             int duration = Integer.parseInt((String)spinnerDuration.getSelectedItem());
+
+            //Get to date
             calendar.add(Calendar.MONTH,duration);
             String toDate = sdf.format(calendar.getTime());
+
+            //get residenceID
             int residenceID = db.retrieveResidenceID(applicationID);
+
             Allocation a = new Allocation(fromDate,toDate,duration,applicationID,residenceID,unitNo);
             db.makeAllocation(a);
             Toast.makeText(this,"Allocation successfully created!",Toast.LENGTH_SHORT).show();
