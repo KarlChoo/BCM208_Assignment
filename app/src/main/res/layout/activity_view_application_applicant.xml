@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#CECCCC"
     tools:context=".ViewApplicationApplicant">
 
     <LinearLayout
@@ -23,11 +24,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:fontFamily="@font/roboto_thin"
+            android:fontFamily="sans-serif-black"
             android:text="View Application"
             android:textAlignment="textEnd"
-            android:textSize="36sp"
-            android:textStyle="bold" />
+            android:textSize="36sp" />
 
         <ImageView
             android:id="@+id/imageView2"
@@ -68,11 +68,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:fontFamily="@font/roboto_thin"
+            android:background="@android:color/holo_red_dark"
+            android:fontFamily="sans-serif-black"
             android:onClick="withdrawApplication"
             android:text="Withdraw"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
