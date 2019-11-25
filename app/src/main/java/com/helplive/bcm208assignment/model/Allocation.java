@@ -10,6 +10,33 @@ public class Allocation {
     private LocalDate fromDate;
     private LocalDate endDate;
     private int duration;   // in 12 or 18 months
+    private int applicationID;
+    private int residenceID;
+    private int unitNo;
+
+    public int getApplicationID() {
+        return applicationID;
+    }
+
+    public void setApplicationID(int applicationID) {
+        this.applicationID = applicationID;
+    }
+
+    public int getResidenceID() {
+        return residenceID;
+    }
+
+    public void setResidenceID(int residenceID) {
+        this.residenceID = residenceID;
+    }
+
+    public int getUnitNo() {
+        return unitNo;
+    }
+
+    public void setUnitNo(int unitNo) {
+        this.unitNo = unitNo;
+    }
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)

@@ -4,27 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F7ECAC"
+    android:background="#CECCCC"
     tools:context=".HousingOfficerMenu">
 
     <TextView
         android:id="@+id/welcomeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-black"
         android:text="Welcome"
         android:textSize="26sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.581"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.075" />
+        app:layout_constraintVertical_bias="0.096" />
 
     <Button
         android:id="@+id/logoutBtn"
         android:layout_width="260dp"
         android:layout_height="60dp"
         android:background="#FFFF4444"
-        android:fontFamily="@font/roboto_thin"
+        android:fontFamily="sans-serif-black"
         android:onClick="logout"
         android:paddingLeft="30dp"
         android:paddingTop="5dp"
@@ -46,7 +48,7 @@
         android:layout_width="260dp"
         android:layout_height="60dp"
         android:background="#2196F3"
-        android:fontFamily="@font/roboto_thin"
+        android:fontFamily="sans-serif-black"
         android:onClick="goViewApplication"
         android:paddingLeft="30dp"
         android:paddingTop="5dp"
@@ -68,7 +70,7 @@
         android:layout_width="260dp"
         android:layout_height="60dp"
         android:background="#2196F3"
-        android:fontFamily="@font/roboto_thin"
+        android:fontFamily="sans-serif-black"
         android:onClick="goViewResidence"
         android:paddingLeft="30dp"
         android:paddingTop="5dp"
@@ -90,7 +92,7 @@
         android:layout_width="260dp"
         android:layout_height="60dp"
         android:background="#2196F3"
-        android:fontFamily="@font/roboto_thin"
+        android:fontFamily="sans-serif-black"
         android:onClick="goAllocateHousing"
         android:paddingLeft="30dp"
         android:paddingTop="5dp"
@@ -111,8 +113,12 @@
         android:id="@+id/profileImgHO"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        app:srcCompat="@drawable/profile"
-        tools:layout_editor_absoluteX="37dp"
-        tools:layout_editor_absoluteY="25dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.018"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.051"
+        app:srcCompat="@drawable/profile" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

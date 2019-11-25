@@ -209,24 +209,13 @@ public class AllocateHousing extends AppCompatActivity implements AdapterView.On
         spinnerUnitNo.setAdapter(dataAdapter);
     }
 
-
-        @Override
+    @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-        switch (view.getId()) {
-
-            case R.id.spinnerApplicationID:
-                int applicationID = (int) parent.getItemAtPosition(position);
-                loadSpinnerUnitNo(applicationID);
-                break;
-            default:
-                break;
+        if(initializedAdapter !=parent.getAdapter() ) {
+            initializedAdapter = parent.getAdapter();
+            return;
         }
-        /*
-            else if(province.matches("Free State")){
-                spinPro = 2;
-                populateDist();
-            }
+
         switch(parent.getId()) {
             case R.id.spinnerApplicationID:
                 applicationID = Integer.parseInt(spinnerApplicationID.getSelectedItem().toString());
@@ -235,7 +224,7 @@ public class AllocateHousing extends AppCompatActivity implements AdapterView.On
                 break;
             default:
                 break;
-        }*/
+        }
     }
 
     @Override

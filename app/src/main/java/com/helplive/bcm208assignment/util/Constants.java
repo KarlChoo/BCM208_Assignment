@@ -32,7 +32,8 @@ public class Constants {
 
 
     //Allocation table columns
-    public static final String ALLOCATION_ID = "allocation_ID";
+    public static final String ALLOCATION_APPLICATION = "application_ID";
+    public static final String ALLOCATION_RESIDENCE = "residence_ID";
     public static final String ALLOCATION_UNITNO = "unit_no";
     public static final String ALLOCATION_FROMDATE = "from_date";
     public static final String ALLOCATION_DURATION = "duration";

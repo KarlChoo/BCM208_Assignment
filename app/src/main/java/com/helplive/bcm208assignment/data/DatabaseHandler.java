@@ -83,11 +83,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try {
             //create allocation table
             String CREATE_ALLOCATION_TABLE = "CREATE TABLE " + Constants.mhstables[3] + "("
-                    + Constants.ALLOCATION_ID + " INTEGER PRIMARY KEY NOT NULL,"
-                    + Constants.ALLOCATION_UNITNO+ " TEXT,"
+                    + Constants.ALLOCATION_APPLICATION + " INTEGER NOT NULL,"
+                    + Constants.ALLOCATION_RESIDENCE + " INTEGER NOT NULL,"
+                    + Constants.ALLOCATION_UNITNO + " INTEGER NOT NULL,"
                     + Constants.ALLOCATION_FROMDATE + " TEXT,"
                     + Constants.ALLOCATION_DURATION + " INTEGER,"
-                    + Constants.ALLOCATION_ENDDATE + " TEXT);";
+                    + Constants.ALLOCATION_ENDDATE + " TEXT,"
+                    +" PRIMARY KEY (" + Constants.ALLOCATION_APPLICATION + "," + Constants.ALLOCATION_RESIDENCE
+                    + "," + Constants.ALLOCATION_UNITNO + "));";
+
+            //Log.d("SQL TEST",CREATE_ALLOCATION_TABLE);
 
             db.execSQL(CREATE_ALLOCATION_TABLE);
         } catch (Exception e) {
@@ -578,7 +583,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             String sql = "SELECT * FROM " + Constants.mhstables[2] + " WHERE RESIDENCE IN ( SELECT "  + Constants.RESIDENCE_ID + " FROM " + Constants.mhstables[1] + " WHERE " + Constants.RESIDENCE_OWNER_ID + " = '" + currentUser +"');";
             Cursor cursor = db.rawQuery(sql,null);
 
-            Log.d("SQL TEST",sql);
 
             if(cursor.moveToFirst() == true){
                 //do-while moveToNext returns false
@@ -657,7 +661,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         try{
 
             String selectAll = "SELECT * FROM " + Constants.mhstables[2] + " WHERE RESIDENCE IN ( SELECT "  + Constants.RESIDENCE_ID + " FROM " + Constants.mhstables[1] + " WHERE " + Constants.RESIDENCE_OWNER_ID + " = '" + currentUser +"');";
-            Log.d("SQL HERE",selectAll);
             //only one for rawQuery, query has more than 1
             Cursor cursor = db.rawQuery(selectAll,null);
 
@@ -703,7 +706,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         String sql = "UPDATE " + Constants.mhstables[2] + " SET " + Constants.APPLICATION_STATUS + " = 'Waitlist' WHERE " + Constants.APPLICATION_ID + " = " + applicationID + ";";
         db.execSQL(sql);
-        Log.d("WAITLIST",sql);
         db.close();
     }
 
@@ -712,7 +714,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         String sql = "UPDATE " + Constants.mhstables[2] + " SET " + Constants.APPLICATION_STATUS + " = 'Rejected' WHERE " + Constants.APPLICATION_ID + " = " + applicationID + ";";
         db.execSQL(sql);
-        Log.d("REJECTED",sql);
         db.close();
     }
 

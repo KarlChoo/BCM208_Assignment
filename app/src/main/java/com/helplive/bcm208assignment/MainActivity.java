@@ -4,13 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.helplive.bcm208assignment.data.DatabaseHandler;
 import com.helplive.bcm208assignment.model.User;
-import com.helplive.bcm208assignment.util.Constants;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
             }
             editTextPassword.setText("");
             editTextUsername.setText("");
+            editTextUsername.requestFocus();
         }else{
             Toast.makeText(this,"User does not exist",Toast.LENGTH_SHORT).show();
         }
