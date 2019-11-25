@@ -232,12 +232,12 @@ public class AllocateHousing extends AppCompatActivity implements AdapterView.On
 
     public void allocateButton(View view) {
         DatabaseHandler db = new DatabaseHandler(getApplicationContext());
-        if (rdbtnWaitlist.isSelected()) {
-            applicationID = Integer.parseInt(spinnerApplicationID.getSelectedItem().toString());
+        if (rdbtnWaitlist.isChecked()) {
+            applicationID = Integer.parseInt((String)spinnerApplicationID.getSelectedItem());
             db.setWaitlist(applicationID);
         }
-        else if(rdbtnReject.isSelected()){
-            applicationID = Integer.parseInt(spinnerApplicationID.getSelectedItem().toString());
+        else if(rdbtnReject.isChecked()){
+            applicationID = Integer.parseInt((String) spinnerApplicationID.getSelectedItem());
             db.setRejected(applicationID);
         }
         finish();

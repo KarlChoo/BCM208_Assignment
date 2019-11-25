@@ -42,7 +42,7 @@
         android:onClick="create"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:text="Create"
+        android:text="Apply"
         android:textColor="@color/colorWhite"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
