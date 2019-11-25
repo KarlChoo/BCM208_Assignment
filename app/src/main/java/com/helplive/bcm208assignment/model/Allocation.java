@@ -7,8 +7,8 @@ import androidx.annotation.RequiresApi;
 import java.time.LocalDate;
 
 public class Allocation {
-    private LocalDate fromDate;
-    private LocalDate endDate;
+    private String fromDate;
+    private String endDate;
     private int duration;   // in 12 or 18 months
     private int applicationID;
     private int residenceID;
@@ -43,35 +43,57 @@ public class Allocation {
     public Allocation(Application application,
                       int duration, LocalDate fromDate) {
         setDuration(duration);
-        setFromDate(fromDate);
-        setEndDate(fromDate.plusMonths(duration).minusDays(1));
+    }
+
+    public Allocation(String fromDate, String endDate, int duration, int applicationID, int residenceID, int unitNo) {
+        this.fromDate = fromDate;
+        this.endDate = endDate;
+        this.duration = duration;
+        this.applicationID = applicationID;
+        this.residenceID = residenceID;
+        this.unitNo = unitNo;
+    }
+
+    @Override
+    public String toString() {
+        return "Allocation{" +
+                "fromDate='" + fromDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", duration=" + duration +
+                ", applicationID=" + applicationID +
+                ", residenceID=" + residenceID +
+                ", unitNo=" + unitNo +
+                '}';
+    }
+
+    public Allocation() {
     }
 
     /**
      * @return the fromDate
      */
-    public LocalDate getFromDate() {
+    public String getFromDate() {
         return fromDate;
     }
 
     /**
      * @param fromDate the fromDate to set
      */
-    public void setFromDate(LocalDate fromDate) {
+    public void setFromDate(String fromDate) {
         this.fromDate = fromDate;
     }
 
     /**
      * @return the endDate
      */
-    public LocalDate getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
     /**
      * @param endDate the endDate to set
      */
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
@@ -89,9 +111,5 @@ public class Allocation {
         this.duration = duration;
     }
 
-
-    public String toString() {
-        return "";
-    }
 
 }

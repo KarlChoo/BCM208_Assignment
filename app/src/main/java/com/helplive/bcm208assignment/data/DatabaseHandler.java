@@ -617,11 +617,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         ContentValues contentValues = new ContentValues();
 
-        //contentValues.put(Constants.ALLOCATION_UNITNO,allocation.getResidenceUnit().getUnitNo());
-        //issue with LocalDate
-        contentValues.put(Constants.ALLOCATION_FROMDATE,dateToStrDB.format(allocation.getFromDate()));
+        contentValues.put(Constants.ALLOCATION_RESIDENCE,allocation.getResidenceID());
+        contentValues.put(Constants.ALLOCATION_APPLICATION,allocation.getApplicationID());
+        contentValues.put(Constants.ALLOCATION_UNITNO,allocation.getUnitNo());
+        contentValues.put(Constants.ALLOCATION_FROMDATE,allocation.getFromDate());
         contentValues.put(Constants.ALLOCATION_DURATION,allocation.getDuration());
-        contentValues.put(Constants.ALLOCATION_ENDDATE,dateToStrDB.format(allocation.getEndDate()));
+        contentValues.put(Constants.ALLOCATION_ENDDATE,allocation.getEndDate());
 
 
         db.insert(Constants.mhstables[3],null,contentValues);
@@ -725,5 +726,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(sql);
         Log.d("APPROVED",sql);
         db.close();
+    }
+
+    public int retrieveResidenceID(int applicationID){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String sql = "SELECT " + Constants.APPLICATION_RESIDENCE + " FROM " + Constants.mhstables[2] + " WHERE " + Constants.APPLICATION_ID + " = " + applicationID + ";";
+        Cursor cursor = db.rawQuery(sql,null);
+        cursor.moveToFirst();
+
+        return Integer.parseInt(cursor.getString(0));
     }
 }

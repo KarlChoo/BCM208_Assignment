@@ -20,10 +20,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.helplive.bcm208assignment.data.DatabaseHandler;
+import com.helplive.bcm208assignment.model.Allocation;
 import com.helplive.bcm208assignment.model.Residence;
 import com.helplive.bcm208assignment.model.Unit;
 import com.helplive.bcm208assignment.util.Constants;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -39,8 +41,11 @@ public class AllocateHousing extends AppCompatActivity implements AdapterView.On
     DatabaseHandler databaseHandler = new DatabaseHandler(this);
     Spinner spinnerApplicationID;
     Spinner spinnerUnitNo;
+    Spinner spinnerDuration;
     private int applicationID;
-    protected Adapter initializedAdapter= null;
+    private int unitNo;
+    String dateformat;
+    Calendar calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +59,8 @@ public class AllocateHousing extends AppCompatActivity implements AdapterView.On
 
         spinnerUnitNo = (Spinner) findViewById(R.id.spinnerUnitNo);
 
+        spinnerDuration = (Spinner) findViewById(R.id.spinnerDuration);
+
         loadSpinnerApplicationID();
 
         // Get reference of widgets from XML layout
@@ -61,9 +68,8 @@ public class AllocateHousing extends AppCompatActivity implements AdapterView.On
 
         // Initializing a String Array
         String[] duration = new String[]{
-                "Select a duration...",
-                "12 months",
-                "18 months",
+                "12",
+                "18",
         };
 
         final List<String> durationList = new ArrayList<>(Arrays.asList(duration));
@@ -126,10 +132,12 @@ public class AllocateHousing extends AppCompatActivity implements AdapterView.On
         fromDate.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Calendar calendar = Calendar.getInstance();
+                calendar = Calendar.getInstance();
                 final int year = calendar.get(Calendar.YEAR);
                 final int month = calendar.get(Calendar.MONTH);
                 final int day = calendar.get(Calendar.DAY_OF_MONTH);
+                calendar.set(year, month, day);
+
                 datePickerDialog = new DatePickerDialog(AllocateHousing.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
@@ -240,6 +248,17 @@ public class AllocateHousing extends AppCompatActivity implements AdapterView.On
         else{
             applicationID = Integer.parseInt((String)spinnerApplicationID.getSelectedItem());
             db.setApproved(applicationID);
+            unitNo = Integer.parseInt((String)spinnerUnitNo.getSelectedItem());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String fromDate = sdf.format(calendar.getTime());
+            int duration = Integer.parseInt((String)spinnerDuration.getSelectedItem());
+            calendar.add(Calendar.MONTH,duration);
+            String toDate = sdf.format(calendar.getTime());
+            int residenceID = db.retrieveResidenceID(applicationID);
+            Allocation a = new Allocation(fromDate,toDate,duration,applicationID,residenceID,unitNo);
+            db.makeAllocation(a);
+            Toast.makeText(this,"Allocation successfully created!",Toast.LENGTH_SHORT).show();
+            Log.d("ALLOCATION",a.toString());
         }
         finish();
     }
