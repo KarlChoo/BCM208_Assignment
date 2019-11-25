@@ -3,10 +3,8 @@ package com.helplive.bcm208assignment.model;
 public class Unit {
 
     private int unitNo;
-
-    public Unit() {
-
-    }
+    private int availability;
+    private int residence;
 
     public int getUnitNo() {
         return unitNo;
@@ -24,8 +22,6 @@ public class Unit {
         this.availability = availability;
     }
 
-    private int availability;
-    private int residence;
 
     public int getResidence() {
         return residence;
