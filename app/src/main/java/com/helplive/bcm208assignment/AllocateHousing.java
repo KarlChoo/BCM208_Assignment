@@ -211,16 +211,11 @@ public class AllocateHousing extends AppCompatActivity implements AdapterView.On
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if(initializedAdapter !=parent.getAdapter() ) {
-            initializedAdapter = parent.getAdapter();
-            return;
-        }
 
         switch(parent.getId()) {
             case R.id.spinnerApplicationID:
                 applicationID = Integer.parseInt(spinnerApplicationID.getSelectedItem().toString());
                 loadSpinnerUnitNo(applicationID);
-                
                 break;
             default:
                 break;
