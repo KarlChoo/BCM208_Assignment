@@ -707,7 +707,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         String sql = "UPDATE " + Constants.mhstables[2] + " SET " + Constants.APPLICATION_STATUS + " = 'Waitlist' WHERE " + Constants.APPLICATION_ID + " = " + applicationID + ";";
         db.execSQL(sql);
-        Log.d("WAITLIST",sql);
         db.close();
     }
 
@@ -716,7 +715,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         String sql = "UPDATE " + Constants.mhstables[2] + " SET " + Constants.APPLICATION_STATUS + " = 'Rejected' WHERE " + Constants.APPLICATION_ID + " = " + applicationID + ";";
         db.execSQL(sql);
-        Log.d("REJECTED",sql);
         db.close();
     }
 }

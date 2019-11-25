@@ -213,6 +213,7 @@ public class AllocateHousing extends AppCompatActivity implements AdapterView.On
             initializedAdapter = parent.getAdapter();
             return;
         }
+        Log.d("OVERHERE",String.valueOf(parent.getId()));
 
         switch(parent.getId()) {
             case R.id.spinnerApplicationID:
@@ -239,7 +240,15 @@ public class AllocateHousing extends AppCompatActivity implements AdapterView.On
         else if(rdbtnReject.isChecked()){
             applicationID = Integer.parseInt((String) spinnerApplicationID.getSelectedItem());
             db.setRejected(applicationID);
+        }else if(rdbtnApprove.isChecked()){
+            applicationID = Integer.parseInt((String) spinnerApplicationID.getSelectedItem());
+            int unit = 1;
+
         }
+        /**
+         * get appID, unit, date, duration
+         *
+         */
         finish();
     }
 

@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import com.helplive.bcm208assignment.data.DatabaseHandler;
 import com.helplive.bcm208assignment.model.User;
-import com.helplive.bcm208assignment.util.Constants;
 
 
 public class MainActivity extends AppCompatActivity {
