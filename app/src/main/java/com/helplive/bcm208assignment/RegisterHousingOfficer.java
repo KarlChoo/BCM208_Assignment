@@ -36,8 +36,14 @@ public class RegisterHousingOfficer extends AppCompatActivity {
         //validations
         //1. Can't be empty
         if(name.equalsIgnoreCase("")) {
-            Toast.makeText(this.getBaseContext(),"Please fill in the name field",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this.getBaseContext(),"Please fill in the username field",Toast.LENGTH_SHORT).show();
             editTextName.requestFocus();
+            return;
+        }
+
+        if(fullname.equalsIgnoreCase("")) {
+            Toast.makeText(this.getBaseContext(),"Please fill in the full name field",Toast.LENGTH_SHORT).show();
+            editTextFullname.requestFocus();
             return;
         }
 
@@ -53,8 +59,7 @@ public class RegisterHousingOfficer extends AppCompatActivity {
             return;
         }
 
-
-        //Pass must be >8 chars
+        //Pass must be >= 8 chars
         if(password.length() < 8){
             Toast.makeText(this.getBaseContext(),"Password must be longer than 8 characters",Toast.LENGTH_SHORT).show();
             editTextPass.requestFocus();
@@ -62,7 +67,7 @@ public class RegisterHousingOfficer extends AppCompatActivity {
         }
         //2. Pass and confirm pass must be same
         if(!(password.equals(confpassword))){
-            Toast.makeText(this.getBaseContext(),"Please fill in the monthly salary field",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this.getBaseContext(),"Password and confirm password fields are not the same",Toast.LENGTH_SHORT).show();
             editTextPass.requestFocus();
             return;
         }

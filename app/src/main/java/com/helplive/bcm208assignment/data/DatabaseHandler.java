@@ -270,7 +270,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return true;
     }
 
-
+    /*
     public List<User> getAllUsers(){
         List<User> users = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -304,7 +304,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return users;
-    }
+    }*/
 
     /**
      *
@@ -490,7 +490,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
             ContentValues contentValues = new ContentValues();
             contentValues.put(Constants.RESIDENCE_ADDRESS, residence.getAddress());
-            contentValues.put(Constants.RESIDENCE_NOOFUNITS, residence.getNumUnits());
             contentValues.put(Constants.RESIDENCE_SIZEPERUNIT, residence.getSizePerUnit());
             contentValues.put(Constants.RESIDENCE_MONTHLYRENTAL, residence.getMonthlyRental());
 

@@ -48,6 +48,12 @@ public class RegisterApplicant extends AppCompatActivity {
             return;
         }
 
+        if(fullname.equalsIgnoreCase("")) {
+            Toast.makeText(this.getBaseContext(),"Please fill in the full name field",Toast.LENGTH_SHORT).show();
+            editTextFullname.requestFocus();
+            return;
+        }
+
         if(password.equalsIgnoreCase("")) {
             Toast.makeText(this.getBaseContext(),"Please fill in the password field",Toast.LENGTH_SHORT).show();
             editTextPass.requestFocus();
@@ -86,7 +92,7 @@ public class RegisterApplicant extends AppCompatActivity {
             editTextPass.requestFocus();
             return;
         }
-        //3. Email must have @
+        //3. Email must have @, and cannot begin or end with @
         if(!(email.contains("@")) || email.substring(0).equals("@") || email.substring(email.length()-1).equals("@")){
             Toast.makeText(this.getBaseContext(),"Invalid email format",Toast.LENGTH_SHORT).show();
             editTextEmail.requestFocus();

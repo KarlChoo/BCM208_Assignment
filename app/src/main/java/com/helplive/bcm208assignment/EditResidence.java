@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.helplive.bcm208assignment.model.Residence;
 import com.helplive.bcm208assignment.data.DatabaseHandler;
@@ -21,12 +22,58 @@ public class EditResidence extends AppCompatActivity {
 
     public void updateResidenceButton(View view){
 
-        residence.setAddress(addressEditText2.getText().toString().trim());
-        residence.setNumUnits(Integer.parseInt(numOfUnitsEditText2.getText().toString().trim()));
-        residence.setSizePerUnit(Integer.parseInt(sizeOfUnitEditText2.getText().toString().trim()));
-        residence.setMonthlyRental(Float.parseFloat(monthlyRentalEditText2.getText().toString().trim()));
+        String address = addressEditText2.getText().toString().trim();
+        String unitSizeStr = sizeOfUnitEditText2.getText().toString().trim();
+        int sizePerUnit;
+        String monthlyRentalStr = monthlyRentalEditText2.getText().toString().trim();
+        double monthlyRental;
+
+        //Validation
+        //1. Cant be empty
+        if(address.equalsIgnoreCase("")){
+            Toast.makeText(this,"Please enter the residence address",Toast.LENGTH_SHORT).show();
+            addressEditText2.requestFocus();
+            return;
+        }
+
+
+        try{
+            sizePerUnit = Integer.parseInt(unitSizeStr);
+        }catch (Exception e){
+            Toast.makeText(this,"Please enter the size of units",Toast.LENGTH_SHORT).show();
+            sizeOfUnitEditText2.requestFocus();
+            return;
+        }
+
+        try{
+            monthlyRental = Double.parseDouble(monthlyRentalStr);
+        }catch (Exception e){
+            Toast.makeText(this,"Please enter the monthly rental of residence",Toast.LENGTH_SHORT).show();
+            sizeOfUnitEditText2.requestFocus();
+            return;
+        }
+
+        //2. Size per unit and rental cannot be 0
+        if(sizePerUnit <=0){
+            Toast.makeText(this,"Size of a unit cannot be 0",Toast.LENGTH_SHORT).show();
+            sizeOfUnitEditText2.requestFocus();
+            return;
+        }
+
+        if(monthlyRental <=0){
+            Toast.makeText(this,"Monthly rental cannot be 0",Toast.LENGTH_SHORT).show();
+            monthlyRentalEditText2.requestFocus();
+            return;
+        }
+
+
+        residence.setAddress(address);
+        residence.setSizePerUnit(sizePerUnit);
+        residence.setMonthlyRental(monthlyRental);
 
         databaseHandler.UpdateResidence(residence);
+        Toast.makeText(this,"Residence has been updated",Toast.LENGTH_SHORT).show();
+        databaseHandler.close();
         finish();
     }
 

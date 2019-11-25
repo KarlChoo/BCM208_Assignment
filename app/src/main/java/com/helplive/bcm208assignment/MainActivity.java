@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             editTextUsername.setText("");
             editTextUsername.requestFocus();
         }else{
-            Toast.makeText(this,"User does not exist",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Username or password is incorrect",Toast.LENGTH_SHORT).show();
         }
         //Toast.makeText(this.getBaseContext(),allUsers.get(0).toString(),Toast.LENGTH_SHORT).show();
     }
